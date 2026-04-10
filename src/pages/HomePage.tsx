@@ -97,7 +97,7 @@ export default function HomePage({ navigate }: Props) {
               </span>
             </div>
 
-            <h1 className="font-black leading-[0.88] tracking-tight mb-8">
+            <h1 className="leading-[0.88] tracking-tight mb-8" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
               <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-white">ATHLETIC</span>
               <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
                 <span className="text-[#d81300]">LEADER</span>
