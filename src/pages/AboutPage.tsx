@@ -71,8 +71,14 @@ export default function AboutPage({ navigate }: Props) {
 
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
       <section className="relative py-24 px-6 bg-[#111] overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `repeating-linear-gradient(-45deg, #d81300, #d81300 1px, transparent 1px, transparent 24px)`,
+        {/* Red top bar */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
+        {/* Red left accent */}
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
+        {/* Red glow bloom */}
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(circle at 0% 0%, rgba(216,19,0,0.15) 0%, transparent 65%)" }} />
+        <div className="absolute inset-0 opacity-8" style={{
+          backgroundImage: `repeating-linear-gradient(-45deg, #d81300, #d81300 1px, transparent 1px, transparent 32px)`,
         }} />
         <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none">
           <HorseshoeLogo className="w-72 h-72 object-contain" />
