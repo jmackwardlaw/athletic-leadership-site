@@ -8,12 +8,12 @@ interface Props {
 
 export default function SALTPage({ navigate }: Props) {
   const roles = [
-    { title: 'Operations Lead', icon: '🏟️', desc: 'Oversees game-day logistics, facility setup, event coordination, and day-of operations for athletic events.', responsibilities: ['Game day setup & breakdown', 'Facility coordination', 'Staff communication', 'Event timeline management'] },
-    { title: 'Media & Content Lead', icon: '📸', desc: 'Manages photography, videography, social media content, and all digital promotion of Palmetto Athletics.', responsibilities: ['Game day photography/film', 'Social media content', 'Highlight production', 'Athlete spotlights'] },
-    { title: 'Equipment Manager', icon: '🎽', desc: 'Tracks, maintains, and organizes all athletic equipment and uniform inventory across programs.', responsibilities: ['Inventory tracking', 'Equipment distribution', 'Uniform management', 'Safety inspections'] },
-    { title: 'Spirit & Engagement Lead', icon: '📣', desc: 'Designs and runs school spirit initiatives, student section themes, and fan engagement at events.', responsibilities: ['Theme night planning', 'Student section coordination', 'Promotional campaigns', 'Fan experience activities'] },
-    { title: 'Athletic Development Asst.', icon: '💪', desc: 'Supports weight room and conditioning programs, tracks athlete progress, and assists with training operations.', responsibilities: ['Weight room setup', 'Athlete monitoring', 'Training logs', 'Performance data collection'] },
-    { title: 'Community Relations Coord.', icon: '🤝', desc: 'Connects athletic programs with the community through outreach, partnerships, and engagement initiatives.', responsibilities: ['Youth camp planning', 'Sponsor coordination', 'Community outreach', 'Partnership development'] },
+    { title: 'Operations Lead', icon: '—', desc: 'Oversees game-day logistics, facility setup, event coordination, and day-of operations for athletic events.', responsibilities: ['Game day setup & breakdown', 'Facility coordination', 'Staff communication', 'Event timeline management'] },
+    { title: 'Media & Content Lead', icon: '—', desc: 'Manages photography, videography, social media content, and all digital promotion of Palmetto Athletics.', responsibilities: ['Game day photography/film', 'Social media content', 'Highlight production', 'Athlete spotlights'] },
+    { title: 'Equipment Manager', icon: '—', desc: 'Tracks, maintains, and organizes all athletic equipment and uniform inventory across programs.', responsibilities: ['Inventory tracking', 'Equipment distribution', 'Uniform management', 'Safety inspections'] },
+    { title: 'Spirit & Engagement Lead', icon: '—', desc: 'Designs and runs school spirit initiatives, student section themes, and fan engagement at events.', responsibilities: ['Theme night planning', 'Student section coordination', 'Promotional campaigns', 'Fan experience activities'] },
+    { title: 'Athletic Development Asst.', icon: '—', desc: 'Supports weight room and conditioning programs, tracks athlete progress, and assists with training operations.', responsibilities: ['Weight room setup', 'Athlete monitoring', 'Training logs', 'Performance data collection'] },
+    { title: 'Community Relations Coord.', icon: '—', desc: 'Connects athletic programs with the community through outreach, partnerships, and engagement initiatives.', responsibilities: ['Youth camp planning', 'Sponsor coordination', 'Community outreach', 'Partnership development'] },
   ]
 
   const habits = [
@@ -98,7 +98,6 @@ export default function SALTPage({ navigate }: Props) {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
             {roles.map(({ title, icon, desc, responsibilities }) => (
               <div key={title} className="bg-[#111] p-6 hover:bg-[#161616] transition-colors group">
-                <div className="text-3xl mb-4">{icon}</div>
                 <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2 group-hover:text-[#d81300] transition-colors">
                   {title}
                 </h3>
@@ -130,14 +129,13 @@ export default function SALTPage({ navigate }: Props) {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {[
-              { icon: '🏈', label: 'Team Student\nAssistant' },
-              { icon: '🎬', label: 'Athletic Media\nAssistant' },
-              { icon: '🏟️', label: 'Event Operations\nAssistant' },
-              { icon: '🎽', label: 'Equipment\nAssistant' },
-              { icon: '🏋️', label: 'Strength & Conditioning\nAssistant' },
+              { icon: '—', label: 'Team Student\nAssistant' },
+              { icon: '—', label: 'Athletic Media\nAssistant' },
+              { icon: '—', label: 'Event Operations\nAssistant' },
+              { icon: '—', label: 'Equipment\nAssistant' },
+              { icon: '—', label: 'Strength & Conditioning\nAssistant' },
             ].map(({ icon, label }) => (
               <div key={label} className="bg-[#0f0f0f] border border-white/5 p-5 text-center hover:border-[#d81300]/30 transition-colors">
-                <div className="text-4xl mb-3">{icon}</div>
                 <div className="text-white text-xs font-bold uppercase tracking-wide whitespace-pre-line leading-relaxed">{label}</div>
               </div>
             ))}
