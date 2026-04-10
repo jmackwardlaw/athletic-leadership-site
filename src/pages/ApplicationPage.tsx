@@ -211,12 +211,13 @@ export default function ApplicationPage({ navigate }: Props) {
       <div className="bg-[#d81300]/10 border-y border-[#d81300]/20 py-4 px-6">
         <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center md:justify-start">
           {[
-            { icon: '📋', text: 'Reviewed by Mr. Wardlaw — not all applicants accepted' },
-            { icon: '⏱️', text: '15–20 minutes to complete' },
-            { icon: '📅', text: '2026–2027 Academic Year' },
-          ].map(({ icon, text }) => (
+            'Reviewed by Mr. Wardlaw — not all applicants accepted',
+            '15–20 minutes to complete',
+            '2026–2027 Academic Year',
+          ].map((text) => (
             <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
-              <span>{icon}</span><span>{text}</span>
+              <span className="text-[#d81300] font-black text-xs">—</span>
+              <span>{text}</span>
             </div>
           ))}
         </div>
@@ -226,7 +227,7 @@ export default function ApplicationPage({ navigate }: Props) {
       {APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE' && (
         <div className="bg-yellow-500/10 border-b border-yellow-500/30 py-3 px-6">
           <div className="max-w-3xl mx-auto text-center text-yellow-400 text-xs font-bold tracking-wide">
-            ⚙️ DEMO MODE — Form submissions simulated. See setup instructions to connect Google Sheets.
+             DEMO MODE — Form submissions simulated. See setup instructions to connect Google Sheets.
           </div>
         </div>
       )}
