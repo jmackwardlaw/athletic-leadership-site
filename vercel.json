@@ -1,5 +1,8 @@
 {
+  "buildCommand": "pnpm run build",
+  "installCommand": "npm install -g pnpm@9.15.0 && pnpm install",
+  "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
