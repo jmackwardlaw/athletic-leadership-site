@@ -53,10 +53,10 @@ export default function AboutPage({ navigate }: Props) {
     },
     {
       num: '07',
-      title: 'Internship Experience',
+      title: 'Capstone Project',
       highlight: false,
-      topics: ['Internship Placements & Goal Setting', 'Practice & Game Day Support', 'Equipment & Facility Assistance', 'Sports Media Assistance', 'Internship Portfolio & Reflection'],
-      tag: 'Experiential',
+      topics: ['Athletic Program Evaluation', 'Research & Best Practices', 'Improvement Proposal Development', 'Implementation Planning', 'Final Presentation to Coaches & Staff'],
+      tag: 'Capstone',
     },
   ]
 
@@ -269,11 +269,12 @@ export default function AboutPage({ navigate }: Props) {
             </div>
           </div>
           <div className="bg-[#0f0f0f] border border-white/10 p-8">
-            <div className="text-gray-400 text-xs font-black tracking-[0.2em] uppercase mb-3">Hands-On Component</div>
+            <div className="text-gray-400 text-xs font-black tracking-[0.2em] uppercase mb-3">Runs All Semester</div>
             <h3 className="text-2xl font-black mb-4">Athletic Leadership<br />Internship</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Every AL student is placed with a coach, team, or athletic program — completing 
-              real work, not just shadowing. Hours are logged and reflected on throughout the semester.
+              The internship is not a unit — it runs the entire semester alongside coursework. 
+              Every AL student is placed with a coach, team, or athletic program from Week 3 
+              through the final week. Hours are logged and reflected on continuously.
             </p>
             <div className="space-y-2">
               {['Practice setup & equipment management', 'Game-day event operations', 'Scorekeeping, stats, or film review', 'Hour logs, reflections & final portfolio'].map(s => (
