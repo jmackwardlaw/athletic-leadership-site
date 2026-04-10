@@ -12,7 +12,7 @@ const careers = [
     paths: [
       {
         title: 'Athletic Director',
-        icon: '🏛️',
+        icon: '—',
         salary: '$55K – $120K+',
         level: 'High school → Collegiate → Pro',
         desc: 'Oversee all athletic programs, manage budgets, coordinate staff, ensure compliance, and lead the vision of a school\'s athletic department.',
@@ -22,7 +22,7 @@ const careers = [
       },
       {
         title: 'Coaching',
-        icon: '📋',
+        icon: '—',
         salary: '$35K – $5M+ (college/pro)',
         level: 'All levels',
         desc: 'Lead teams in player development, game planning, practice design, and building winning culture — from youth leagues to Division I programs.',
@@ -38,7 +38,7 @@ const careers = [
     paths: [
       {
         title: 'Sports Broadcaster / Journalist',
-        icon: '🎙️',
+        icon: '—',
         salary: '$40K – $300K+',
         level: 'Local → National → Network',
         desc: 'Cover sports through radio, television, podcasting, or digital media. Tell the stories behind the games — players, programs, and moments.',
@@ -48,7 +48,7 @@ const careers = [
       },
       {
         title: 'Sports Content Creator / Videographer',
-        icon: '🎬',
+        icon: '—',
         salary: '$40K – $150K+',
         level: 'Team / Agency / Freelance',
         desc: 'Produce video content, highlight reels, social media campaigns, and digital media for athletic programs at every level.',
@@ -64,7 +64,7 @@ const careers = [
     paths: [
       {
         title: 'Event & Game Operations Manager',
-        icon: '📋',
+        icon: '—',
         salary: '$45K – $110K+',
         level: 'HS → College → Pro venues',
         desc: 'Coordinate the logistics of live athletic events — staffing, facilities, fan experience, broadcast setup, and day-of operations.',
@@ -74,7 +74,7 @@ const careers = [
       },
       {
         title: 'Equipment Manager',
-        icon: '🎽',
+        icon: '—',
         salary: '$35K – $90K+',
         level: 'HS → College → Pro',
         desc: 'Manage all athletic equipment — ordering, inventory, distribution, care, and logistics for travel and competitions.',
@@ -90,7 +90,7 @@ const careers = [
     paths: [
       {
         title: 'Strength & Conditioning Coach',
-        icon: '🏋️',
+        icon: '—',
         salary: '$40K – $250K+',
         level: 'HS → College → Pro',
         desc: 'Design and implement training programs to maximize athletic performance, reduce injury risk, and develop athletes physically year-round.',
@@ -100,7 +100,7 @@ const careers = [
       },
       {
         title: 'Athletic Trainer',
-        icon: '🩹',
+        icon: '—',
         salary: '$48K – $95K+',
         level: 'HS → College → Pro → Clinical',
         desc: 'Prevent, diagnose, and treat athletic injuries — working directly with teams at practice and competition to keep athletes healthy and competing.',
@@ -116,7 +116,7 @@ const careers = [
     paths: [
       {
         title: 'Sports Marketing Director',
-        icon: '📣',
+        icon: '—',
         salary: '$55K – $180K+',
         level: 'Team / Agency / Brand',
         desc: 'Develop and execute marketing campaigns for athletic programs and sports brands — fan engagement, ticket sales, sponsorships, and brand identity.',
@@ -126,7 +126,7 @@ const careers = [
       },
       {
         title: 'Sports Analytics Specialist',
-        icon: '📊',
+        icon: '—',
         salary: '$55K – $175K+',
         level: 'College → Pro → Sports Tech',
         desc: 'Collect, analyze, and interpret athletic performance data to inform coaching decisions, player development, and competitive strategy.',
@@ -213,7 +213,8 @@ export default function CareersPage({ navigate }: Props) {
               { unit: 'Unit 03', skill: 'Event & Game Operations', arrow: '→', career: 'Event Management, Game Ops' },
               { unit: 'Unit 04', skill: 'Equipment & Facility Management', arrow: '→', career: 'Equipment Manager, Facility Director' },
               { unit: 'Unit 05', skill: 'Sports Media & Marketing', arrow: '→', career: 'Broadcasting, Content, Marketing' },
-              { unit: 'Unit 06–07', skill: 'Internship & Capstone', arrow: '→', career: 'Resume, references, real experience' },
+              { unit: 'Internship', skill: 'All-Semester Placement', arrow: '→', career: 'Resume, references, real program experience' },
+              { unit: 'Unit 07', skill: 'Capstone Project', arrow: '→', career: 'Problem-solving, research, professional presentation' },
             ].map(({ unit, skill, career }, i) => (
               <div key={unit}
                 className="io-reveal bg-[#111] border border-white/5 p-5 flex gap-4 items-start hover:border-[#d81300]/30 transition-colors card-lift"
@@ -259,8 +260,7 @@ export default function CareersPage({ navigate }: Props) {
                   <div className="p-6 border-b border-white/5">
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
-                        <span className="text-3xl">{path.icon}</span>
-                        <h3 className="font-black text-white text-xl">{path.title}</h3>
+                          <h3 className="font-black text-white text-xl">{path.title}</h3>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-3 text-xs">
@@ -331,15 +331,14 @@ export default function CareersPage({ navigate }: Props) {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { degree: 'Sports Management', icon: '🏆', schools: 'USC, Clemson, Winthrop, Lander', note: 'Broadest pathway — covers business, ops, and leadership' },
-              { degree: 'Exercise Science / Kinesiology', icon: '💪', schools: 'USC, Clemson, Anderson Univ.', note: 'Foundation for S&C, athletic training, and performance careers' },
-              { degree: 'Communications / Broadcast', icon: '📡', schools: 'USC, Coastal Carolina, Bob Jones', note: 'Sports media, journalism, broadcasting, and PR' },
-              { degree: 'Athletic Training (BS + ATC)', icon: '🩹', schools: 'Presbyterian, Winthrop, Lander', note: 'Clinical pathway requiring specific accredited programs' },
+              { degree: 'Sports Management', icon: '—', schools: 'USC, Clemson, Winthrop, Lander', note: 'Broadest pathway — covers business, ops, and leadership' },
+              { degree: 'Exercise Science / Kinesiology', icon: '—', schools: 'USC, Clemson, Anderson Univ.', note: 'Foundation for S&C, athletic training, and performance careers' },
+              { degree: 'Communications / Broadcast', icon: '—', schools: 'USC, Coastal Carolina, Bob Jones', note: 'Sports media, journalism, broadcasting, and PR' },
+              { degree: 'Athletic Training (BS + ATC)', icon: '—', schools: 'Presbyterian, Winthrop, Lander', note: 'Clinical pathway requiring specific accredited programs' },
             ].map(({ degree, icon, schools, note }, i) => (
               <div key={degree}
                 className="io-reveal bg-[#0f0f0f] border border-white/5 p-6 hover:border-[#d81300]/30 transition-all duration-300 card-lift"
                 data-delay={String(i * 70)}>
-                <div className="text-3xl mb-4">{icon}</div>
                 <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2">{degree}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed mb-3">{note}</p>
                 <div className="text-[#d81300] text-[10px] font-bold uppercase tracking-wide">SC Schools:</div>
