@@ -169,7 +169,7 @@ export default function CareersPage({ navigate }: Props) {
             <div className="w-8 h-0.5 bg-[#d81300]" />
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Sports Industry Careers</span>
           </div>
-          <h1 className="reveal delay-1 text-5xl md:text-7xl font-black leading-none mb-6">
+          <h1 className="reveal delay-1 text-5xl md:text-7xl font-black leading-none mb-6" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
             Where This
             <br /><span className="text-[#d81300]">Takes You</span>
           </h1>
