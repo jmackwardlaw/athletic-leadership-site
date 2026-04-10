@@ -4,9 +4,10 @@ import AboutPage from './pages/AboutPage'
 import SALTPage from './pages/SALTPage'
 import ApplicationPage from './pages/ApplicationPage'
 import CareersPage from './pages/CareersPage'
+import InstructorPage from './pages/InstructorPage'
 import Nav from './components/Nav'
 
-export type Page = 'home' | 'about' | 'salt' | 'apply' | 'careers'
+export type Page = 'home' | 'about' | 'salt' | 'apply' | 'careers' | 'instructor'
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home')
@@ -24,6 +25,7 @@ export default function App() {
       {currentPage === 'salt' && <SALTPage navigate={navigate} />}
       {currentPage === 'careers' && <CareersPage navigate={navigate} />}
       {currentPage === 'apply' && <ApplicationPage navigate={navigate} />}
+      {currentPage === 'instructor' && <InstructorPage navigate={navigate} />}
     </div>
   )
 }
