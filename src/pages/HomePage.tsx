@@ -215,41 +215,42 @@ export default function HomePage({ navigate }: Props) {
               moving through operations, media, and ending with the Capstone. Internship runs all semester.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-[#d81300]/20">
+          {/* Unit list — vertical stack */}
+          <div className="space-y-px bg-[#d81300]/20">
             {pillars.map(({ num, title, desc }, i) => (
               <div key={num}
-                className="io-reveal bg-[#111] p-7 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default"
-                data-delay={String(i * 60)}>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 bg-[#d81300] flex items-center justify-center font-black text-white text-xs flex-shrink-0">
-                    {num}
-                  </div>
-                  {num === '01' && (
-                    <span className="text-[10px] font-black text-[#d81300] uppercase tracking-wider">Foundation</span>
-                  )}
-                  {num === '07' && (
-                    <span className="text-[10px] font-black text-[#d81300] uppercase tracking-wider">Capstone</span>
-                  )}
+                className="io-reveal bg-[#111] px-8 py-5 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default flex items-start gap-6"
+                data-delay={String(i * 50)}>
+                <div className="flex-shrink-0 w-10 h-10 bg-[#d81300] flex items-center justify-center font-black text-white text-sm">
+                  {num}
                 </div>
-                <h3 className="font-black text-white text-sm mb-2 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200">
-                  {title}
-                </h3>
-                <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
-                <div className="mt-4 h-px w-0 bg-[#d81300] group-hover:w-full transition-all duration-500" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1">
+                    <h3 className="font-black text-white text-sm uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200">
+                      {title}
+                    </h3>
+                    {num === '01' && <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Foundation</span>}
+                    {num === '07' && <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Capstone</span>}
+                  </div>
+                  <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
+                </div>
+                <div className="flex-shrink-0 text-[#d81300]/20 group-hover:text-[#d81300]/60 transition-colors font-black text-lg">→</div>
               </div>
             ))}
-            {/* Internship note card */}
-            <div className="io-reveal bg-[#d81300]/10 border border-[#d81300]/30 p-7" data-delay={String(7 * 60)}>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 bg-[#d81300]/20 border border-[#d81300]/50 flex items-center justify-center font-black text-[#d81300] text-xs flex-shrink-0">
-                  ↻
-                </div>
-                <span className="text-[10px] font-black text-[#d81300] uppercase tracking-wider">All Semester</span>
+            {/* Internship — runs all semester */}
+            <div className="io-reveal bg-[#d81300]/8 border-l-4 border-[#d81300] px-8 py-5 flex items-start gap-6" data-delay={String(7 * 50)}>
+              <div className="flex-shrink-0 w-10 h-10 border-2 border-[#d81300]/60 flex items-center justify-center font-black text-[#d81300] text-base">
+                ↻
               </div>
-              <h3 className="font-black text-white text-sm mb-2 uppercase tracking-wide">Internship</h3>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                Runs alongside all units from Week 3 through finals. Every student placed with a coach, team, or athletic program. Hours logged weekly.
-              </p>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="font-black text-white text-sm uppercase tracking-wide">Semester-Long Internship</h3>
+                  <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Ongoing</span>
+                </div>
+                <p className="text-gray-400 text-xs leading-relaxed">
+                  Runs alongside coursework from Week 3 through finals. Every student is placed with a coach, team, or athletic program — real work, logged weekly.
+                </p>
+              </div>
             </div>
           </div>
           <div className="io-reveal text-center mt-10" data-delay="200">
