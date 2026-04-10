@@ -11,6 +11,7 @@ export default function Footer({ navigate }: Props) {
     { label: 'About', page: 'about' },
     { label: 'The SALT', page: 'salt' },
     { label: 'Careers', page: 'careers' },
+    { label: 'Instructor', page: 'instructor' },
     { label: 'Apply', page: 'apply' },
   ]
 
