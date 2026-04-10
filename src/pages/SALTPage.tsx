@@ -46,7 +46,7 @@ export default function SALTPage({ navigate }: Props) {
             <div className="w-8 h-0.5 bg-[#d81300]"></div>
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Student Organization</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black leading-none mb-6">
+          <h1 className="text-5xl md:text-7xl font-black leading-none mb-6" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
             The <span className="text-[#d81300]">SALT</span><br />Team
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
