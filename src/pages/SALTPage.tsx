@@ -31,7 +31,13 @@ export default function SALTPage({ navigate }: Props) {
 
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
       <section className="relative py-24 px-6 overflow-hidden bg-[#0f0f0f]">
+        {/* Red top bar */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
+        {/* Red left accent */}
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
         <div className="absolute inset-0 bg-[#d81300]/5"></div>
+        {/* Red glow bloom */}
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 65%)" }} />
         <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.06]">
           <HorseshoeLogo className="w-full h-full object-contain" />
         </div>
