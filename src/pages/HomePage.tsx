@@ -41,14 +41,16 @@ export default function HomePage({ navigate }: Props) {
     return () => obs.disconnect()
   }, [])
 
-  const pillars = [
-    { num: '01', title: '7 Habits & Leader in Me', desc: 'Every AL student begins here — the 7 Habits of Highly Effective People applied directly to the athletic environment.' },
-    { num: '02', title: 'Foundations of Athletic Leadership', desc: 'Leadership styles, team culture, communication, conflict resolution, and ethics in athletic settings.' },
-    { num: '03', title: 'Athletic Department Structure', desc: 'How programs are built, funded, governed, and organized — from SCHSL compliance to booster clubs.' },
-    { num: '04', title: 'Event & Game Operations', desc: 'Plan, staff, and execute live athletic events. Students work real game-day operations all semester.' },
-    { num: '05', title: 'Equipment & Facility Management', desc: 'Inventory systems, facility prep, safety protocols, and the behind-the-scenes work that keeps programs running.' },
-    { num: '06', title: 'Sports Media & Marketing', desc: 'Photography, videography, social media, branding, and promotions — telling the Palmetto story.' },
-    { num: '07', title: 'Capstone Project', desc: 'Students identify a real improvement opportunity in Palmetto Athletics, build a research-based proposal, and present to coaches and admin.' },
+  // 7 units + internship = 8 cards, 2 rows of 4
+  const units = [
+    { num: '01', title: '7 Habits & Leader in Me', desc: 'The leadership foundation. Every AL student starts here before anything else.', tag: 'Foundation', useLogo: true },
+    { num: '02', title: 'Foundations of Athletic Leadership', desc: 'Leadership styles, team culture, communication, and ethics in athletics.', tag: null, useLogo: false },
+    { num: '03', title: 'Athletic Department Structure', desc: 'How programs are built, funded, governed — from SCHSL compliance to booster clubs.', tag: null, useLogo: false },
+    { num: '04', title: 'Event & Game Operations', desc: 'Plan, staff, and execute live athletic events all semester.', tag: null, useLogo: false },
+    { num: '05', title: 'Equipment & Facility Management', desc: 'Inventory, facility prep, safety protocols, and behind-the-scenes ops.', tag: null, useLogo: false },
+    { num: '06', title: 'Sports Media & Marketing', desc: 'Photography, videography, social media, branding — telling the Palmetto story.', tag: null, useLogo: false },
+    { num: '07', title: 'Capstone Project', desc: 'Identify a real improvement opportunity, build a proposal, present to coaches and admin.', tag: 'Capstone', useLogo: false },
+    { num: '↻', title: 'Semester-Long Internship', desc: 'Runs alongside all units from Week 3 through finals. Every student placed with a real program.', tag: 'Ongoing', useLogo: false },
   ]
 
   const ticker = [
@@ -57,33 +59,52 @@ export default function HomePage({ navigate }: Props) {
     'Sports Marketing', 'Internship Experience', 'Strength & Conditioning', 'Career Exploration',
   ]
 
+  // Monochrome SVG icons for careers callout
+  const careerCards = [
+    {
+      title: 'Sports Media & Broadcasting',
+      desc: 'From game-day content to full broadcast careers.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-[#d81300]">
+          <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+        </svg>
+      ),
+    },
+    {
+      title: 'Athletic Administration',
+      desc: 'AD pipelines start with program-level experience.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-[#d81300]">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      ),
+    },
+    {
+      title: 'Sports Business & Events',
+      desc: 'Marketing, operations, and event management at every level.',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-[#d81300]">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      ),
+    },
+  ]
+
   return (
     <div className="pt-16">
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0f0f0f]">
-
-        {/* Bold red top bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
-
-        {/* Grid — more visible */}
         <div className="absolute inset-0" style={{
           backgroundImage: `linear-gradient(rgba(216,19,0,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(216,19,0,0.12) 1px, transparent 1px)`,
           backgroundSize: '80px 80px',
         }} />
-
-        {/* Strong red left accent panel */}
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
-
-        {/* Red glow bloom top-left */}
         <div className="absolute top-0 left-0 w-[500px] h-[500px] pointer-events-none"
           style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 70%)' }} />
-
-        {/* Right red diagonal sweep — stronger */}
         <div className="absolute right-0 top-0 h-full w-2/3 pointer-events-none"
           style={{ background: 'linear-gradient(120deg, transparent 55%, rgba(216,19,0,0.10) 100%)' }} />
-
-        {/* Watermark horseshoe */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 pointer-events-none select-none opacity-[0.05]">
           <HorseshoeLogo className="w-[700px] h-[700px]" />
         </div>
@@ -96,15 +117,14 @@ export default function HomePage({ navigate }: Props) {
                 Palmetto High School · Anderson District One
               </span>
             </div>
-
-            <h1 className="leading-[0.88] tracking-tight mb-8" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
+            <h1 className="leading-[0.88] tracking-tight mb-8"
+              style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
               <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-white">ATHLETIC</span>
               <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
                 <span className="text-[#d81300]">LEADER</span>
                 <span className="text-white">SHIP</span>
               </span>
             </h1>
-
             <p className="reveal delay-3 text-gray-400 text-lg md:text-xl max-w-xl mb-3 leading-relaxed font-light">
               An honors-weighted career course for students who want to lead, operate,
               and shape Palmetto athletics from the inside out.
@@ -112,7 +132,6 @@ export default function HomePage({ navigate }: Props) {
             <p className="reveal delay-4 text-gray-500 text-sm mb-10 tracking-wide font-bold uppercase">
               1.0 Honors Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall Semester
             </p>
-
             <div className="reveal delay-5 flex flex-col sm:flex-row gap-4">
               <button onClick={() => navigate('apply')}
                 className="px-8 py-4 bg-[#d81300] text-white font-black text-sm tracking-[0.15em] uppercase hover:bg-[#ff1a00] transition-all duration-200 hover:shadow-xl hover:shadow-[#d81300]/40 hover:-translate-y-0.5">
@@ -125,20 +144,18 @@ export default function HomePage({ navigate }: Props) {
             </div>
           </div>
         </div>
-
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-25">
           <span className="text-[10px] tracking-[0.25em] uppercase text-white">Scroll</span>
           <div className="w-px h-10 bg-gradient-to-b from-white to-transparent" />
         </div>
       </section>
 
-      {/* ─── MARQUEE TICKER ───────────────────────────────────────────────── */}
+      {/* ─── MARQUEE ──────────────────────────────────────────────────────── */}
       <div className="bg-[#d81300] py-3 overflow-hidden border-y border-[#ff1a00]/30">
         <div className="marquee-track">
           {[...ticker, ...ticker].map((item, i) => (
             <span key={i} className="inline-flex items-center gap-4 px-4 text-white/90 font-black text-xs tracking-[0.2em] uppercase">
-              {item}
-              <span className="text-white/50">◆</span>
+              {item}<span className="text-white/50">◆</span>
             </span>
           ))}
         </div>
@@ -146,7 +163,6 @@ export default function HomePage({ navigate }: Props) {
 
       {/* ─── WHAT IS AL ───────────────────────────────────────────────────── */}
       <section className="bg-[#111] py-24 px-6 relative overflow-hidden" ref={s1}>
-        {/* Red left border accent */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#d81300] via-[#d81300]/40 to-transparent" />
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
@@ -156,8 +172,7 @@ export default function HomePage({ navigate }: Props) {
                 <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">About the Course</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6">
-                More Than A Class.
-                <br /><span className="text-[#d81300]">A Career Path.</span>
+                More Than A Class.<br /><span className="text-[#d81300]">A Career Path.</span>
               </h2>
             </div>
             <div className="io-reveal" data-delay="80">
@@ -176,7 +191,6 @@ export default function HomePage({ navigate }: Props) {
               </p>
             </div>
           </div>
-
           <div ref={counterRef} className="grid grid-cols-2 gap-4">
             {[
               { count: '18', label: 'Weeks of Training', sub: 'Full semester' },
@@ -187,9 +201,7 @@ export default function HomePage({ navigate }: Props) {
               <div key={label}
                 className="io-reveal bg-[#0f0f0f] border-l-4 border-[#d81300] border-t border-r border-b border-t-white/5 border-r-white/5 border-b-white/5 p-6 card-lift"
                 data-delay={String(i * 80)}>
-                <div className="text-4xl font-black text-[#d81300] mb-1 tabular-nums" data-count={count}>
-                  {count}
-                </div>
+                <div className="text-4xl font-black text-[#d81300] mb-1 tabular-nums" data-count={count}>{count}</div>
                 <div className="text-white font-bold text-sm uppercase tracking-wide">{label}</div>
                 <div className="text-gray-500 text-xs mt-1">{sub}</div>
               </div>
@@ -198,12 +210,11 @@ export default function HomePage({ navigate }: Props) {
         </div>
       </section>
 
-      {/* ─── COURSE PILLARS ───────────────────────────────────────────────── */}
+      {/* ─── UNITS GRID 2×4 ───────────────────────────────────────────────── */}
       <section className="bg-[#0f0f0f] py-24 px-6 relative" ref={s2}>
-        {/* Red top border */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal text-center mb-16" data-delay="0">
+          <div className="io-reveal text-center mb-12" data-delay="0">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-8 h-0.5 bg-[#d81300]" />
               <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Outline</span>
@@ -211,48 +222,46 @@ export default function HomePage({ navigate }: Props) {
             </div>
             <h2 className="text-4xl md:text-5xl font-black">What You'll Cover</h2>
             <p className="text-gray-500 mt-3 max-w-lg mx-auto text-sm">
-              Seven units across a full semester — starting with the leadership foundation,
-              moving through operations, media, and ending with the Capstone. Internship runs all semester.
+              Seven units plus a semester-long internship — starting with the 7 Habits, ending with the Capstone.
             </p>
           </div>
-          {/* Unit list — vertical stack */}
-          <div className="space-y-px bg-[#d81300]/20">
-            {pillars.map(({ num, title, desc }, i) => (
+
+          {/* 2 rows of 4 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20">
+            {units.map(({ num, title, desc, tag, useLogo }, i) => (
               <div key={num}
-                className="io-reveal bg-[#111] px-8 py-5 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default flex items-start gap-6"
+                className={`io-reveal p-6 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default flex flex-col ${
+                  num === '↻' ? 'bg-[#d81300]/8' : 'bg-[#111]'
+                }`}
                 data-delay={String(i * 50)}>
-                <div className="flex-shrink-0 w-10 h-10 bg-[#d81300] flex items-center justify-center font-black text-white text-sm">
-                  {num}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-black text-white text-sm uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200">
-                      {title}
-                    </h3>
-                    {num === '01' && <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Foundation</span>}
-                    {num === '07' && <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Capstone</span>}
+                {/* Header row */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`w-9 h-9 flex items-center justify-center font-black text-sm flex-shrink-0 ${
+                    num === '↻' ? 'border-2 border-[#d81300]/60 text-[#d81300]' : 'bg-[#d81300] text-white'
+                  }`}>
+                    {num}
                   </div>
-                  <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
+                  {tag && (
+                    <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">
+                      {tag}
+                    </span>
+                  )}
                 </div>
-                <div className="flex-shrink-0 text-[#d81300]/20 group-hover:text-[#d81300]/60 transition-colors font-black text-lg">→</div>
+                {/* Leader in Me logo for unit 01 */}
+                {useLogo && (
+                  <div className="mb-3">
+                    <LeaderInMeLogo className="w-12 h-12 object-contain" />
+                  </div>
+                )}
+                <h3 className="font-black text-white text-xs mb-2 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200 leading-tight">
+                  {title}
+                </h3>
+                <p className="text-gray-500 text-xs leading-relaxed flex-1">{desc}</p>
+                <div className="mt-3 h-px w-0 bg-[#d81300] group-hover:w-full transition-all duration-500" />
               </div>
             ))}
-            {/* Internship — runs all semester */}
-            <div className="io-reveal bg-[#d81300]/8 border-l-4 border-[#d81300] px-8 py-5 flex items-start gap-6" data-delay={String(7 * 50)}>
-              <div className="flex-shrink-0 w-10 h-10 border-2 border-[#d81300]/60 flex items-center justify-center font-black text-[#d81300] text-base">
-                ↻
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-3 mb-1">
-                  <h3 className="font-black text-white text-sm uppercase tracking-wide">Semester-Long Internship</h3>
-                  <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">Ongoing</span>
-                </div>
-                <p className="text-gray-400 text-xs leading-relaxed">
-                  Runs alongside coursework from Week 3 through finals. Every student is placed with a coach, team, or athletic program — real work, logged weekly.
-                </p>
-              </div>
-            </div>
           </div>
+
           <div className="io-reveal text-center mt-10" data-delay="200">
             <button onClick={() => navigate('about')}
               className="px-8 py-3 border border-white/15 text-white font-bold text-sm tracking-[0.12em] uppercase hover:border-[#d81300] hover:text-[#d81300] hover:bg-[#d81300]/5 transition-all duration-200">
@@ -326,15 +335,13 @@ export default function HomePage({ navigate }: Props) {
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Where This Takes You</span>
           </div>
           <div className="grid md:grid-cols-3 gap-px bg-[#d81300]/15">
-            {[
-              { title: 'Sports Media & Broadcasting', desc: 'From game-day content to full broadcast careers.' },
-              { title: 'Athletic Administration', desc: 'AD pipelines start with program-level experience.' },
-              { title: 'Sports Business & Events', desc: 'Marketing, operations, and event management at every level.' },
-            ].map(({ title, desc }, i) => (
+            {careerCards.map(({ title, desc, icon }, i) => (
               <div key={title}
                 className="io-reveal bg-[#0f0f0f] p-8 hover:bg-[#151515] transition-colors duration-300 group card-lift"
                 data-delay={String(i * 80)}>
-                <div className="w-1 h-8 bg-[#d81300] mb-4 group-hover:h-12 transition-all duration-300" />
+                <div className="mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">
+                  {icon}
+                </div>
                 <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2 group-hover:text-[#d81300] transition-colors">{title}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
               </div>
