@@ -43,12 +43,13 @@ export default function HomePage({ navigate }: Props) {
   }, [])
 
   const pillars = [
-    { num: '01', icon: '🧠', title: '7 Habits & Leader in Me', desc: 'Every AL student begins with the leadership foundation — the 7 Habits applied directly to athletics.' },
-    { num: '02', icon: '🏛️', title: 'Athletic Department Structure', desc: 'How programs are built, funded, governed, and organized at every level.' },
-    { num: '03', icon: '🏟️', title: 'Event & Game Operations', desc: 'Students assist with live athletic events — this is not a simulation.' },
-    { num: '04', icon: '🎽', title: 'Equipment & Facilities', desc: 'Inventory systems, facility prep, safety protocols, and behind-the-scenes ops.' },
-    { num: '05', icon: '📸', title: 'Sports Media & Marketing', desc: 'Photography, videography, social media, branding — telling the Palmetto story.' },
-    { num: '06', icon: '🤝', title: 'Internship Experience', desc: 'Real hours. Real programs. Every student is placed with a coach or athletic organization.' },
+    { num: '01', title: '7 Habits & Leader in Me', desc: 'Every AL student begins here — the 7 Habits of Highly Effective People applied directly to the athletic environment.' },
+    { num: '02', title: 'Foundations of Athletic Leadership', desc: 'Leadership styles, team culture, communication, conflict resolution, and ethics in athletic settings.' },
+    { num: '03', title: 'Athletic Department Structure', desc: 'How programs are built, funded, governed, and organized — from SCHSL compliance to booster clubs.' },
+    { num: '04', title: 'Event & Game Operations', desc: 'Plan, staff, and execute live athletic events. Students work real game-day operations all semester.' },
+    { num: '05', title: 'Equipment & Facility Management', desc: 'Inventory systems, facility prep, safety protocols, and the behind-the-scenes work that keeps programs running.' },
+    { num: '06', title: 'Sports Media & Marketing', desc: 'Photography, videography, social media, branding, and promotions — telling the Palmetto story.' },
+    { num: '07', title: 'Capstone Project', desc: 'Students identify a real improvement opportunity in Palmetto Athletics, build a research-based proposal, and present to coaches and admin.' },
   ]
 
   const ticker = [
@@ -206,12 +207,11 @@ export default function HomePage({ navigate }: Props) {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
-            {pillars.map(({ num, icon, title, desc }, i) => (
+            {pillars.map(({ num, title, desc }, i) => (
               <div key={num}
                 className="io-reveal bg-[#111] p-8 hover:bg-[#161616] transition-all duration-300 group cursor-default card-lift"
                 data-delay={String(i * 60)}>
                 <div className="text-[#d81300] text-xs font-black tracking-[0.2em] mb-3">UNIT {num}</div>
-                <div className="text-3xl mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">{icon}</div>
                 <h3 className="font-black text-white text-base mb-3 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200">
                   {title}
                 </h3>
@@ -288,9 +288,9 @@ export default function HomePage({ navigate }: Props) {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-1">
             {[
-              { emoji: '🎙️', title: 'Sports Media & Broadcasting', desc: 'From game-day content to full broadcast careers.' },
-              { emoji: '🏛️', title: 'Athletic Administration', desc: 'AD pipelines start with program-level experience.' },
-              { emoji: '💼', title: 'Sports Business & Events', desc: 'Marketing, operations, and event management at every level.' },
+              { emoji: '—', title: 'Sports Media & Broadcasting', desc: 'From game-day content to full broadcast careers.' },
+              { emoji: '—', title: 'Athletic Administration', desc: 'AD pipelines start with program-level experience.' },
+              { emoji: '—', title: 'Sports Business & Events', desc: 'Marketing, operations, and event management at every level.' },
             ].map(({ emoji, title, desc }, i) => (
               <div key={title}
                 className="io-reveal bg-[#0f0f0f] border border-white/5 p-8 hover:border-[#d81300]/30 transition-colors duration-300 group card-lift"
