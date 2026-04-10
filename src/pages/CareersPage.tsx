@@ -160,10 +160,7 @@ export default function CareersPage({ navigate }: Props) {
         {/* Red left accent */}
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
         {/* Red glow bloom */}
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(circle at 0% 0%, rgba(216,19,0,0.15) 0%, transparent 65%)" }} />
-        <div className="absolute inset-0 opacity-8" style={{
-          backgroundImage: `repeating-linear-gradient(-45deg, #d81300, #d81300 1px, transparent 1px, transparent 32px)`,
-        }} />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 65%)" }} />
         <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none opacity-[0.04]">
           <HorseshoeLogo className="w-80 h-80 object-contain" />
         </div>
