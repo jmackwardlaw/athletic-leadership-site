@@ -36,7 +36,7 @@ const initialForm: FormData = {
 // (Execute as: Me | Who has access: Anyone)
 // then replace the placeholder below.
 // ─────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzs94QmCY0tKd7u8U92SDEMxuC7rSotEOt1D9cA93V0zhFUhUY_hN6vme5dI0ai-MOL/exec'
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error'
 
