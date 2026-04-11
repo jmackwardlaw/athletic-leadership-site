@@ -83,10 +83,10 @@ export default function AboutPage() {
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Overview</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black leading-none mb-6" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-            Athletic Leadership
-            <br />
-            <span className="text-[#d81300]"></span>
-          </h1>
+  Athletic<br />
+  <span className="text-[#d81300]">Leader</span>ship
+  <br /><span className="text-[#d81300]">&amp; Operations</span>
+</h1>
           <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
             A career-focused, honors-weighted elective built around real athletic programs — 
             real internships, real leadership, and real skills that translate to careers in sports.
