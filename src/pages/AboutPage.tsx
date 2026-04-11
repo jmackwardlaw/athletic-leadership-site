@@ -167,7 +167,7 @@ export default function AboutPage() {
           <div className="bg-[#0f0f0f] border border-[#d81300]/30 p-8 md:p-10">
             <div className="grid md:grid-cols-3 gap-10 items-center">
               <div className="flex justify-center">
-                <LeaderInMeLogo className="w-48 h-48 object-contain" />
+                <LeaderInMeLogo className="w-72 h-72 object-contain" />
               </div>
               <div className="md:col-span-2">
                 <div className="flex items-center gap-3 mb-4">
