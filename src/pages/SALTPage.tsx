@@ -96,9 +96,8 @@ export default function SALTPage() {
   We season the program.
 </p>
           <p className="reveal delay-1 text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Students enrolled in Athletic Leadership form the <strong className="text-white">Student Athletic Leadership Team</strong> —
-            the operational backbone of Palmetto Athletics.
-          </p>
+  Students in Athletic Leadership have the opportunity to earn a role on the <strong className="text-white">Student Athletic Leadership Team</strong>, where they take on real leadership responsibilities that keep Palmetto Athletics running at every level.
+</p>
         </div>
       </section>
 
