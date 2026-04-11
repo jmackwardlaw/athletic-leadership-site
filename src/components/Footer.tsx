@@ -1,19 +1,17 @@
-import { Page } from '../App'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { HorseshoeLogo } from './Logos'
 
-interface Props {
-  navigate: (page: Page) => void
-}
+const links: { label: string; to: string }[] = [
+  { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
+  { label: 'The SALT', to: '/salt' },
+  { label: 'Careers', to: '/careers' },
+  { label: 'Instructor', to: '/instructor' },
+  { label: 'Apply', to: '/apply' },
+]
 
-export default function Footer({ navigate }: Props) {
-  const links: { label: string; page: Page }[] = [
-    { label: 'Home', page: 'home' },
-    { label: 'About', page: 'about' },
-    { label: 'The SALT', page: 'salt' },
-    { label: 'Careers', page: 'careers' },
-    { label: 'Instructor', page: 'instructor' },
-    { label: 'Apply', page: 'apply' },
-  ]
+export default function Footer() {
+  const navigate = useNavigate()
 
   return (
     <footer className="bg-[#0a0a0a] border-t border-white/5">
@@ -21,13 +19,13 @@ export default function Footer({ navigate }: Props) {
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
+            <NavLink to="/" className="flex items-center gap-3 mb-4">
               <HorseshoeLogo className="w-10 h-10 object-contain" />
               <div>
                 <div className="text-white font-black text-sm tracking-[0.1em] uppercase">Athletic Leadership</div>
                 <div className="text-[#d81300] text-[10px] font-bold tracking-[0.2em] uppercase">Palmetto High School</div>
               </div>
-            </div>
+            </NavLink>
             <p className="text-gray-600 text-xs leading-relaxed max-w-xs">
               A career-focused honors elective building the next generation of athletic leaders through real experience.
             </p>
@@ -37,14 +35,15 @@ export default function Footer({ navigate }: Props) {
           <div>
             <div className="text-[#d81300] text-xs font-black tracking-[0.2em] uppercase mb-4">Navigation</div>
             <div className="space-y-2">
-              {links.map(({ label, page }) => (
-                <button
-                  key={page}
-                  onClick={() => navigate(page)}
-                  className="block text-gray-500 text-sm hover:text-white transition-colors underline-grow"
+              {links.map(({ label, to }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  className="block text-gray-500 text-sm hover:text-white transition-colors"
                 >
                   {label}
-                </button>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -75,7 +74,7 @@ export default function Footer({ navigate }: Props) {
             Athletic Leadership &amp; Operations · Palmetto High School · Anderson District One
           </div>
           <button
-            onClick={() => navigate('apply')}
+            onClick={() => navigate('/apply')}
             className="px-5 py-2 bg-[#d81300] text-white font-black text-xs tracking-[0.1em] uppercase hover:bg-[#ff1a00] transition-all duration-200 hover:shadow-lg hover:shadow-[#d81300]/30"
           >
             Apply Now →
