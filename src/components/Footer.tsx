@@ -55,7 +55,7 @@ export default function Footer() {
               {[
                 ['School', 'Palmetto High School'],
                 ['District', 'Anderson School District One'],
-                ['Instructor', 'Mr. Jack Wardlaw'],
+                ['Instructor', 'Jack Wardlaw'],
                 ['Credit', '1.0 Honors Elective (HW)'],
                 ['Year', '2026–2027'],
               ].map(([label, val]) => (
