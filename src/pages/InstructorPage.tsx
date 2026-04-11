@@ -14,7 +14,7 @@ export default function InstructorPage() {
     { label: 'Subject', value: 'Health & Physical Education' },
     { label: 'Role', value: 'Football Coach' },
     { label: 'Graduate Program', value: 'Doctoral Student — Educational Leadership' },
-    { label: 'Course', value: 'Athletic Leadership & Operations' },
+    { label: 'Course', value: 'Athletic Leadership' },
   ]
 
   const expertise = [
