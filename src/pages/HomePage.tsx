@@ -223,7 +223,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20 grid-rows-2 auto-rows-fr">
             {units.map(({ num, title, desc, tag, useLogo }, i) => (
               <div key={num}
                 className={`io-reveal p-6 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default flex flex-col ${
