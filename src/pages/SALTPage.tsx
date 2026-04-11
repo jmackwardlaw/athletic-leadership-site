@@ -218,7 +218,7 @@ export default function SALTPage() {
                   the Leader in Me framework. These habits aren't classroom theory — they're
                   the operating principles SALT members apply every day in their roles.
                 </p>
-                <LeaderInMeLogo className="w-36 h-36 object-contain opacity-90" />
+                <LeaderInMeLogo className="w-56 h-56 object-contain opacity-90" />
               </div>
             </div>
             <div className="space-y-2">
