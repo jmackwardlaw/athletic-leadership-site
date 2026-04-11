@@ -103,7 +103,7 @@ export default function ApplicationPage() {
       // Apps Script requires no-cors when called from a browser.
       // We use a fetch with no-cors — the response will be opaque but the data
       // still lands in the sheet. We optimistically treat it as success.
-      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+      if (APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzs94QmCY0tKd7u8U92SDEMxuC7rSotEOt1D9cA93V0zhFUhUY_hN6vme5dI0ai-MOL/exec') {
         // Demo mode: simulate success after 1.5s
         await new Promise(r => setTimeout(r, 1500))
         setStatus('success')
@@ -122,7 +122,7 @@ export default function ApplicationPage() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
       setStatus('error')
-      setErrorMsg('Submission failed. Please check your connection and try again, or email Mr. Wardlaw directly.')
+      setErrorMsg('Submission failed. Please check your connection and try again, or email Coach Wardlaw directly.')
     }
   }
 
@@ -143,7 +143,7 @@ export default function ApplicationPage() {
             Thanks, <span className="text-white font-bold">{form.firstName}</span>. Your application for the SALT Program has been logged.
           </p>
           <p className="text-gray-500 text-sm leading-relaxed mb-10 max-w-sm mx-auto">
-            Mr. Wardlaw reviews all applications personally. Selected students will be contacted before the 2026–2027 school year. Not all applicants will be selected — membership is limited and based on character, commitment, and fit.
+            Coach Wardlaw reviews all applications personally. Selected students will be contacted before the 2026–2027 school year. Not all applicants will be selected — membership is limited and based on character, commitment, and fit.
           </p>
           <div className="bg-[#111] border border-white/10 p-5 mb-10 text-left">
             <div className="text-[#d81300] text-xs font-black uppercase tracking-[0.15em] mb-3">Application Summary</div>
@@ -199,7 +199,7 @@ export default function ApplicationPage() {
           </h1>
           <p className="text-gray-400 max-w-xl leading-relaxed">
             Membership in the Student Athletic Leadership Team is selective.
-            Complete the application — Mr. Wardlaw will review all submissions and notify selected students.
+            Complete the application — Coach Wardlaw will review all submissions and notify selected students.
           </p>
         </div>
       </section>
@@ -208,7 +208,7 @@ export default function ApplicationPage() {
       <div className="bg-[#d81300]/10 border-y border-[#d81300]/20 py-4 px-6">
         <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center md:justify-start">
           {[
-            'Reviewed by Mr. Wardlaw — not all applicants accepted',
+            'Reviewed by Coach Wardlaw — not all applicants accepted',
             '15–20 minutes to complete',
             '2026–2027 Academic Year',
           ].map((text) => (
@@ -221,7 +221,7 @@ export default function ApplicationPage() {
       </div>
 
       {/* Demo mode banner */}
-      {APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE' && (
+      {APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzs94QmCY0tKd7u8U92SDEMxuC7rSotEOt1D9cA93V0zhFUhUY_hN6vme5dI0ai-MOL/exec' && (
         <div className="bg-yellow-500/10 border-b border-yellow-500/30 py-3 px-6">
           <div className="max-w-3xl mx-auto text-center text-yellow-400 text-xs font-bold tracking-wide">
              DEMO MODE — Form submissions simulated. See setup instructions to connect Google Sheets.
@@ -390,7 +390,7 @@ export default function ApplicationPage() {
               <div className="bg-[#111] border border-white/5 p-5 mb-6">
                 <p className="text-gray-500 text-xs leading-relaxed">
                   <strong className="text-gray-300">Important:</strong> Submitting this application does not guarantee selection.
-                  All applications are reviewed by Mr. Wardlaw. Selected students will be contacted prior to the 2026–2027 school year.
+                  All applications are reviewed by Coach Wardlaw. Selected students will be contacted prior to the 2026–2027 school year.
                   SALT membership is limited and based on character, commitment, and fit.
                 </p>
               </div>
