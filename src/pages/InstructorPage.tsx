@@ -2,6 +2,7 @@ import { HorseshoeLogo } from '../components/Logos'
 import { useNavigate } from 'react-router-dom'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
+import coachPhoto from '../assets/coach-wardlaw.jpg'
 
 export default function InstructorPage() {
   const navigate = useNavigate()
@@ -13,8 +14,13 @@ export default function InstructorPage() {
     { label: 'District', value: 'Anderson School District One' },
     { label: 'Subject', value: 'Health & Physical Education' },
     { label: 'Role', value: 'Football Coach' },
-    { label: 'Graduate Program', value: 'Doctoral Student — Educational Leadership' },
     { label: 'Course', value: 'Athletic Leadership' },
+  ]
+
+  const education = [
+    { degree: 'Bachelor of Science (BS)', school: 'Clemson University', status: null },
+    { degree: 'Master of Arts in Teaching (MAT)', school: 'Liberty University', status: null },
+    { degree: 'Doctor of Education: Educational Leadership (Ed.D)', school: 'Liberty University', status: 'In Progress' },
   ]
 
   const expertise = [
@@ -56,12 +62,18 @@ export default function InstructorPage() {
       <section className="bg-[#0f0f0f] py-20 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 items-start">
 
-          {/* Photo placeholder */}
+          {/* Photo */}
           <div className="io-reveal" data-delay="0">
-            <div className="bg-[#111] border-2 border-[#d81300]/30 aspect-square flex flex-col items-center justify-center text-center p-8">
-              <HorseshoeLogo className="w-24 h-24 object-contain opacity-20 mb-4" />
-              <div className="text-gray-600 text-xs uppercase tracking-[0.15em] font-bold">Photo Coming Soon</div>
-              <div className="text-gray-700 text-[10px] mt-2">Coach Wardlaw · Palmetto HS</div>
+            <div className="border-2 border-[#d81300]/30 aspect-square overflow-hidden">
+              <img
+                src={coachPhoto}
+                alt="Coach Wardlaw"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div className="mt-3 text-center">
+              <div className="text-white font-black text-sm">Coach Jack Wardlaw</div>
+              <div className="text-[#d81300] text-xs font-bold tracking-wide uppercase mt-0.5">Palmetto High School</div>
             </div>
           </div>
 
@@ -76,25 +88,27 @@ export default function InstructorPage() {
             </div>
             <div className="io-reveal space-y-4 text-gray-400 leading-relaxed text-sm" data-delay="120">
               <p>
-                Coach Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School in Anderson School District One. He brings a unique combination of classroom instruction, on-field coaching experience, and ongoing doctoral study in Educational Leadership to the Athletic Leadership course.
+                Coach Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School and a 2014 PHS graduate. Teaching in the community he grew up in is something he is passionate about, and his focus as an educator is helping students develop the confidence, accountability, and discipline to make a positive impact on those around them.
               </p>
               <p>
-                Athletic Leadership & Operations is built from real experience — not just theory. The course reflects what Coach Wardlaw has learned running athletic programs, developing student-athletes, and studying what makes great leaders in educational and athletic contexts.
+                While completing his degree at Clemson, he was on staff with the football program throughout his time there, including the 2016 and 2018 National Championship seasons under Dabo Swinney. He later worked in the NFL with the Jacksonville Jaguars under Super Bowl-winning head coach Doug Pederson. Those experiences gave him a firsthand look at how elite programs operate at the highest level, including the culture, communication, leadership structure, and daily accountability that separate good programs from great ones.
               </p>
               <p>
-                Outside of the classroom and field, Coach Wardlaw works extensively with technology — building Google Sheets dashboards, Apps Script automation tools, and athlete tracking systems for Palmetto's athletic programs. This technical background directly informs the data and analytics components of the course.
+                He also minored in Athletic Leadership at Clemson, where he discovered how many careers exist in sports beyond playing. Those courses, combined with his experiences at Clemson and in the NFL, are what inspired the creation of this course.
               </p>
-              <p className="text-gray-500 italic">
-                Photo and additional bio details coming soon.
+              <p>
+                Athletic Leadership was built to give Palmetto students real experience inside athletic programs, real career awareness, and the leadership habits that carry into every area of life.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CREDENTIALS */}
+      {/* CREDENTIALS + EDUCATION */}
       <section className="bg-[#111] py-16 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+
+          {/* Credentials */}
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-0.5 bg-[#d81300]" />
@@ -103,13 +117,35 @@ export default function InstructorPage() {
             <div className="space-y-3">
               {credentials.map(({ label, value }) => (
                 <div key={label} className="flex gap-4 bg-[#0f0f0f] border-l-2 border-[#d81300]/40 px-4 py-3">
-                  <span className="text-gray-600 text-xs w-28 flex-shrink-0 uppercase tracking-wide font-bold pt-0.5">{label}</span>
+                  <span className="text-gray-600 text-xs w-20 flex-shrink-0 uppercase tracking-wide font-bold pt-0.5">{label}</span>
                   <span className="text-white text-sm font-bold">{value}</span>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Education */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-0.5 bg-[#d81300]" />
+              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Education</span>
+            </div>
+            <div className="space-y-3">
+              {education.map(({ degree, school, status }) => (
+                <div key={degree} className="bg-[#0f0f0f] border-l-2 border-[#d81300]/40 px-4 py-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="text-white text-sm font-bold leading-snug">{degree}</div>
+                    {status && (
+                      <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider whitespace-nowrap flex-shrink-0 mt-0.5">{status}</span>
+                    )}
+                  </div>
+                  <div className="text-gray-500 text-xs mt-1">{school}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Expertise */}
           <div ref={s2}>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-0.5 bg-[#d81300]" />
@@ -126,6 +162,7 @@ export default function InstructorPage() {
               ))}
             </div>
           </div>
+
         </div>
       </section>
 
