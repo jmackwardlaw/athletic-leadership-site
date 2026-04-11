@@ -231,11 +231,11 @@ export default function HomePage() {
                 }`}
                 data-delay={String(i * 50)}>
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`w-9 h-9 flex items-center justify-center font-black text-sm flex-shrink-0 ${
-                    num === '↻' ? 'border-2 border-[#d81300]/60 text-[#d81300]' : 'bg-[#d81300] text-white'
-                  }`}>
-                    {num}
-                  </div>
+                  {num !== '↻' && (
+  <div className="w-9 h-9 flex items-center justify-center font-black text-sm flex-shrink-0 bg-[#d81300] text-white">
+    {num}
+  </div>
+)}
                   {tag && (
                     <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">
                       {tag}
