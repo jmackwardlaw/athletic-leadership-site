@@ -364,7 +364,7 @@ export default function HomePage() {
             Ready to Be Part of Palmetto Athletics?
           </h2>
           <p className="reveal delay-1 text-white/75 text-lg mb-10">
-            Athletic Leadership is selective. Submit your application — Mr. Wardlaw reviews every one personally.
+            Athletic Leadership is selective. Submit your application — Coach Wardlaw reviews every one personally.
           </p>
           <div className="reveal delay-2 flex flex-col sm:flex-row gap-4 justify-center">
             <button onClick={() => navigate('/apply')}
