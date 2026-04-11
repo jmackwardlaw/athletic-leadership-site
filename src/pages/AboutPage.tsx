@@ -85,7 +85,7 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-7xl font-black leading-none mb-6" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
             Athletic Leadership
             <br />
-            <span className="text-[#d81300]">&amp; Operations</span>
+            <span className="text-[#d81300]"></span>
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
             A career-focused, honors-weighted elective built around real athletic programs — 
