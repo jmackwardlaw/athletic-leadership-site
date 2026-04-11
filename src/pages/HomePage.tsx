@@ -116,10 +116,10 @@ export default function HomePage() {
             </div>
             <h1 className="leading-[0.88] tracking-tight mb-8"
               style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-              <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-white">ATHLETIC</span>
+              <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-white">athletic</span>
               <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
                 <span className="text-[#d81300]">LEADER</span>
-                <span className="text-white">SHIP</span>
+                <span className="text-white">ship</span>
               </span>
             </h1>
             <p className="reveal delay-3 text-gray-400 text-lg md:text-xl max-w-xl mb-3 leading-relaxed font-light">
