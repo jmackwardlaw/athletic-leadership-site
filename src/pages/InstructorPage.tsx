@@ -61,7 +61,7 @@ export default function InstructorPage() {
             <div className="bg-[#111] border-2 border-[#d81300]/30 aspect-square flex flex-col items-center justify-center text-center p-8">
               <HorseshoeLogo className="w-24 h-24 object-contain opacity-20 mb-4" />
               <div className="text-gray-600 text-xs uppercase tracking-[0.15em] font-bold">Photo Coming Soon</div>
-              <div className="text-gray-700 text-[10px] mt-2">Mr. Wardlaw · Palmetto HS</div>
+              <div className="text-gray-700 text-[10px] mt-2">Coach Wardlaw · Palmetto HS</div>
             </div>
           </div>
 
@@ -76,13 +76,13 @@ export default function InstructorPage() {
             </div>
             <div className="io-reveal space-y-4 text-gray-400 leading-relaxed text-sm" data-delay="120">
               <p>
-                Mr. Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School in Anderson School District One. He brings a unique combination of classroom instruction, on-field coaching experience, and ongoing doctoral study in Educational Leadership to the Athletic Leadership course.
+                Coach Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School in Anderson School District One. He brings a unique combination of classroom instruction, on-field coaching experience, and ongoing doctoral study in Educational Leadership to the Athletic Leadership course.
               </p>
               <p>
-                Athletic Leadership & Operations is built from real experience — not just theory. The course reflects what Mr. Wardlaw has learned running athletic programs, developing student-athletes, and studying what makes great leaders in educational and athletic contexts.
+                Athletic Leadership & Operations is built from real experience — not just theory. The course reflects what Coach Wardlaw has learned running athletic programs, developing student-athletes, and studying what makes great leaders in educational and athletic contexts.
               </p>
               <p>
-                Outside of the classroom and field, Mr. Wardlaw works extensively with technology — building Google Sheets dashboards, Apps Script automation tools, and athlete tracking systems for Palmetto's athletic programs. This technical background directly informs the data and analytics components of the course.
+                Outside of the classroom and field, Coach Wardlaw works extensively with technology — building Google Sheets dashboards, Apps Script automation tools, and athlete tracking systems for Palmetto's athletic programs. This technical background directly informs the data and analytics components of the course.
               </p>
               <p className="text-gray-500 italic">
                 Photo and additional bio details coming soon.
@@ -137,7 +137,7 @@ export default function InstructorPage() {
               <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">2026–2027</div>
               <h3 className="text-2xl font-black mb-3">Interested in Athletic Leadership?</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Applications for the 2026–2027 school year are open. Mr. Wardlaw reviews every application personally — selection is based on character, work ethic, and commitment to Palmetto Athletics.
+                Applications for the 2026–2027 school year are open. Coach Wardlaw reviews every application personally — selection is based on character, work ethic, and commitment to Palmetto Athletics.
               </p>
             </div>
             <div className="flex flex-col gap-3 flex-shrink-0">
