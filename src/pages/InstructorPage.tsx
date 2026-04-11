@@ -44,7 +44,7 @@ export default function InstructorPage() {
           </div>
           <h1 className="reveal delay-1 text-5xl md:text-7xl font-black leading-none mb-4"
             style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-            Mr. Jack<br /><span className="text-[#d81300]">Wardlaw</span>
+            Coach<br /><span className="text-[#d81300]">Wardlaw</span>
           </h1>
           <p className="reveal delay-2 text-gray-400 text-lg max-w-xl leading-relaxed">
             Health/PE Teacher · Football Coach · Palmetto High School
