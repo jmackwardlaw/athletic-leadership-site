@@ -8,7 +8,6 @@ const links: { label: string; to: string }[] = [
   { label: 'The SALT', to: '/salt' },
   { label: 'Careers', to: '/careers' },
   { label: 'Instructor', to: '/instructor' },
-  { label: 'Apply', to: '/apply' },
 ]
 
 export default function Nav() {
