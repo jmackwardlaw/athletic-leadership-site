@@ -74,7 +74,7 @@ export default function SALTPage() {
   return (
     <div className="pt-16">
       {/* HEADER */}
-      <section className="relative py-24 px-6 overflow-hidden bg-[#0f0f0f]">
+      <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
         <div className="absolute inset-0 bg-[#d81300]/5" />
@@ -102,7 +102,7 @@ export default function SALTPage() {
       </section>
 
       {/* MISSION */}
-      <section className="bg-[#111] py-20 px-6" ref={s1}>
+      <section className="bg-white py-20 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3">
             <div className="io-slide-right" data-delay="0">
@@ -110,15 +110,15 @@ export default function SALTPage() {
                 <div className="w-8 h-0.5 bg-[#d81300]" />
                 <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Mission</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-black mb-6">Built to Serve.<br />Trained to Lead.</h2>
+              <h2 className="text-3xl md:text-4xl font-black mb-6 text-gray-900">Built to Serve.<br />Trained to Lead.</h2>
             </div>
             <div className="io-reveal" data-delay="80">
-              <p className="text-gray-400 leading-relaxed mb-5">
+              <p className="text-gray-600 leading-relaxed mb-5">
                 SALT members aren't observers — they're contributors. They show up before
                 games start, stay after they end, and spend the weeks between building the
                 systems that make programs successful.
               </p>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed">
                 Membership through Athletic Leadership is selective. Every SALT member is
                 chosen for character, work ethic, and commitment to the Palmetto athletic culture.
               </p>
@@ -133,10 +133,10 @@ export default function SALTPage() {
               'Promote positive sportsmanship and culture',
             ].map((item, i) => (
               <div key={item}
-                className="io-reveal flex gap-3 items-start bg-[#0f0f0f] border-l-2 border-[#d81300]/50 pl-4 py-3 pr-3"
+                className="io-reveal flex gap-3 items-start bg-gray-50 border-l-2 border-[#d81300]/50 pl-4 py-3 pr-3 border border-gray-200"
                 data-delay={String(i * 60)}>
                 <span className="text-[#d81300] font-black text-base leading-tight flex-shrink-0">✓</span>
-                <span className="text-gray-300 text-sm leading-relaxed">{item}</span>
+                <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
               </div>
             ))}
           </div>
@@ -144,7 +144,7 @@ export default function SALTPage() {
       </section>
 
       {/* ROLES */}
-      <section className="bg-[#0f0f0f] py-20 px-6" ref={s2}>
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-20 px-6" ref={s2}>
         <div className="max-w-7xl mx-auto">
           <div className="io-reveal flex items-center gap-3 mb-3" data-delay="0">
             <div className="w-8 h-0.5 bg-[#d81300]" />
@@ -154,7 +154,7 @@ export default function SALTPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#d81300]/15">
             {roles.map(({ key, title, desc, responsibilities }, i) => (
               <div key={key}
-                className="io-reveal bg-[#111] p-6 hover:bg-[#181818] transition-all duration-300 group"
+                className="io-reveal bg-gradient-to-br from-[#242424] to-[#383838] p-6 hover:bg-[#181818] transition-all duration-300 group"
                 data-delay={String(i * 60)}>
                 <div className="text-[#d81300] mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">
                   {Icons[key as keyof typeof Icons]}
@@ -177,7 +177,7 @@ export default function SALTPage() {
       </section>
 
       {/* INTERNSHIP PLACEMENTS */}
-      <section className="bg-[#111] py-20 px-6" ref={s3}>
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6" ref={s3}>
         <div className="max-w-7xl mx-auto">
           <div className="io-reveal flex items-center gap-3 mb-3" data-delay="0">
             <div className="w-8 h-0.5 bg-[#d81300]" />
@@ -190,7 +190,7 @@ export default function SALTPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {placements.map(({ icon, label }, i) => (
               <div key={label}
-                className="io-reveal bg-[#0f0f0f] border border-white/5 p-5 text-center hover:border-[#d81300]/40 transition-all duration-300 group card-lift"
+                className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/5 p-5 text-center hover:border-[#d81300]/40 transition-all duration-300 group card-lift"
                 data-delay={String(i * 60)}>
                 <div className="text-[#d81300] flex justify-center mb-3 transition-transform duration-300 group-hover:scale-110">
                   {icon}
@@ -203,7 +203,7 @@ export default function SALTPage() {
       </section>
 
       {/* 7 HABITS */}
-      <section className="bg-[#0f0f0f] py-20 px-6" ref={s4}>
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-20 px-6" ref={s4}>
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
@@ -226,7 +226,7 @@ export default function SALTPage() {
             <div className="space-y-2">
               {habits.map(({ num, title, desc }, i) => (
                 <div key={num}
-                  className="io-reveal flex gap-4 items-start bg-[#111] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
+                  className="io-reveal flex gap-4 items-start bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
                   data-delay={String(i * 50)}>
                   <div className="w-8 h-8 bg-[#d81300] flex items-center justify-center font-black text-white text-xs flex-shrink-0">{num}</div>
                   <div>
@@ -241,9 +241,9 @@ export default function SALTPage() {
       </section>
 
       {/* INSTRUCTOR */}
-      <section className="bg-[#111] py-16 px-6">
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-[#0f0f0f] border border-[#d81300]/20 p-8 md:p-10">
+          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-[#d81300]/20 p-8 md:p-10">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-0.5 bg-[#d81300]" />
               <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Instructor</span>

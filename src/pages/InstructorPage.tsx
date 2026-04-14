@@ -35,7 +35,7 @@ export default function InstructorPage() {
   return (
     <div className="pt-16">
       {/* HEADER */}
-      <section className="relative py-24 px-6 bg-[#111] overflow-hidden">
+      <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
         <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none"
@@ -59,7 +59,7 @@ export default function InstructorPage() {
       </section>
 
       {/* PHOTO + BIO */}
-      <section className="bg-[#0f0f0f] py-20 px-6" ref={s1}>
+      <section className="bg-white py-20 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 items-start">
 
           {/* Photo */}
@@ -72,7 +72,7 @@ export default function InstructorPage() {
               />
             </div>
             <div className="mt-3 text-center">
-              <div className="text-white font-black text-sm">Coach Jack Wardlaw</div>
+              <div className="text-gray-900 font-black text-sm">Coach Jack Wardlaw</div>
               <div className="text-[#d81300] text-xs font-bold tracking-wide uppercase mt-0.5">Palmetto High School</div>
             </div>
           </div>
@@ -84,9 +84,9 @@ export default function InstructorPage() {
                 <div className="w-8 h-0.5 bg-[#d81300]" />
                 <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">About</span>
               </div>
-              <h2 className="text-3xl font-black mb-4">Building the Next Generation<br />of Athletic Leaders</h2>
+              <h2 className="text-3xl font-black mb-4 text-gray-900">Building the Next Generation<br />of Athletic Leaders</h2>
             </div>
-            <div className="io-reveal space-y-4 text-gray-400 leading-relaxed text-sm" data-delay="120">
+            <div className="io-reveal space-y-4 text-gray-600 leading-relaxed text-sm" data-delay="120">
               <p>
                 Coach Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School and a 2014 PHS graduate. Teaching in the community he grew up in is something he is passionate about, and his focus as an educator is helping students develop the confidence, accountability, and discipline to make a positive impact on those around them.
               </p>
@@ -105,7 +105,7 @@ export default function InstructorPage() {
       </section>
 
       {/* CREDENTIALS + EDUCATION */}
-      <section className="bg-[#111] py-16 px-6">
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
 
           {/* Credentials */}
@@ -116,7 +116,7 @@ export default function InstructorPage() {
             </div>
             <div className="space-y-3">
               {credentials.map(({ label, value }) => (
-                <div key={label} className="flex gap-4 bg-[#0f0f0f] border-l-2 border-[#d81300]/40 px-4 py-3">
+                <div key={label} className="flex gap-4 bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border-l-2 border-[#d81300]/40 px-4 py-3">
                   <span className="text-gray-600 text-xs w-20 flex-shrink-0 uppercase tracking-wide font-bold pt-0.5">{label}</span>
                   <span className="text-white text-sm font-bold">{value}</span>
                 </div>
@@ -132,7 +132,7 @@ export default function InstructorPage() {
             </div>
             <div className="space-y-3">
               {education.map(({ degree, school, status }) => (
-                <div key={degree} className="bg-[#0f0f0f] border-l-2 border-[#d81300]/40 px-4 py-3">
+                <div key={degree} className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border-l-2 border-[#d81300]/40 px-4 py-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="text-white text-sm font-bold leading-snug">{degree}</div>
                     {status && (
@@ -154,7 +154,7 @@ export default function InstructorPage() {
             <div className="space-y-3">
               {expertise.map(({ area, desc }, i) => (
                 <div key={area}
-                  className="io-reveal bg-[#0f0f0f] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
+                  className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
                   data-delay={String(i * 50)}>
                   <div className="text-white font-bold text-sm mb-1">{area}</div>
                   <div className="text-gray-500 text-xs leading-relaxed">{desc}</div>
@@ -167,9 +167,9 @@ export default function InstructorPage() {
       </section>
 
       {/* COURSE CTA */}
-      <section className="bg-[#0f0f0f] py-16 px-6">
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-[#111] border border-[#d81300]/20 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+          <div className="bg-gradient-to-br from-[#242424] to-[#383838] border border-[#d81300]/20 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">2026–2027</div>
               <h3 className="text-2xl font-black mb-3">Interested in Athletic Leadership?</h3>

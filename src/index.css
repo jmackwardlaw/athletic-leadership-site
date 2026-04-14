@@ -16,6 +16,9 @@
 :root {
   --red: #d81300;
   --grey: #323131;
+  --charcoal-dark: #222222;
+  --charcoal: #2e2e2e;
+  --charcoal-light: #3a3a3a;
 }
 
 * { box-sizing: border-box; }
@@ -23,7 +26,7 @@
 body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
-  background: #0f0f0f;
+  background: #2e2e2e;
   color: white;
   -webkit-font-smoothing: antialiased;
 }
@@ -32,7 +35,8 @@ h1, h2, h3, h4, h5 {
   font-family: 'Barlow Condensed', sans-serif;
 }
 
-select option { background: #111; color: white; }
+select option { background: #1a1a1a; color: white; }
+select.on-white option { background: white; color: #111; }
 ::selection { background: #d81300; color: white; }
 
 /* ── Noise texture overlay ───────────────────────────── */
@@ -177,4 +181,12 @@ body::before {
 @keyframes numFlash {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
+}
+
+/* ── Section background gradients ──────────────────── */
+.bg-section-dark {
+  background: linear-gradient(160deg, #0d0d0d 0%, #1c1c1c 100%);
+}
+.bg-section-mid {
+  background: linear-gradient(160deg, #141414 0%, #222222 100%);
 }

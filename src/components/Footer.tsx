@@ -14,7 +14,7 @@ export default function Footer() {
   const navigate = useNavigate()
 
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/5">
+    <footer className="bg-gradient-to-br from-[#111111] to-[#1f1f1f] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}

@@ -67,7 +67,7 @@ export default function AboutPage() {
     <div className="pt-16">
 
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
-      <section className="relative py-24 px-6 bg-[#111] overflow-hidden">
+      <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
         {/* Red top bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
         {/* Red left accent */}
@@ -111,17 +111,17 @@ export default function AboutPage() {
       </div>
 
       {/* ── RATIONALE ────────────────────────────────────────────────────── */}
-      <section className="bg-[#0f0f0f] py-20 px-6">
+      <section className="bg-white py-20 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-0.5 bg-[#d81300]"></div>
               <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Rationale</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black mb-6">
+            <h2 className="text-3xl md:text-4xl font-black mb-6 text-gray-900">
               Built Around Real Programs.<br />Real Experience.
             </h2>
-            <div className="space-y-4 text-gray-400 leading-relaxed">
+            <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
                 Athletics define school culture — yet most students never see what it takes 
                 to make them run. Athletic Leadership bridges that gap.
@@ -134,13 +134,13 @@ export default function AboutPage() {
               </p>
               <p>
                 The course begins with the 7 Habits of Highly Effective People through the 
-                <strong className="text-white"> Leader in Me</strong> framework — establishing 
+                <strong className="text-gray-900"> Leader in Me</strong> framework — establishing 
                 the character and leadership foundation that everything else builds on.
               </p>
             </div>
           </div>
           <div className="space-y-3">
-            <div className="text-sm font-black text-white uppercase tracking-[0.2em] mb-4">Skills You'll Build</div>
+            <div className="text-sm font-black text-gray-900 uppercase tracking-[0.2em] mb-4">Skills You'll Build</div>
             {[
               ['Communication', 'Presentations, written plans, event messaging'],
               ['Collaboration', 'Group projects, peer feedback, shared decision-making'],
@@ -149,10 +149,10 @@ export default function AboutPage() {
               ['Leadership', 'Philosophy development, project management, accountability'],
               ['Career Readiness', 'Professional proposals, industry exploration, workforce skills'],
             ].map(([skill, desc]) => (
-              <div key={skill} className="flex gap-4 items-start bg-[#111] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors">
+              <div key={skill} className="flex gap-4 items-start bg-gray-50 border border-gray-200 p-4 hover:border-[#d81300]/30 transition-colors">
                 <div className="w-1.5 h-1.5 bg-[#d81300] rounded-full mt-2 flex-shrink-0"></div>
                 <div>
-                  <div className="text-white font-bold text-sm">{skill}</div>
+                  <div className="text-gray-900 font-bold text-sm">{skill}</div>
                   <div className="text-gray-500 text-xs mt-0.5">{desc}</div>
                 </div>
               </div>
@@ -162,9 +162,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── LEADER IN ME CALLOUT ──────────────────────────────────────────── */}
-      <section className="bg-[#111] py-16 px-6">
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-[#0f0f0f] border border-[#d81300]/30 p-8 md:p-10">
+          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-[#d81300]/30 p-8 md:p-10">
             <div className="grid md:grid-cols-3 gap-10 items-center">
               <div className="flex justify-center">
                 <LeaderInMeLogo className="w-72 h-72 object-contain" />
@@ -194,7 +194,7 @@ export default function AboutPage() {
                     ['6', 'Synergize'],
                     ['7', 'Sharpen the Saw'],
                   ].map(([num, habit]) => (
-                    <div key={num} className="flex items-center gap-3 bg-[#111] border border-white/5 px-3 py-2">
+                    <div key={num} className="flex items-center gap-3 bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 px-3 py-2">
                       <div className="w-6 h-6 bg-[#d81300] flex items-center justify-center font-black text-white text-xs flex-shrink-0">{num}</div>
                       <span className="text-gray-300 text-xs font-bold">{habit}</span>
                     </div>
@@ -207,7 +207,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── UNITS ────────────────────────────────────────────────────────── */}
-      <section className="bg-[#0f0f0f] py-20 px-6">
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#d81300]"></div>
@@ -221,7 +221,7 @@ export default function AboutPage() {
                 className={`p-6 hover:border-[#d81300]/40 transition-colors ${
                   highlight
                     ? 'bg-[#d81300]/10 border border-[#d81300]/40 lg:col-span-1'
-                    : 'bg-[#111] border border-white/5'
+                    : 'bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
@@ -250,9 +250,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── CAPSTONE + INTERNSHIP ────────────────────────────────────────── */}
-      <section className="bg-[#111] py-20 px-6">
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
-          <div className="bg-[#0f0f0f] border border-[#d81300]/30 p-8">
+          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-[#d81300]/30 p-8">
             <div className="text-[#d81300] text-xs font-black tracking-[0.2em] uppercase mb-3">Capstone Assessment</div>
             <h3 className="text-2xl font-black mb-4">Athletic Improvement<br />Project</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -267,7 +267,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-          <div className="bg-[#0f0f0f] border border-white/10 p-8">
+          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/10 p-8">
             <div className="text-gray-400 text-xs font-black tracking-[0.2em] uppercase mb-3">Runs All Semester</div>
             <h3 className="text-2xl font-black mb-4">Athletic Leadership<br />Internship</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -287,29 +287,29 @@ export default function AboutPage() {
       </section>
 
       {/* ── GRADING ──────────────────────────────────────────────────────── */}
-      <section className="bg-[#0f0f0f] py-20 px-6">
+      <section className="bg-white py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#d81300]"></div>
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Assessment</span>
           </div>
-          <h2 className="text-3xl font-black mb-8">Grading Structure</h2>
+          <h2 className="text-3xl font-black mb-8 text-gray-900">Grading Structure</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-[#111] border border-[#d81300]/30 p-6">
+            <div className="bg-gray-50 border border-[#d81300]/30 p-6">
               <div className="text-[#d81300] text-4xl font-black mb-1">60%</div>
-              <div className="text-white font-black text-sm uppercase tracking-wide mb-4">Major Grades</div>
-              <ul className="space-y-1.5 text-gray-400 text-sm">
+              <div className="text-gray-900 font-black text-sm uppercase tracking-wide mb-4">Major Grades</div>
+              <ul className="space-y-1.5 text-gray-600 text-sm">
                 {['Capstone Athletic Improvement Project', 'Athletic Leadership Internship', 'Athletic Program Analysis', 'Event Operations Plan', 'Equipment & Facility Project'].map(a => (
                   <li key={a} className="flex gap-2"><span className="text-[#d81300]">—</span>{a}</li>
                 ))}
               </ul>
             </div>
-            <div className="bg-[#111] border border-white/10 p-6">
-              <div className="text-white text-4xl font-black mb-1">40%</div>
-              <div className="text-white font-black text-sm uppercase tracking-wide mb-4">Minor Grades</div>
-              <ul className="space-y-1.5 text-gray-400 text-sm">
+            <div className="bg-gray-50 border border-gray-200 p-6">
+              <div className="text-gray-900 text-4xl font-black mb-1">40%</div>
+              <div className="text-gray-900 font-black text-sm uppercase tracking-wide mb-4">Minor Grades</div>
+              <ul className="space-y-1.5 text-gray-600 text-sm">
                 {['Leadership Reflection Journals', 'Athletic Event Observation Reports', 'Class Activities & Simulations', 'Knowledge Checks', 'Internship Progress Checkpoints'].map(a => (
-                  <li key={a} className="flex gap-2"><span className="text-gray-600">—</span>{a}</li>
+                  <li key={a} className="flex gap-2"><span className="text-gray-400">—</span>{a}</li>
                 ))}
               </ul>
             </div>
@@ -318,7 +318,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── CAREERS ──────────────────────────────────────────────────────── */}
-      <section className="bg-[#111] py-20 px-6">
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#d81300]"></div>

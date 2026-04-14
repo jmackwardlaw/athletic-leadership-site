@@ -127,15 +127,15 @@ export default function ApplicationPage() {
   }
 
   const inputClass = (field: keyof FormData) =>
-    `w-full bg-[#111] border ${errors[field] ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 text-sm focus:outline-none focus:border-[#d81300] transition-colors placeholder:text-gray-600`
+    `w-full bg-white border ${errors[field] ? 'border-red-500' : 'border-gray-300'} text-gray-900 px-4 py-3 text-sm focus:outline-none focus:border-[#d81300] transition-colors placeholder:text-gray-400`
 
   const textareaClass = (field: keyof FormData) =>
-    `w-full bg-[#111] border ${errors[field] ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 text-sm focus:outline-none focus:border-[#d81300] transition-colors placeholder:text-gray-600 resize-none`
+    `w-full bg-white border ${errors[field] ? 'border-red-500' : 'border-gray-300'} text-gray-900 px-4 py-3 text-sm focus:outline-none focus:border-[#d81300] transition-colors placeholder:text-gray-400 resize-none`
 
   // ── SUCCESS SCREEN ───────────────────────────────────────────────────────────
   if (status === 'success') {
     return (
-      <div className="pt-16 min-h-screen bg-[#0a0a0a] flex items-center justify-center px-6">
+      <div className="pt-16 min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] flex items-center justify-center px-6">
         <div className="max-w-xl w-full text-center">
           <div className="w-20 h-20 bg-[#d81300] flex items-center justify-center font-black text-black text-3xl mx-auto mb-8">✓</div>
           <h1 className="text-5xl font-black mb-4">Application<br />Received.</h1>
@@ -145,7 +145,7 @@ export default function ApplicationPage() {
           <p className="text-gray-500 text-sm leading-relaxed mb-10 max-w-sm mx-auto">
             Coach Wardlaw reviews all applications personally. Selected students will be contacted before the 2026–2027 school year. Not all applicants will be selected — membership is limited and based on character, commitment, and fit.
           </p>
-          <div className="bg-[#111] border border-white/10 p-5 mb-10 text-left">
+          <div className="bg-white border border-gray-200 p-5 mb-10 text-left">
             <div className="text-[#d81300] text-xs font-black uppercase tracking-[0.15em] mb-3">Application Summary</div>
             <div className="grid grid-cols-2 gap-2 text-sm">
               {[
@@ -184,7 +184,7 @@ export default function ApplicationPage() {
   return (
     <div className="pt-16">
       {/* Header */}
-      <section className="relative py-20 px-6 bg-[#111] overflow-hidden">
+      <section className="relative py-20 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
         <div
           className="absolute inset-0 opacity-5"
           style={{ backgroundImage: `repeating-linear-gradient(-45deg, #d81300, #d81300 1px, transparent 1px, transparent 24px)` }}
@@ -212,7 +212,7 @@ export default function ApplicationPage() {
             '15–20 minutes to complete',
             '2026–2027 Academic Year',
           ].map((text) => (
-            <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
+            <div key={text} className="flex items-center gap-2 text-gray-600 text-sm">
               <span className="text-[#d81300] font-black text-xs">—</span>
               <span>{text}</span>
             </div>
@@ -230,7 +230,7 @@ export default function ApplicationPage() {
       )}
 
       {/* Form */}
-      <section className="bg-[#0a0a0a] py-12 px-6">
+      <section className="bg-white py-12 px-6">
         <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-12" noValidate>
 
@@ -325,14 +325,14 @@ export default function ApplicationPage() {
             {/* ── SECTION 4: Scenario ── */}
             <div>
               <SectionHeader num="4" title="Scenario Response" />
-              <div className="bg-[#111] border border-[#d81300]/20 p-6 mb-4">
+              <div className="bg-gray-50 border border-[#d81300]/20 p-6 mb-4">
                 <div className="text-[#d81300] text-xs font-black uppercase tracking-[0.1em] mb-3">Scenario</div>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className="text-gray-700 text-sm leading-relaxed">
                   It's 30 minutes before a home football game. The equipment you were responsible
                   for organizing hasn't been set out yet. The coach is busy. Two other SALT
                   members aren't there yet. There's a lot to do and not much time.
                 </p>
-                <p className="text-gray-400 text-sm mt-3">
+                <p className="text-gray-600 text-sm mt-3">
                   <strong className="text-white">How do you handle it?</strong> Walk through what you would actually do.
                 </p>
               </div>
@@ -370,13 +370,13 @@ export default function ApplicationPage() {
                   <div
                     key={field}
                     id={`field-${field}`}
-                    className={`flex gap-4 items-start p-4 border cursor-pointer transition-colors ${errors[field] ? 'border-red-500 bg-red-500/5' : 'border-white/10 bg-[#111] hover:border-[#d81300]/30'}`}
+                    className={`flex gap-4 items-start p-4 border cursor-pointer transition-colors ${errors[field] ? 'border-red-500 bg-red-500/5' : 'border-gray-300 bg-white hover:border-[#d81300]/50'}`}
                     onClick={() => set(field, !form[field])}
                   >
                     <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${form[field] ? 'bg-[#d81300] border-[#d81300]' : 'border-white/30'}`}>
                       {form[field] && <span className="text-black text-xs font-black">✓</span>}
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed select-none">{text}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed select-none">{text}</p>
                   </div>
                 ))}
                 {(errors.commitmentConfirm || errors.internshipConfirm || errors.behaviorConfirm) && (
@@ -387,9 +387,9 @@ export default function ApplicationPage() {
 
             {/* ── SUBMIT ── */}
             <div className="pt-2">
-              <div className="bg-[#111] border border-white/5 p-5 mb-6">
-                <p className="text-gray-500 text-xs leading-relaxed">
-                  <strong className="text-gray-300">Important:</strong> Submitting this application does not guarantee selection.
+              <div className="bg-gray-50 border border-gray-200 p-5 mb-6">
+                <p className="text-gray-600 text-xs leading-relaxed">
+                  <strong className="text-gray-800">Important:</strong> Submitting this application does not guarantee selection.
                   All applications are reviewed by Coach Wardlaw. Selected students will be contacted prior to the 2026–2027 school year.
                   SALT membership is limited and based on character, commitment, and fit.
                 </p>
@@ -437,7 +437,7 @@ function SectionHeader({ num, title }: { num: string; title: string }) {
   return (
     <div className="flex items-center gap-3 mb-6">
       <div className="w-6 h-6 bg-[#d81300] flex items-center justify-center font-black text-black text-xs flex-shrink-0">{num}</div>
-      <h2 className="text-lg font-black uppercase tracking-[0.15em]">{title}</h2>
+      <h2 className="text-lg font-black uppercase tracking-[0.15em] text-gray-900">{title}</h2>
     </div>
   )
 }
@@ -453,7 +453,7 @@ function Field({
 }) {
   return (
     <div id={id}>
-      <label className="block text-xs font-bold text-gray-400 uppercase tracking-[0.1em] mb-1">
+      <label className="block text-xs font-bold text-gray-600 uppercase tracking-[0.1em] mb-1">
         {label} {required && <span className="text-[#d81300]">*</span>}
         {hint && <span className="text-gray-600 normal-case font-normal tracking-normal ml-2">— {hint}</span>}
       </label>

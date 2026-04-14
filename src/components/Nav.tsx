@@ -17,7 +17,7 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
       <div className="h-1 bg-[#d81300] w-full" />
-      <div className="bg-[#0f0f0f]/96 backdrop-blur-md border-b border-[#d81300]/30">
+      <div className="bg-gradient-to-br from-[#111111] to-[#1f1f1f]/96 backdrop-blur-md border-b border-[#d81300]/30">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
           <NavLink to="/" className="flex items-center gap-3 group">
             <div className="relative">
@@ -81,7 +81,7 @@ export default function Nav() {
       </div>
 
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
-        <div className="bg-[#111] border-b border-[#d81300]/20 px-6 py-4 space-y-1">
+        <div className="bg-gradient-to-br from-[#242424] to-[#383838] border-b border-[#d81300]/20 px-6 py-4 space-y-1">
           {links.map(({ label, to }) => (
             <NavLink
               key={to}

@@ -91,7 +91,7 @@ export default function HomePage() {
     <div className="pt-16">
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0f0f0f]">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
         <div className="absolute inset-0" style={{
           backgroundImage: `linear-gradient(rgba(216,19,0,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(216,19,0,0.12) 1px, transparent 1px)`,
@@ -159,7 +159,7 @@ export default function HomePage() {
       </div>
 
       {/* ─── WHAT IS AL ───────────────────────────────────────────────────── */}
-      <section className="bg-[#111] py-24 px-6 relative overflow-hidden" ref={s1}>
+      <section className="bg-white py-24 px-6 relative overflow-hidden" ref={s1}>
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#d81300] via-[#d81300]/40 to-transparent" />
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
@@ -168,21 +168,21 @@ export default function HomePage() {
                 <div className="w-8 h-0.5 bg-[#d81300]" />
                 <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">About the Course</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6">
+              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 text-gray-900">
                 More Than A Class.<br /><span className="text-[#d81300]">A Career Path.</span>
               </h2>
             </div>
             <div className="io-reveal" data-delay="80">
-              <p className="text-gray-400 leading-relaxed mb-5">
+              <p className="text-gray-600 leading-relaxed mb-5">
                 Athletic Leadership is Palmetto's career-focused elective built around one question:
-                <em className="text-white"> What does it actually take to run a championship program?</em>
+                <em className="text-gray-900 font-medium"> What does it actually take to run a championship program?</em>
               </p>
-              <p className="text-gray-400 leading-relaxed mb-5">
+              <p className="text-gray-600 leading-relaxed mb-5">
                 Students don't just learn about athletics — they work inside them. Through a semester-long
                 internship, real event operations, media production, and project-based leadership,
                 AL students are the backbone of Palmetto Athletics.
               </p>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed">
                 The course begins with the 7 Habits of Highly Effective People through the Leader
                 in Me framework — building the leadership foundation everything else is built on.
               </p>
@@ -196,10 +196,10 @@ export default function HomePage() {
               { count: '11', label: 'Career Pathways', sub: 'Explored in-course' },
             ].map(({ count, label, sub }, i) => (
               <div key={label}
-                className="io-reveal bg-[#0f0f0f] border-l-4 border-[#d81300] border-t border-r border-b border-t-white/5 border-r-white/5 border-b-white/5 p-6 card-lift"
+                className="io-reveal bg-gray-50 border-l-4 border-[#d81300] border-t border-r border-b border-gray-200 p-6 card-lift"
                 data-delay={String(i * 80)}>
                 <div className="text-4xl font-black text-[#d81300] mb-1 tabular-nums" data-count={count}>{count}</div>
-                <div className="text-white font-bold text-sm uppercase tracking-wide">{label}</div>
+                <div className="text-gray-900 font-bold text-sm uppercase tracking-wide">{label}</div>
                 <div className="text-gray-500 text-xs mt-1">{sub}</div>
               </div>
             ))}
@@ -208,7 +208,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── UNITS GRID 2×4 ───────────────────────────────────────────────── */}
-      <section className="bg-[#0f0f0f] py-24 px-6 relative" ref={s2}>
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-24 px-6 relative" ref={s2}>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
         <div className="max-w-7xl mx-auto">
           <div className="io-reveal text-center mb-12" data-delay="0">
@@ -226,8 +226,8 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20 grid-rows-2 auto-rows-fr">
             {units.map(({ num, title, desc, tag, useLogo }, i) => (
               <div key={num}
-                className={`io-reveal p-6 hover:bg-[#1a1a1a] transition-all duration-300 group cursor-default flex flex-col ${
-                  num === '↻' ? 'bg-[#d81300]/8' : 'bg-[#111]'
+                className={`io-reveal p-6 hover:bg-gradient-to-br from-[#111111] to-[#1f1f1f] transition-all duration-300 group cursor-default flex flex-col ${
+                  num === '↻' ? 'bg-[#d81300]/8' : 'bg-gradient-to-br from-[#242424] to-[#383838]'
                 }`}
                 data-delay={String(i * 50)}>
                 <div className="flex items-start justify-between mb-4">
@@ -266,7 +266,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── SALT CALLOUT ─────────────────────────────────────────────────── */}
-      <section className="bg-[#111] py-20 px-6 relative overflow-hidden" ref={s3}>
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6 relative overflow-hidden" ref={s3}>
         <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#d81300] via-[#d81300]/40 to-transparent" />
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="io-reveal flex-shrink-0" data-delay="0">
@@ -298,17 +298,17 @@ export default function HomePage() {
       </section>
 
       {/* ─── LEADER IN ME STRIP ───────────────────────────────────────────── */}
-      <section className="bg-[#0f0f0f] py-16 px-6 relative" ref={s4}>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
+      <section className="bg-white py-16 px-6 relative" ref={s4}>
+        <div className="absolute top-0 left-0 right-0 h-px bg-[#d81300]/30" />
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal bg-[#111] border-l-4 border-[#d81300] border-t border-r border-b border-t-white/5 border-r-white/5 border-b-white/5 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8" data-delay="0">
+          <div className="io-reveal bg-gray-50 border-l-4 border-[#d81300] border border-gray-200 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8" data-delay="0">
             <LeaderInMeLogo className="w-28 h-28 object-contain flex-shrink-0" />
             <div className="flex-1">
               <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">Foundation — Unit 01</div>
-              <h3 className="text-2xl md:text-3xl font-black mb-3">Every student starts with the 7 Habits</h3>
-              <p className="text-gray-400 text-sm leading-relaxed max-w-2xl">
+              <h3 className="text-2xl md:text-3xl font-black mb-3 text-gray-900">Every student starts with the 7 Habits</h3>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-2xl">
                 Before operations, media, or equipment — every AL student builds a leadership
-                foundation through the <strong className="text-white">Leader in Me</strong> framework.
+                foundation through the <strong className="text-gray-900">Leader in Me</strong> framework.
                 The 7 Habits become the operating principles of everything SALT members do all semester.
               </p>
             </div>
@@ -321,7 +321,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── CAREERS CALLOUT ──────────────────────────────────────────────── */}
-      <section className="bg-[#111] py-16 px-6 relative" ref={s5}>
+      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6 relative" ref={s5}>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
         <div className="max-w-7xl mx-auto">
           <div className="io-reveal flex items-center gap-3 mb-8" data-delay="0">
@@ -331,7 +331,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-px bg-[#d81300]/15">
             {careerCards.map(({ title, desc, icon }, i) => (
               <div key={title}
-                className="io-reveal bg-[#0f0f0f] p-8 hover:bg-[#151515] transition-colors duration-300 group card-lift"
+                className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] p-8 hover:bg-[#424242] transition-colors duration-300 group card-lift"
                 data-delay={String(i * 80)}>
                 <div className="mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">
                   {icon}

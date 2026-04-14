@@ -187,7 +187,7 @@ export default function CareersPage() {
   return (
     <div className="pt-16">
       {/* HEADER */}
-      <section className="relative py-24 px-6 bg-[#111] overflow-hidden">
+      <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
         <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none"
@@ -230,7 +230,7 @@ export default function CareersPage() {
       </div>
 
       {/* CATEGORY FILTER */}
-      <div className="bg-[#111] border-b border-white/5 sticky top-[57px] z-40">
+      <div className="bg-gradient-to-br from-[#242424] to-[#383838] border-b border-white/5 sticky top-[57px] z-40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-1 overflow-x-auto py-3 scrollbar-none">
             {categories.map(({ key, label }) => (
@@ -240,7 +240,7 @@ export default function CareersPage() {
                 className={`flex items-center gap-2 px-4 py-2 text-xs font-black tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
                   activeCategory === key
                     ? 'bg-[#d81300] text-white'
-                    : 'bg-[#0f0f0f] text-gray-400 hover:text-white border border-white/10 hover:border-white/25'
+                    : 'bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] text-gray-400 hover:text-white border border-white/10 hover:border-white/25'
                 }`}>
                 {key !== 'all' && (
                   <span className={activeCategory === key ? 'text-white' : 'text-[#d81300]'}>
@@ -255,7 +255,7 @@ export default function CareersPage() {
       </div>
 
       {/* CAREER CARDS */}
-      <section className="bg-[#0f0f0f] py-12 px-6" ref={s1}>
+      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-12 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
             {filtered.map((path) => {
@@ -263,7 +263,7 @@ export default function CareersPage() {
               return (
                 <div
                   key={path.title}
-                  className="io-reveal bg-[#111] border border-white/5 hover:border-[#d81300]/30 transition-all duration-300"
+                  className="io-reveal bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 hover:border-[#d81300]/30 transition-all duration-300"
                   data-delay="0"
                 >
                   {/* Card header — always visible */}
@@ -299,7 +299,7 @@ export default function CareersPage() {
                         <div className="flex flex-wrap items-center gap-1">
                           {path.pathSteps.map((step, si) => (
                             <div key={step} className="flex items-center gap-1">
-                              <span className="bg-[#0f0f0f] border border-white/10 text-gray-300 text-[10px] px-2 py-1 font-bold">{step}</span>
+                              <span className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/10 text-gray-300 text-[10px] px-2 py-1 font-bold">{step}</span>
                               {si < path.pathSteps.length - 1 && <span className="text-[#d81300] text-xs font-black">›</span>}
                             </div>
                           ))}
@@ -326,13 +326,13 @@ export default function CareersPage() {
       </section>
 
       {/* DEGREE PATHWAYS */}
-      <section className="bg-[#111] py-20 px-6">
+      <section className="bg-white py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#d81300]" />
             <div>
               <div className="text-[#d81300] text-xs font-black tracking-[0.25em] uppercase mb-0.5">After High School</div>
-              <h2 className="text-3xl font-black">Degree Pathways to Consider</h2>
+              <h2 className="text-3xl font-black text-gray-900">Degree Pathways to Consider</h2>
             </div>
           </div>
           <p className="text-gray-500 text-sm mb-8 max-w-xl">SC schools with relevant programs — Athletic Leadership gives you the foundation before you arrive.</p>
@@ -343,12 +343,12 @@ export default function CareersPage() {
               { degree: 'Communications / Broadcast', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>, schools: 'USC, Coastal Carolina, Bob Jones', note: 'Sports media, journalism, broadcasting, and PR' },
               { degree: 'Athletic Training (BS + ATC)', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>, schools: 'Presbyterian, Winthrop, Lander', note: 'Clinical pathway requiring specific accredited programs' },
             ].map(({ degree, icon, schools, note }, i) => (
-              <div key={degree} className="bg-[#0f0f0f] border border-white/5 p-6 hover:border-[#d81300]/30 transition-all duration-300 card-lift">
+              <div key={degree} className="bg-gray-50 border border-gray-200 p-6 hover:border-[#d81300]/40 transition-all duration-300 card-lift">
                 <div className="mb-4">{icon}</div>
-                <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2">{degree}</h3>
+                <h3 className="font-black text-gray-900 text-sm uppercase tracking-wide mb-2">{degree}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed mb-3">{note}</p>
                 <div className="text-[#d81300] text-[10px] font-bold uppercase tracking-wide">SC Schools:</div>
-                <div className="text-gray-600 text-[10px]">{schools}</div>
+                <div className="text-gray-500 text-[10px]">{schools}</div>
               </div>
             ))}
           </div>
