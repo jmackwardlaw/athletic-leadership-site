@@ -620,7 +620,7 @@ export default function ApplicationPage() {
             <div className="w-8 h-0.5 bg-[#d81300]"></div>
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">2026–2027 Enrollment</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-black mb-4">
+          <h1 className="text-5xl md:text-6xl font-black mb-4" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
             Athletic Leadership<br /><span className="text-[#d81300]">Application</span>
           </h1>
           <p className="text-gray-400 max-w-xl leading-relaxed">
@@ -638,7 +638,7 @@ export default function ApplicationPage() {
             'Plan 20–30 minutes for thoughtful responses',
             '2026–2027 Academic Year',
           ].map((text) => (
-            <div key={text} className="flex items-center gap-2 text-gray-600 text-sm">
+            <div key={text} className="flex items-center gap-2 text-gray-200 text-sm">
               <span className="text-[#d81300] font-black text-xs">—</span>
               <span>{text}</span>
             </div>
