@@ -562,6 +562,22 @@ export default function ApplicationPage() {
           </div>
         </section>
 
+        {/* Info bar */}
+        <div className="bg-[#d81300] py-4 px-6">
+          <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-3 justify-center">
+            {[
+              { icon: <ShieldCheckIcon />, text: 'Reviewed by Coach Wardlaw — not all applicants accepted' },
+              { icon: <ClockIcon />, text: 'Plan 20–30 minutes for thoughtful responses' },
+              { icon: <CalendarIcon />, text: '2026–2027 Academic Year' },
+            ].map(({ icon, text }) => (
+              <div key={text} className="flex items-center gap-2.5 text-white text-sm">
+                <span className="text-white/90 flex-shrink-0">{icon}</span>
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Sign-in gate */}
         <section className="py-20 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a]">
           <div className="max-w-xl mx-auto">
