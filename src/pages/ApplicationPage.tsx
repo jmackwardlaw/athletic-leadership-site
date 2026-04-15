@@ -518,8 +518,9 @@ export default function ApplicationPage() {
       )}
 
       {/* Form */}
-      <section className="bg-white py-12 px-6">
+      <section className="bg-gradient-to-b from-[#1a1a1a] via-[#202020] to-[#2a2a2a] py-16 px-6">
         <div className="max-w-3xl mx-auto">
+          <div className="bg-white shadow-2xl ring-1 ring-black/5 p-8 md:p-12">
           <form onSubmit={handleSubmit} className="space-y-12" noValidate>
 
             {/* ── SECTION 1: Student Info ── */}
@@ -675,8 +676,8 @@ export default function ApplicationPage() {
                     className={`flex gap-4 items-start p-4 border cursor-pointer transition-colors ${errors[field] ? 'border-red-500 bg-red-500/5' : 'border-gray-300 bg-white hover:border-[#d81300]/50'}`}
                     onClick={() => set(field, !form[field])}
                   >
-                    <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${form[field] ? 'bg-[#d81300] border-[#d81300]' : 'border-white/30'}`}>
-                      {form[field] && <span className="text-black text-xs font-black">✓</span>}
+                    <div className={`w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${form[field] ? 'bg-[#d81300] border-[#d81300]' : 'border-gray-400 bg-white'}`}>
+                      {form[field] && <span className="text-white text-xs font-black">✓</span>}
                     </div>
                     <p className="text-gray-700 text-sm leading-relaxed select-none">{text}</p>
                   </div>
@@ -726,6 +727,7 @@ export default function ApplicationPage() {
             </div>
 
           </form>
+          </div>
         </div>
       </section>
       <Footer />
