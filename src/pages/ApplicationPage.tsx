@@ -27,8 +27,9 @@ const IS_DEMO_AUTH = GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID.apps.googleusercontent
 //    - Execute as: Me (your email)
 //    - Who has access: Anyone
 // 4. Copy the Web app URL and paste it below.
+const APPS_SCRIPT_PLACEHOLDER = 'YOUR_APPS_SCRIPT_URL'
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWOs2eSj9ZQODY-1MW6HJj6eZom0sqj-iK9dUjzlYds67WSYA541Qd2EVL1XlYSCl7Iw/exec'
-const IS_DEMO_STORAGE = APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxWOs2eSj9ZQODY-1MW6HJj6eZom0sqj-iK9dUjzlYds67WSYA541Qd2EVL1XlYSCl7Iw/exec'
+const IS_DEMO_STORAGE = APPS_SCRIPT_URL === APPS_SCRIPT_PLACEHOLDER
 
 const MIN_LONG = 50
 
