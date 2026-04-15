@@ -64,7 +64,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="pt-16">
+    <div className="pt-[100px]">
 
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
       <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">

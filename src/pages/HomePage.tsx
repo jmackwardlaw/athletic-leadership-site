@@ -88,7 +88,7 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="pt-16">
+    <div className="pt-[100px]">
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">

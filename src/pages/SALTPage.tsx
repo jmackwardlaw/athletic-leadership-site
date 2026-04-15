@@ -72,7 +72,7 @@ export default function SALTPage() {
   ]
 
   return (
-    <div className="pt-16">
+    <div className="pt-[100px]">
       {/* HEADER */}
       <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { HorseshoeLogo } from './Logos'
+import DeadlineBanner from './DeadlineBanner'
 
 const links: { label: string; to: string }[] = [
   { label: 'Home', to: '/' },
@@ -16,6 +17,7 @@ export default function Nav() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
+      <DeadlineBanner />
       <div className="h-1 bg-[#d81300] w-full" />
       <div className="bg-gradient-to-br from-[#111111] to-[#1f1f1f]/96 backdrop-blur-md border-b border-[#d81300]/30">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
