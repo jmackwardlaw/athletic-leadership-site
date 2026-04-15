@@ -113,6 +113,58 @@ function decodeJwt(token: string): Record<string, unknown> | null {
   }
 }
 
+// ── Draft storage (localStorage) ───────────────────────────────────────────────
+
+const DRAFT_VERSION = 1
+const draftKey = (sub: string) => `al-draft-v${DRAFT_VERSION}-${sub}`
+
+interface DraftData {
+  version: number
+  savedAt: string // ISO timestamp
+  form: FormData
+}
+
+function loadDraft(sub: string): DraftData | null {
+  try {
+    const raw = localStorage.getItem(draftKey(sub))
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as DraftData
+    if (parsed.version !== DRAFT_VERSION || !parsed.form) return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+function saveDraft(sub: string, form: FormData): string {
+  const savedAt = new Date().toISOString()
+  try {
+    const draft: DraftData = { version: DRAFT_VERSION, savedAt, form }
+    localStorage.setItem(draftKey(sub), JSON.stringify(draft))
+  } catch {
+    // localStorage full or disabled — silently fail
+  }
+  return savedAt
+}
+
+function clearDraft(sub: string) {
+  try {
+    localStorage.removeItem(draftKey(sub))
+  } catch {
+    /* ignore */
+  }
+}
+
+function formatDraftTime(iso: string): string {
+  const d = new Date(iso)
+  return d.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}
+
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function ApplicationPage() {
@@ -123,6 +175,8 @@ export default function ApplicationPage() {
   const [errorMsg, setErrorMsg] = useState('')
   const [googleUser, setGoogleUser] = useState<GoogleUser | null>(null)
   const [authError, setAuthError] = useState<string | null>(null)
+  const [draftRestoredAt, setDraftRestoredAt] = useState<string | null>(null)
+  const [draftSavedAt, setDraftSavedAt] = useState<string | null>(null)
   const signInBtnRef = useRef<HTMLDivElement>(null)
 
   // ── Google Sign-In: load script + render button ──
@@ -188,22 +242,31 @@ export default function ApplicationPage() {
     }
     const givenName = (payload.given_name as string) || ''
     const familyName = (payload.family_name as string) || ''
+    const sub = payload.sub as string
     setGoogleUser({
       email: payload.email as string,
       name: payload.name as string,
       givenName,
       familyName,
-      sub: payload.sub as string,
+      sub,
       picture: payload.picture as string | undefined,
       credential: response.credential,
     })
-    // Pre-fill name fields from Google identity — student can still edit
-    // (e.g. to use a preferred name / nickname).
-    setForm(prev => ({
-      ...prev,
-      firstName: prev.firstName || givenName,
-      lastName: prev.lastName || familyName,
-    }))
+
+    // Attempt to restore a saved draft for this student. If none, pre-fill
+    // name fields from Google identity (student can still edit).
+    const draft = loadDraft(sub)
+    if (draft) {
+      // Merge with initialForm to gracefully handle schema additions
+      setForm({ ...initialForm, ...draft.form })
+      setDraftRestoredAt(draft.savedAt)
+    } else {
+      setForm(prev => ({
+        ...prev,
+        firstName: prev.firstName || givenName,
+        lastName: prev.lastName || familyName,
+      }))
+    }
     setAuthError(null)
   }
 
@@ -211,25 +274,62 @@ export default function ApplicationPage() {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.disableAutoSelect()
     }
+    // Intentionally DO NOT clear the draft — student may sign back in later
+    // and expect their progress to be restored.
     setGoogleUser(null)
+    setDraftRestoredAt(null)
+    setDraftSavedAt(null)
     setAuthError(null)
   }
 
   const handleDemoSignIn = () => {
+    const sub = 'demo-sub-12345'
     setGoogleUser({
       email: 'demo.student@apps.anderson1.org',
       name: 'Demo Student',
       givenName: 'Demo',
       familyName: 'Student',
-      sub: 'demo-sub-12345',
+      sub,
       credential: 'demo',
     })
-    setForm(prev => ({
-      ...prev,
-      firstName: prev.firstName || 'Demo',
-      lastName: prev.lastName || 'Student',
-    }))
+    const draft = loadDraft(sub)
+    if (draft) {
+      setForm({ ...initialForm, ...draft.form })
+      setDraftRestoredAt(draft.savedAt)
+    } else {
+      setForm(prev => ({
+        ...prev,
+        firstName: prev.firstName || 'Demo',
+        lastName: prev.lastName || 'Student',
+      }))
+    }
   }
+
+  const handleStartOver = () => {
+    if (!googleUser) return
+    if (!window.confirm('Discard your saved progress and start over? This cannot be undone.')) return
+    clearDraft(googleUser.sub)
+    setForm({
+      ...initialForm,
+      firstName: googleUser.givenName,
+      lastName: googleUser.familyName,
+    })
+    setErrors({})
+    setDraftRestoredAt(null)
+    setDraftSavedAt(null)
+  }
+
+  // Auto-save draft to localStorage 500ms after the last form change.
+  // Keyed by the student's Google sub, so multiple students sharing a
+  // Chromebook each have their own isolated draft.
+  useEffect(() => {
+    if (!googleUser || status === 'success' || status === 'loading') return
+    const handle = setTimeout(() => {
+      const savedAt = saveDraft(googleUser.sub, form)
+      setDraftSavedAt(savedAt)
+    }, 500)
+    return () => clearTimeout(handle)
+  }, [form, googleUser, status])
 
   const set = (field: keyof FormData, value: string | boolean) => {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -305,6 +405,7 @@ export default function ApplicationPage() {
       if (IS_DEMO_STORAGE) {
         // Demo mode: simulate success after 1.5s
         await new Promise(r => setTimeout(r, 1500))
+        clearDraft(googleUser.sub)
         setStatus('success')
         window.scrollTo({ top: 0, behavior: 'smooth' })
         return
@@ -318,6 +419,7 @@ export default function ApplicationPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
+      clearDraft(googleUser.sub)
       setStatus('success')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
@@ -498,13 +600,23 @@ export default function ApplicationPage() {
             <span className="text-white font-bold truncate">{googleUser.name}</span>
             <span className="text-gray-500 hidden sm:inline truncate">— {googleUser.email}</span>
           </div>
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="text-gray-400 hover:text-white text-xs underline flex-shrink-0"
-          >
-            Not you? Sign out
-          </button>
+          <div className="flex items-center gap-4 flex-shrink-0">
+            {draftSavedAt && (
+              <span className="text-green-400 text-xs flex items-center gap-1.5" title={`Draft saved ${formatDraftTime(draftSavedAt)}`}>
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Draft saved
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="text-gray-400 hover:text-white text-xs underline"
+            >
+              Not you? Sign out
+            </button>
+          </div>
         </div>
       </div>
 
@@ -522,6 +634,27 @@ export default function ApplicationPage() {
         <div className="max-w-3xl mx-auto">
           <div className="bg-white shadow-2xl ring-1 ring-black/5 p-8 md:p-12">
           <form onSubmit={handleSubmit} className="space-y-12" noValidate>
+
+            {/* ── Draft restored banner ── */}
+            {draftRestoredAt && (
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 flex items-start gap-4 -mt-2">
+                <div className="flex-1">
+                  <p className="text-gray-900 font-bold text-sm">
+                    Welcome back — we restored your progress
+                  </p>
+                  <p className="text-gray-600 text-xs mt-1 leading-relaxed">
+                    Last saved {formatDraftTime(draftRestoredAt)}. Your answers autosave as you type — you can close this tab and come back anytime.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleStartOver}
+                  className="text-xs font-bold text-red-600 hover:text-red-700 uppercase tracking-wider whitespace-nowrap flex-shrink-0"
+                >
+                  Start Over
+                </button>
+              </div>
+            )}
 
             {/* ── SECTION 1: Student Info ── */}
             <div>
