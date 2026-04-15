@@ -631,15 +631,15 @@ export default function ApplicationPage() {
       </section>
 
       {/* Info bar */}
-      <div className="bg-[#1a1a1a] border-y border-white/10 py-4 px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center md:justify-start">
+      <div className="bg-[#d81300] py-4 px-6">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center">
           {[
             'Reviewed by Coach Wardlaw — not all applicants accepted',
             'Plan 20–30 minutes for thoughtful responses',
             '2026–2027 Academic Year',
           ].map((text) => (
-            <div key={text} className="flex items-center gap-2 text-gray-200 text-sm">
-              <span className="text-[#d81300] font-black text-xs">—</span>
+            <div key={text} className="flex items-center gap-2 text-white text-sm">
+              <span className="text-white/70 font-black text-xs">—</span>
               <span>{text}</span>
             </div>
           ))}
