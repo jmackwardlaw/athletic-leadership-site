@@ -631,7 +631,7 @@ export default function ApplicationPage() {
       </section>
 
       {/* Info bar */}
-      <div className="bg-[#d81300]/10 border-y border-[#d81300]/20 py-4 px-6">
+      <div className="bg-[#1a1a1a] border-y border-white/10 py-4 px-6">
         <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center md:justify-start">
           {[
             'Reviewed by Coach Wardlaw — not all applicants accepted',
