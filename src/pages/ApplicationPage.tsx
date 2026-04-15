@@ -632,14 +632,14 @@ export default function ApplicationPage() {
 
       {/* Info bar */}
       <div className="bg-[#d81300] py-4 px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-6 justify-center">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-3 justify-center">
           {[
-            'Reviewed by Coach Wardlaw — not all applicants accepted',
-            'Plan 20–30 minutes for thoughtful responses',
-            '2026–2027 Academic Year',
-          ].map((text) => (
-            <div key={text} className="flex items-center gap-2 text-white text-sm">
-              <span className="text-white/70 font-black text-xs">—</span>
+            { icon: <ShieldCheckIcon />, text: 'Reviewed by Coach Wardlaw — not all applicants accepted' },
+            { icon: <ClockIcon />, text: 'Plan 20–30 minutes for thoughtful responses' },
+            { icon: <CalendarIcon />, text: '2026–2027 Academic Year' },
+          ].map(({ icon, text }) => (
+            <div key={text} className="flex items-center gap-2.5 text-white text-sm">
+              <span className="text-white/90 flex-shrink-0">{icon}</span>
               <span>{text}</span>
             </div>
           ))}
@@ -1000,5 +1000,34 @@ function CharCount({ val, min }: { val: string; min: number }) {
         {val.length} / {min} min
       </span>
     </div>
+  )
+}
+
+// ── Icons (info bar) ───────────────────────────────────────────────────────────
+
+function ShieldCheckIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M12 2L3 7v6c0 5 4 9 9 11 5-2 9-6 9-11V7l-9-5z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
+    </svg>
+  )
+}
+
+function CalendarIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4 M8 2v4 M3 10h18" />
+    </svg>
   )
 }
