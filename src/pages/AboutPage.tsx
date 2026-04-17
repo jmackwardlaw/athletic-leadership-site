@@ -123,7 +123,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Athletics define school culture — yet most students never see what it takes 
+                Athletics can define school culture, yet most students never see what it takes
                 to make them run. Athletic Leadership bridges that gap.
               </p>
               <p>
