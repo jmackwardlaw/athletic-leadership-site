@@ -1,28 +1,38 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AdminShell from '../components/AdminShell'
-import { useAdminAuth } from '../hooks/useAdminAuth'
+import { AdminAuthState, useAdminAuth } from '../hooks/useAdminAuth'
 import {
+  Status,
   STATUS_COLORS,
+  STATUS_OPTIONS,
   Submission,
   fetchSubmissions,
   formatSubmittedAt,
+  updateSubmission,
 } from '../lib/admin'
 
 export default function AdminDetailPage() {
   const auth = useAdminAuth()
   return (
     <AdminShell auth={auth}>
-      <Detail />
+      <Detail auth={auth} />
     </AdminShell>
   )
 }
 
-function Detail() {
+function Detail({ auth }: { auth: AdminAuthState }) {
   const { sub } = useParams<{ sub: string }>()
   const [submission, setSubmission] = useState<Submission | null>(null)
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState<string | null>(null)
+
+  // ── Editing state ─────────────────────────────────────────────────────────────
+  const [editingStatus, setEditingStatus] = useState<Status>('Pending')
+  const [editingNotes, setEditingNotes] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const [savedAt, setSavedAt] = useState<string | null>(null)
 
   useEffect(() => {
     const run = async () => {
@@ -35,6 +45,8 @@ function Detail() {
           setLoadError('Application not found.')
         } else {
           setSubmission(match)
+          setEditingStatus(match.status)
+          setEditingNotes(match.notes || '')
         }
       } catch (err: unknown) {
         setLoadError(err instanceof Error ? err.message : String(err))
@@ -44,6 +56,37 @@ function Detail() {
     }
     void run()
   }, [sub])
+
+  const isDirty =
+    !!submission &&
+    (editingStatus !== submission.status || editingNotes !== (submission.notes || ''))
+
+  const handleSave = async () => {
+    if (!submission || !auth.user) return
+    setSaving(true)
+    setSaveError(null)
+    try {
+      await updateSubmission({
+        google_sub: submission.google_sub,
+        status: editingStatus,
+        notes: editingNotes,
+        reviewed_by: auth.user.name,
+      })
+      const reviewed_at = new Date().toISOString()
+      setSubmission({
+        ...submission,
+        status: editingStatus,
+        notes: editingNotes,
+        reviewed_by: auth.user.name,
+        reviewed_at,
+      })
+      setSavedAt(reviewed_at)
+    } catch (err: unknown) {
+      setSaveError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setSaving(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -133,49 +176,119 @@ function Detail() {
           </Card>
         </div>
 
-        {/* Sidebar: review panel (editing + PDF land in next commits) */}
+        {/* Sidebar: editable review panel */}
         <aside className="space-y-6">
-          <div className="bg-[#1a1a1a] border border-white/10 p-5">
-            <div className="text-[#d81300] text-xs font-black tracking-[0.2em] uppercase mb-4">
-              Review Status
-            </div>
-            <div className="mb-4">
-              <div className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">
-                Current
+          <div className="bg-[#1a1a1a] border border-white/10 p-5 sticky top-[120px]">
+            <div className="flex items-center justify-between mb-5">
+              <div className="text-[#d81300] text-xs font-black tracking-[0.2em] uppercase">
+                Review
               </div>
-              <span
-                className={`inline-block px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.1em] ${statusColor.bg} ${statusColor.text}`}
-              >
-                {statusColor.label}
-              </span>
+              {isDirty && (
+                <span className="text-yellow-400 text-[10px] font-black uppercase tracking-[0.1em]">
+                  Unsaved
+                </span>
+              )}
             </div>
-            {s.reviewed_by && (
-              <div className="mb-4">
-                <div className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">
-                  Reviewed By
+
+            {/* Status dropdown */}
+            <label className="block mb-5">
+              <span className="block text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5">
+                Decision Status
+              </span>
+              <select
+                value={editingStatus}
+                onChange={e => setEditingStatus(e.target.value as Status)}
+                disabled={saving}
+                className="on-white w-full bg-[#2a2a2a] border border-white/10 text-white text-sm px-3 py-2.5 focus:outline-none focus:border-[#d81300] disabled:opacity-50"
+              >
+                {STATUS_OPTIONS.map(s => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </label>
+
+            {/* Notes textarea */}
+            <label className="block mb-5">
+              <span className="block text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5">
+                Reviewer Notes
+              </span>
+              <textarea
+                value={editingNotes}
+                onChange={e => setEditingNotes(e.target.value)}
+                disabled={saving}
+                rows={5}
+                placeholder="Private notes — visible to admins only and will print on the PDF."
+                className="w-full bg-[#2a2a2a] border border-white/10 text-white text-sm px-3 py-2 resize-y focus:outline-none focus:border-[#d81300] placeholder:text-gray-600 disabled:opacity-50"
+              />
+            </label>
+
+            {/* Save button */}
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={!isDirty || saving}
+              className={`w-full py-3 text-xs font-black tracking-[0.15em] uppercase transition-colors ${
+                !isDirty || saving
+                  ? 'bg-white/5 text-white/30 cursor-not-allowed'
+                  : 'bg-[#d81300] text-white hover:bg-[#ff1a00]'
+              }`}
+            >
+              {saving ? (
+                <span className="inline-flex items-center justify-center gap-2">
+                  <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                  </svg>
+                  Saving…
+                </span>
+              ) : isDirty ? (
+                'Save Review'
+              ) : (
+                'No Changes'
+              )}
+            </button>
+
+            {/* Save feedback */}
+            {saveError && (
+              <div className="mt-3 p-2.5 bg-red-500/10 border border-red-500/30 text-red-300 text-xs leading-snug">
+                <strong className="block mb-1">Save failed</strong>
+                <span className="font-mono text-[11px]">{saveError}</span>
+              </div>
+            )}
+            {savedAt && !isDirty && !saveError && (
+              <div className="mt-3 p-2.5 bg-green-500/10 border border-green-500/30 text-green-300 text-xs leading-snug inline-flex items-center gap-2">
+                <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Saved {formatSubmittedAt(savedAt)}
+              </div>
+            )}
+
+            {/* Last reviewer info */}
+            {(s.reviewed_by || s.reviewed_at) && (
+              <div className="mt-6 pt-5 border-t border-white/10">
+                <div className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5">
+                  Last Reviewed
                 </div>
-                <div className="text-white text-sm">{s.reviewed_by}</div>
+                {s.reviewed_by && (
+                  <div className="text-white text-sm">{s.reviewed_by}</div>
+                )}
                 {s.reviewed_at && (
-                  <div className="text-gray-500 text-xs">{formatSubmittedAt(s.reviewed_at)}</div>
+                  <div className="text-gray-500 text-xs mt-0.5">
+                    {formatSubmittedAt(s.reviewed_at)}
+                  </div>
                 )}
               </div>
             )}
-            {s.notes && (
-              <div className="mb-4">
-                <div className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">
-                  Reviewer Notes
-                </div>
-                <div className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                  {s.notes}
-                </div>
-              </div>
-            )}
-            <div className="mt-6 pt-4 border-t border-white/10 text-xs text-gray-500 leading-relaxed">
-              <strong className="text-gray-300 block mb-1">Editing + PDF export coming next</strong>
-              Status, notes, and "Download PDF" actions land in the next commits. For now this page is read-only so you can verify sign-in, allowlist, and data fetching work end-to-end.
-            </div>
           </div>
 
+          {/* PDF download placeholder (next commit) */}
+          <div className="bg-[#1a1a1a] border border-white/10 p-5 text-xs text-gray-500 leading-relaxed">
+            <div className="text-gray-400 font-bold mb-1">Download PDF</div>
+            Branded PDF export with letterhead and signature lines lands in the next commit.
+          </div>
+
+          {/* Metadata */}
           <div className="bg-[#1a1a1a] border border-white/10 p-5 text-xs text-gray-500 leading-relaxed">
             <div className="text-gray-400 font-bold mb-2">Metadata</div>
             <dl className="space-y-1">
