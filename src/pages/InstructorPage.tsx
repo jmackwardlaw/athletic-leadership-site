@@ -13,7 +13,7 @@ export default function InstructorPage() {
     { label: 'School', value: 'Palmetto High School' },
     { label: 'District', value: 'Anderson School District One' },
     { label: 'Subject', value: 'Health & Physical Education' },
-    { label: 'Role', value: 'Football Coach' },
+    { label: 'Role', value: 'Health & PE Teacher and Football Coach' },
     { label: 'Course', value: 'Athletic Leadership' },
   ]
 

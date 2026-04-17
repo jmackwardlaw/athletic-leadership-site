@@ -235,11 +235,11 @@ export default function AboutPage() {
                 <h3 className={`font-black text-base mb-4 leading-tight ${highlight ? 'text-white' : 'text-white'}`}>
                   {title}
                 </h3>
-                <ul className="space-y-1">
+                <ul className="space-y-1.5">
                   {topics.map(t => (
-                    <li key={t} className="text-gray-500 text-xs flex gap-2">
-                      <span className="text-[#d81300]/60 flex-shrink-0">—</span>
-                      {t}
+                    <li key={t} className="text-gray-300 text-sm leading-relaxed flex gap-2.5">
+                      <span className="text-[#d81300] flex-shrink-0 font-bold">›</span>
+                      <span>{t}</span>
                     </li>
                   ))}
                 </ul>
