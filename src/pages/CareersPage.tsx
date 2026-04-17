@@ -263,8 +263,7 @@ export default function CareersPage() {
               return (
                 <div
                   key={path.title}
-                  className="io-reveal bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 hover:border-[#d81300]/30 transition-all duration-300"
-                  data-delay="0"
+                  className="bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 hover:border-[#d81300]/30 transition-all duration-300"
                 >
                   {/* Card header — always visible */}
                   <div
