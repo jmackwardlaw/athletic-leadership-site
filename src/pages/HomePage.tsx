@@ -127,7 +127,7 @@ export default function HomePage() {
               and shape Palmetto athletics from the inside out.
             </p>
             <p className="reveal delay-4 text-gray-500 text-sm mb-10 tracking-wide font-bold uppercase">
-              1.0 Honors Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall Semester
+              1.0 Honors Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall / Spring Semesters
             </p>
             <div className="reveal delay-5 flex flex-col sm:flex-row gap-4">
               <button onClick={() => navigate('/apply')}
