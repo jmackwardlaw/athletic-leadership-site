@@ -97,7 +97,7 @@ export default function AboutPage() {
       <div className="bg-[#d81300]">
         <div className="max-w-7xl mx-auto px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: 'Course Type', value: 'Honors Elective' },
+            { label: 'Course Type', value: 'Honors Weighted Elective' },
             { label: 'Credit', value: '1.0 (HW)' },
             { label: 'Grade Levels', value: '9–12' },
             { label: 'Length', value: '1 Semester' },

@@ -127,7 +127,7 @@ export default function HomePage() {
               and shape Palmetto athletics from the inside out.
             </p>
             <p className="reveal delay-4 text-gray-500 text-sm mb-10 tracking-wide font-bold uppercase">
-              1.0 Honors Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall / Spring Semesters
+              1.0 Honors Weighted — Elective Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall / Spring Semesters
             </p>
             <div className="reveal delay-5 flex flex-col sm:flex-row gap-4">
               <button onClick={() => navigate('/apply')}
@@ -191,7 +191,7 @@ export default function HomePage() {
           <div ref={counterRef} className="grid grid-cols-2 gap-4">
             {[
               { count: '18', label: 'Weeks of Training', sub: 'Full semester' },
-              { count: '1.0', label: 'Honors Credit', sub: 'Weighted elective (HW)' },
+              { count: '1.0', label: 'HW Elective Credit', sub: 'Honors Weighted' },
               { count: '7', label: 'Course Units', sub: 'Starts with 7 Habits' },
               { count: '11', label: 'Career Pathways', sub: 'Explored in-course' },
             ].map(({ count, label, sub }, i) => (
