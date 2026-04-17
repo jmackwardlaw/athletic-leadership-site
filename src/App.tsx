@@ -5,6 +5,8 @@ import SALTPage from './pages/SALTPage'
 import ApplicationPage from './pages/ApplicationPage'
 import CareersPage from './pages/CareersPage'
 import InstructorPage from './pages/InstructorPage'
+import AdminPage from './pages/AdminPage'
+import AdminDetailPage from './pages/AdminDetailPage'
 import Nav from './components/Nav'
 import ScrollToTop from './components/ScrollToTop'
 
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/apply" element={<ApplicationPage />} />
           <Route path="/instructor" element={<InstructorPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/:sub" element={<AdminDetailPage />} />
         </Routes>
       </div>
     </BrowserRouter>
