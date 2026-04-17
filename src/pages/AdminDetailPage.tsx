@@ -34,6 +34,10 @@ function Detail({ auth }: { auth: AdminAuthState }) {
   const [saveError, setSaveError] = useState<string | null>(null)
   const [savedAt, setSavedAt] = useState<string | null>(null)
 
+  // ── PDF state ─────────────────────────────────────────────────────────────────
+  const [generatingPdf, setGeneratingPdf] = useState(false)
+  const [pdfError, setPdfError] = useState<string | null>(null)
+
   useEffect(() => {
     const run = async () => {
       setLoading(true)
@@ -85,6 +89,22 @@ function Detail({ auth }: { auth: AdminAuthState }) {
       setSaveError(err instanceof Error ? err.message : String(err))
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handleDownloadPdf = async () => {
+    if (!submission) return
+    setGeneratingPdf(true)
+    setPdfError(null)
+    try {
+      // Dynamic import keeps the ~280KB PDF library out of the main bundle.
+      // Only loads when an admin actually clicks Download.
+      const { generateApplicationPdf } = await import('../pdf/ApplicationPdf')
+      await generateApplicationPdf(submission, auth.user?.name)
+    } catch (err: unknown) {
+      setPdfError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setGeneratingPdf(false)
     }
   }
 
@@ -282,10 +302,55 @@ function Detail({ auth }: { auth: AdminAuthState }) {
             )}
           </div>
 
-          {/* PDF download placeholder (next commit) */}
-          <div className="bg-[#1a1a1a] border border-white/10 p-5 text-xs text-gray-500 leading-relaxed">
-            <div className="text-gray-400 font-bold mb-1">Download PDF</div>
-            Branded PDF export with letterhead and signature lines lands in the next commit.
+          {/* PDF download */}
+          <div className="bg-[#1a1a1a] border border-white/10 p-5">
+            <div className="text-[#d81300] text-xs font-black tracking-[0.2em] uppercase mb-4">
+              Export
+            </div>
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              disabled={generatingPdf}
+              className={`w-full py-3 text-xs font-black tracking-[0.15em] uppercase transition-colors flex items-center justify-center gap-2 ${
+                generatingPdf
+                  ? 'bg-white/5 text-white/30 cursor-not-allowed'
+                  : 'bg-white text-[#0d0d0d] hover:bg-gray-100'
+              }`}
+            >
+              {generatingPdf ? (
+                <>
+                  <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                  </svg>
+                  Generating PDF…
+                </>
+              ) : (
+                <>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                  </svg>
+                  Download PDF
+                </>
+              )}
+            </button>
+            <p className="text-gray-500 text-[11px] leading-relaxed mt-3">
+              Branded letter-size PDF with Palmetto letterhead, full responses,
+              current decision status, signature lines, and commitment
+              acknowledgements. Uses the current saved review state — save any
+              pending edits first.
+            </p>
+            {pdfError && (
+              <div className="mt-3 p-2.5 bg-red-500/10 border border-red-500/30 text-red-300 text-xs leading-snug">
+                <strong className="block mb-1">PDF generation failed</strong>
+                <span className="font-mono text-[11px]">{pdfError}</span>
+              </div>
+            )}
+            {isDirty && (
+              <div className="mt-3 p-2.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-[11px] leading-snug">
+                You have unsaved changes. The PDF will use the last saved values, not what's currently in the form above.
+              </div>
+            )}
           </div>
 
           {/* Metadata */}
