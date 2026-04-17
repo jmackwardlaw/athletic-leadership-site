@@ -11,6 +11,12 @@ import {
   formatSubmittedAt,
 } from '../lib/admin'
 
+interface BulkProgress {
+  current: number
+  total: number
+  label: string
+}
+
 type FilterValue = 'all' | Status
 type SortKey = 'submitted' | 'name' | 'grade' | 'status'
 type SortDir = 'asc' | 'desc'
@@ -49,6 +55,9 @@ function Dashboard({
   const [sortKey, setSortKey] = useState<SortKey>('submitted')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
+  const [bulkProgress, setBulkProgress] = useState<BulkProgress | null>(null)
+  const [bulkError, setBulkError] = useState<string | null>(null)
+
   const load = async () => {
     setLoading(true)
     setLoadError(null)
@@ -65,6 +74,77 @@ function Dashboard({
   useEffect(() => {
     void load()
   }, [])
+
+  // ── Bulk ZIP export ──────────────────────────────────────────────────────────
+  const handleBulkDownload = async (targets: Submission[], contextLabel: string) => {
+    if (targets.length === 0 || bulkProgress) return
+    setBulkError(null)
+    setBulkProgress({ current: 0, total: targets.length, label: 'Starting…' })
+    try {
+      // Lazy-load the PDF module (~500KB gzipped) + JSZip (~100KB gzipped)
+      const [{ buildApplicationPdfBlob }, JSZipModule] = await Promise.all([
+        import('../pdf/ApplicationPdf'),
+        import('jszip'),
+      ])
+      const JSZip = JSZipModule.default
+      const zip = new JSZip()
+      const usedNames = new Set<string>()
+
+      for (let i = 0; i < targets.length; i++) {
+        const s = targets[i]
+        const displayName = `${s.first_name} ${s.last_name}`.trim() || s.google_sub
+        setBulkProgress({
+          current: i + 1,
+          total: targets.length,
+          label: displayName,
+        })
+
+        const blob = await buildApplicationPdfBlob(s, s.reviewed_by || undefined)
+        // File name: AL_Application_Last_First_Grade.pdf (collision-safe)
+        let safe = `${s.last_name}_${s.first_name}`
+          .replace(/[^a-zA-Z0-9_-]/g, '')
+          .replace(/_+/g, '_')
+          .replace(/^_|_$/g, '')
+        if (!safe) safe = s.google_sub.slice(0, 8)
+        let filename = `AL_Application_${safe}_Grade${s.grade || '?'}.pdf`
+        let suffix = 1
+        while (usedNames.has(filename)) {
+          filename = `AL_Application_${safe}_Grade${s.grade || '?'}_${++suffix}.pdf`
+        }
+        usedNames.add(filename)
+
+        zip.file(filename, blob)
+        // Yield to the event loop so the progress UI can repaint
+        await new Promise(r => setTimeout(r, 0))
+      }
+
+      setBulkProgress({
+        current: targets.length,
+        total: targets.length,
+        label: 'Packaging ZIP…',
+      })
+      const zipBlob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' })
+      const now = new Date()
+      const stamp = now.toISOString().slice(0, 10) // YYYY-MM-DD
+      const zipName = `AL_Applications_${contextLabel}_${stamp}.zip`
+        .replace(/\s+/g, '_')
+        .replace(/_+/g, '_')
+      const url = URL.createObjectURL(zipBlob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = zipName
+      document.body.appendChild(a)
+      a.click()
+      setTimeout(() => {
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+      }, 0)
+    } catch (err: unknown) {
+      setBulkError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setBulkProgress(null)
+    }
+  }
 
   // ── Counts by status for the filter chips
   const counts = useMemo(() => {
@@ -222,13 +302,57 @@ function Dashboard({
 
           <button
             onClick={() => void load()}
-            disabled={loading}
+            disabled={loading || !!bulkProgress}
             className="px-4 py-2 border border-white/10 text-gray-300 text-xs font-black uppercase tracking-[0.1em] hover:border-[#d81300] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             title="Reload from sheet"
           >
             {loading ? 'Loading…' : 'Refresh'}
           </button>
+
+          <button
+            onClick={() => {
+              const label = filter === 'all' ? 'All' : filter
+              void handleBulkDownload(rows, label)
+            }}
+            disabled={rows.length === 0 || !!bulkProgress}
+            className={`px-4 py-2 text-xs font-black uppercase tracking-[0.1em] transition-colors ${
+              rows.length === 0 || bulkProgress
+                ? 'bg-white/5 text-white/30 cursor-not-allowed'
+                : 'bg-white text-[#0d0d0d] hover:bg-gray-100'
+            }`}
+            title={rows.length === 0 ? 'No applications match the current filter' : 'Download filtered applications as a ZIP of PDFs'}
+          >
+            {bulkProgress
+              ? `${bulkProgress.current} / ${bulkProgress.total}…`
+              : `Download ${rows.length} as ZIP`}
+          </button>
         </div>
+
+        {/* Bulk progress bar */}
+        {bulkProgress && (
+          <div className="max-w-7xl mx-auto mt-3">
+            <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+              <span>
+                Generating PDF {bulkProgress.current} of {bulkProgress.total} —{' '}
+                <span className="text-white">{bulkProgress.label}</span>
+              </span>
+              <span className="tabular-nums">
+                {Math.round((bulkProgress.current / bulkProgress.total) * 100)}%
+              </span>
+            </div>
+            <div className="h-1 bg-white/5 overflow-hidden">
+              <div
+                className="h-full bg-[#d81300] transition-[width] duration-150"
+                style={{ width: `${(bulkProgress.current / bulkProgress.total) * 100}%` }}
+              />
+            </div>
+          </div>
+        )}
+        {bulkError && !bulkProgress && (
+          <div className="max-w-7xl mx-auto mt-3 p-3 bg-red-500/10 border border-red-500/30 text-red-300 text-xs">
+            <strong>Bulk export failed:</strong> <span className="font-mono">{bulkError}</span>
+          </div>
+        )}
       </div>
 
       {/* Body */}
