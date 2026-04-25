@@ -371,7 +371,7 @@ export default function ApplicationPage() {
     ev.preventDefault()
     if (isDeadlinePassed()) {
       setStatus('error')
-      setErrorMsg('Applications are now closed. The deadline was Friday, April 24, 2026.')
+      setErrorMsg('Applications are now closed. The deadline was Friday, May 1, 2026.')
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }

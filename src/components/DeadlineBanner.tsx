@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────
 // Application deadline
 // ─────────────────────────────────────────────
-// Applications close at midnight Eastern at the END of Friday, April 24, 2026
-// (i.e. the instant Saturday April 25 begins).
-// April 2026 is during EDT (Eastern Daylight Time), UTC-4.
-export const APPLICATION_DEADLINE = new Date('2026-04-25T00:00:00-04:00')
+// Applications close at midnight Eastern at the END of Friday, May 1, 2026
+// (i.e. the instant Saturday May 2 begins).
+// May 2026 is during EDT (Eastern Daylight Time), UTC-4.
+export const APPLICATION_DEADLINE = new Date('2026-05-02T00:00:00-04:00')
 
 export function isDeadlinePassed(): boolean {
   return Date.now() >= APPLICATION_DEADLINE.getTime()
@@ -39,7 +39,7 @@ export default function DeadlineBanner() {
           <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
         </span>
         <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.12em] sm:tracking-[0.18em] text-center leading-tight">
-          Applications Close Friday April 24 at Midnight
+          Applications Close Friday May 1 at Midnight
           {remaining && (
             <>
               <span className="mx-1.5 sm:mx-2 opacity-60">•</span>
