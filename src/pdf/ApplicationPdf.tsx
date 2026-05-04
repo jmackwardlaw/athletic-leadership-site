@@ -36,20 +36,20 @@ const styles = StyleSheet.create({
     fontSize: 9.5,
     color: COLOR.black,
     paddingTop: 0,
-    paddingBottom: 40,
-    paddingHorizontal: 40,
-    lineHeight: 1.45,
+    paddingBottom: 26,
+    paddingHorizontal: 36,
+    lineHeight: 1.4,
   },
 
   // Compact letterhead (single strip across top)
   letterhead: {
     backgroundColor: COLOR.red,
     color: '#ffffff',
-    marginLeft: -40,
-    marginRight: -40,
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    marginBottom: 14,
+    marginLeft: -36,
+    marginRight: -36,
+    paddingVertical: 7,
+    paddingHorizontal: 36,
+    marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -91,14 +91,14 @@ const styles = StyleSheet.create({
   submittedLine: {
     fontSize: 8.5,
     color: COLOR.gray,
-    marginBottom: 10,
+    marginBottom: 6,
   },
 
   // Four-column info row
   infoRow: {
     flexDirection: 'row',
-    marginBottom: 10,
-    paddingVertical: 6,
+    marginBottom: 6,
+    paddingVertical: 4,
     borderTopWidth: 0.5,
     borderTopColor: COLOR.rule,
     borderBottomWidth: 0.5,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   reviewLine: {
     fontSize: 8,
     color: COLOR.gray,
-    marginBottom: 10,
+    marginBottom: 4,
     fontFamily: 'Helvetica-Oblique',
   },
 
@@ -136,20 +136,20 @@ const styles = StyleSheet.create({
     color: COLOR.red,
     textTransform: 'uppercase',
     letterSpacing: 2,
-    marginTop: 8,
-    marginBottom: 6,
-    paddingBottom: 3,
+    marginTop: 4,
+    marginBottom: 3,
+    paddingBottom: 2,
     borderBottomWidth: 0.75,
     borderBottomColor: COLOR.red,
   },
 
   // Q&A blocks
   essayBlock: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   essayHeader: {
     flexDirection: 'row',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   essayNum: {
     fontFamily: 'Helvetica-Bold',
@@ -167,17 +167,17 @@ const styles = StyleSheet.create({
   essayAnswer: {
     fontSize: 9.5,
     color: COLOR.black,
-    lineHeight: 1.5,
-    marginTop: 1,
+    lineHeight: 1.4,
+    marginTop: 0,
   },
 
   // Reviewer notes
   notesBox: {
     borderWidth: 0.75,
     borderColor: COLOR.rule,
-    padding: 8,
-    minHeight: 28,
-    marginBottom: 8,
+    padding: 6,
+    minHeight: 16,
+    marginBottom: 4,
   },
   notesText: {
     fontSize: 9.5,
@@ -193,8 +193,8 @@ const styles = StyleSheet.create({
   // Decision row
   decisionRow: {
     flexDirection: 'row',
-    marginBottom: 12,
-    marginTop: 4,
+    marginBottom: 6,
+    marginTop: 2,
   },
   decisionItem: {
     flexDirection: 'row',
@@ -226,8 +226,8 @@ const styles = StyleSheet.create({
   // Signatures — two columns side by side
   sigGrid: {
     flexDirection: 'row',
-    marginTop: 4,
-    marginBottom: 10,
+    marginTop: 2,
+    marginBottom: 4,
   },
   sigCell: {
     flex: 1,
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   sigLine: {
     borderBottomWidth: 0.75,
     borderBottomColor: COLOR.black,
-    height: 18,
+    height: 14,
     paddingLeft: 2,
     justifyContent: 'flex-end',
   },
@@ -260,15 +260,15 @@ const styles = StyleSheet.create({
 
   // Commitments — compact block, kept together on one page
   commitmentsBlock: {
-    marginTop: 10,
-    paddingTop: 6,
+    marginTop: 4,
+    paddingTop: 3,
     borderTopWidth: 0.5,
     borderTopColor: COLOR.rule,
   },
   commitment: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   commitmentCheck: {
     color: COLOR.red,
@@ -287,9 +287,9 @@ const styles = StyleSheet.create({
   // Footer (fixed on every auto-generated page)
   footer: {
     position: 'absolute',
-    bottom: 18,
-    left: 40,
-    right: 40,
+    bottom: 12,
+    left: 36,
+    right: 36,
     flexDirection: 'row',
     justifyContent: 'space-between',
     fontSize: 6.5,
