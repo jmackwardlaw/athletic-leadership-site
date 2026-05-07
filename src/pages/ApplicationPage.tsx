@@ -32,6 +32,14 @@ const APPS_SCRIPT_PLACEHOLDER = 'YOUR_APPS_SCRIPT_URL'
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWOs2eSj9ZQODY-1MW6HJj6eZom0sqj-iK9dUjzlYds67WSYA541Qd2EVL1XlYSCl7Iw/exec'
 const IS_DEMO_STORAGE = APPS_SCRIPT_URL === APPS_SCRIPT_PLACEHOLDER
 
+// Late-applicant bypass: appending ?override=<token> to /apply skips the
+// deadline check so a single student can submit after the window has closed.
+const LATE_OVERRIDE_TOKEN = 'latepass-2026'
+function hasLateOverride(): boolean {
+  if (typeof window === 'undefined') return false
+  return new URLSearchParams(window.location.search).get('override') === LATE_OVERRIDE_TOKEN
+}
+
 const MIN_LONG = 50
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -369,7 +377,7 @@ export default function ApplicationPage() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault()
-    if (isDeadlinePassed()) {
+    if (isDeadlinePassed() && !hasLateOverride()) {
       setStatus('error')
       setErrorMsg('Applications are now closed. The deadline was Friday, May 1, 2026.')
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -442,7 +450,7 @@ export default function ApplicationPage() {
     `w-full bg-white border ${errors[field] ? 'border-red-500' : 'border-gray-300'} text-gray-900 px-4 py-3 text-sm focus:outline-none focus:border-[#d81300] transition-colors placeholder:text-gray-400 resize-none`
 
   // ── APPLICATIONS CLOSED ──────────────────────────────────────────────────────
-  if (isDeadlinePassed()) {
+  if (isDeadlinePassed() && !hasLateOverride()) {
     return (
       <div className="pt-[100px] min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] flex items-center justify-center px-6">
         <div className="max-w-xl w-full text-center">
