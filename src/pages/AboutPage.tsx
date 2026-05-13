@@ -7,53 +7,67 @@ export default function AboutPage() {
 
   const units = [
     {
-      num: '01',
-      title: '7 Habits & Leader in Me',
+      num: '00',
+      title: 'Course Intro & Self-Assessment',
       highlight: true,
-      topics: ['What is Leadership?', 'Habit 1 — Be Proactive', 'Habit 2 — Begin with the End in Mind', 'Habit 3 — Put First Things First', 'Habit 4 — Think Win-Win', 'Habit 5 — Seek First to Understand', 'Habit 6 — Synergize', 'Habit 7 — Sharpen the Saw', 'Your Personal Leadership Philosophy'],
-      tag: 'Foundation Unit',
+      topics: ['Course Overview & Expectations', '7 Habits Framing', 'Baseline Leadership Inventory', 'Goal-Setting & Self-Awareness', 'Foundation for the Semester'],
+      tag: 'Orientation',
     },
     {
-      num: '02',
+      num: '01',
       title: 'Foundations of Athletic Leadership',
       highlight: false,
-      topics: ['Leadership Styles in Athletics', 'Communication & Team Leadership', 'Building Positive Team Culture', 'Conflict Resolution', 'Ethics & Sportsmanship'],
+      topics: ['Leadership Theories & Styles', 'AL as an Academic Discipline', 'Vision-Driven Leadership', 'Influence & Team Culture', 'Habit 2 — Begin with the End in Mind'],
       tag: 'Leadership',
     },
     {
-      num: '03',
-      title: 'Athletic Department Structure',
+      num: '02',
+      title: 'Coaching Philosophy & Principles',
       highlight: false,
-      topics: ['Athletic Department Roles', 'Budgeting Basics', 'Scheduling Competitions', 'SCHSL Policies & Compliance', 'Booster Clubs & Partnerships'],
-      tag: 'Administration',
+      topics: ['Developing a Coaching Philosophy', 'Coaching Communication', 'Motivating Athletes', 'Listening & Player-Centered Coaching', 'Habit 5 — Seek First to Understand'],
+      tag: 'Coaching',
+    },
+    {
+      num: '03',
+      title: 'Sport Science Foundations',
+      highlight: false,
+      topics: ['Kinesiology & Movement', 'Strength & Conditioning', 'Nutrition for Athletes', 'Recovery & Load Management', 'Habit 7 — Sharpen the Saw'],
+      tag: 'Sport Science',
     },
     {
       num: '04',
-      title: 'Event & Game Operations',
+      title: 'Sport Psychology & Mental Performance',
       highlight: false,
-      topics: ['Event Planning Fundamentals', 'Game Day Logistics', 'Ticketing & Admissions', 'Crowd Management', 'Sportsmanship & Safety'],
-      tag: 'Operations',
+      topics: ['Mental Skills Training', 'Athlete Identity & Development', 'Mental Health in Sport', 'Performance Under Pressure', 'Habit 1 — Be Proactive'],
+      tag: 'Mental Performance',
     },
     {
       num: '05',
-      title: 'Equipment & Facility Operations',
+      title: 'Ethics, Legal Issues & Character',
       highlight: false,
-      topics: ['Equipment Inventory Systems', 'Facility Preparation & Scheduling', 'Locker Room Operations', 'Safety & Risk Management', 'Equipment Budgeting'],
-      tag: 'Operations',
+      topics: ['Ethical Frameworks in Athletics', 'Title IX', 'Athlete Welfare & Safety', 'Real Case Studies', 'Habit 4 — Think Win-Win'],
+      tag: 'Ethics & Legal',
     },
     {
       num: '06',
-      title: 'Sports Marketing & Media',
+      title: 'Athletic Administration & Modern Issues',
       highlight: false,
-      topics: ['Social Media for Athletics', 'Photography & Videography', 'Branding & Promotions', 'Athlete Storytelling', 'Digital Content Planning'],
-      tag: 'Media',
+      topics: ['Athletic Department Structure', 'NIL in High School & College', 'History of Athletics in Education', 'Modern Issues in Sport', 'Habit 3 — Put First Things First'],
+      tag: 'Administration',
     },
     {
       num: '07',
-      title: 'Capstone Project',
+      title: 'Athletic Operations, Events & Facilities',
       highlight: false,
-      topics: ['Athletic Program Evaluation', 'Research & Best Practices', 'Improvement Proposal Development', 'Implementation Planning', 'Final Presentation to Coaches & Staff'],
-      tag: 'Capstone',
+      topics: ['Game-Day Operations', 'Equipment Management', 'Facility Preparation & Safety', 'Event Planning & Execution', 'Habit 6 — Synergize'],
+      tag: 'Operations',
+    },
+    {
+      num: '08',
+      title: 'Sports Media, Marketing & Branding',
+      highlight: false,
+      topics: ['Sport Media Production', 'Branding & Storytelling', 'School Spirit & Engagement', 'Digital Campaigns', 'Habit 2 — Brand & Message'],
+      tag: 'Media',
     },
   ]
 
@@ -172,17 +186,18 @@ export default function AboutPage() {
               <div className="md:col-span-2">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-0.5 bg-[#d81300]"></div>
-                  <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Unit 1 — The Foundation</span>
+                  <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Unit 00 — The Foundation</span>
                 </div>
                 <h2 className="text-3xl font-black mb-4">
                   We Start with the 7 Habits
                 </h2>
                 <p className="text-gray-400 leading-relaxed mb-5">
-                  Before students touch operations, media, or equipment — they build the 
-                  leadership foundation. Unit 1 is dedicated entirely to the 
-                  <strong className="text-white"> 7 Habits of Highly Effective People</strong> through the 
-                  Leader in Me framework. Students don't just read the habits — they apply 
-                  them to the athletic environment and build their personal leadership philosophy.
+                  The course opens with the
+                  <strong className="text-white"> 7 Habits of Highly Effective People</strong> through the
+                  Leader in Me framework — introduced in Unit 00 and woven through every unit that
+                  follows. Each unit emphasizes a primary habit applied to its content domain, so
+                  students don't just read the habits — they live them across coaching, sport
+                  science, ethics, operations, and media.
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   {[
@@ -213,7 +228,7 @@ export default function AboutPage() {
             <div className="w-8 h-0.5 bg-[#d81300]"></div>
             <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Curriculum</span>
           </div>
-          <h2 className="text-4xl font-black mb-12">7 Units of Study</h2>
+          <h2 className="text-4xl font-black mb-12">9 Units of Study</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-1">
             {units.map(({ num, title, topics, tag, highlight }) => (
               <div

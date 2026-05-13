@@ -41,14 +41,17 @@ export default function HomePage() {
   }, [])
 
   const units = [
-    { num: '01', title: '7 Habits & Leader in Me', desc: 'The leadership foundation. Every AL student starts here before anything else.', tag: 'Foundation', useLogo: true },
-    { num: '02', title: 'Foundations of Athletic Leadership', desc: 'Leadership styles, team culture, communication, and ethics in athletics.', tag: null, useLogo: false },
-    { num: '03', title: 'Athletic Department Structure', desc: 'How programs are built, funded, governed — from SCHSL compliance to booster clubs.', tag: null, useLogo: false },
-    { num: '04', title: 'Event & Game Operations', desc: 'Plan, staff, and execute live athletic events all semester.', tag: null, useLogo: false },
-    { num: '05', title: 'Equipment & Facility Management', desc: 'Inventory, facility prep, safety protocols, and behind-the-scenes ops.', tag: null, useLogo: false },
-    { num: '06', title: 'Sports Media & Marketing', desc: 'Photography, videography, social media, branding — telling the Palmetto story.', tag: null, useLogo: false },
-    { num: '07', title: 'Capstone Project', desc: 'Identify a real improvement opportunity, build a proposal, present to coaches and admin.', tag: 'Capstone', useLogo: false },
-    { num: '↻', title: 'Semester-Long Internship', desc: 'Runs alongside all units from Week 3 through finals. Every student placed with a real program.', tag: 'Ongoing', useLogo: false },
+    { num: '00', title: 'Course Intro & Self-Assessment', desc: 'Orientation, 7 Habits framing, and a baseline leadership inventory.', tag: 'Foundation', useLogo: true },
+    { num: '01', title: 'Foundations of Athletic Leadership', desc: 'Leadership theories, styles, and AL as an academic discipline.', tag: null, useLogo: false },
+    { num: '02', title: 'Coaching Philosophy & Principles', desc: 'Philosophy development, coaching communication, and motivation.', tag: null, useLogo: false },
+    { num: '03', title: 'Sport Science Foundations', desc: 'Kinesiology, strength & conditioning, nutrition, and recovery.', tag: null, useLogo: false },
+    { num: '04', title: 'Sport Psychology & Mental Performance', desc: 'Mental skills, athlete identity, and mental health in sport.', tag: null, useLogo: false },
+    { num: '05', title: 'Ethics, Legal Issues & Character', desc: 'Ethical frameworks, Title IX, athlete welfare, and case studies.', tag: null, useLogo: false },
+    { num: '06', title: 'Athletic Administration & Modern Issues', desc: 'Dept. structure, NIL, and the history of athletics in education.', tag: null, useLogo: false },
+    { num: '07', title: 'Athletic Operations, Events & Facilities', desc: 'Game day, equipment, facilities, and event planning.', tag: null, useLogo: false },
+    { num: '08', title: 'Sports Media, Marketing & Branding', desc: 'Sport media, branding, school spirit, and engagement.', tag: null, useLogo: false },
+    { num: '—', title: 'Capstone & Internship Portfolio', desc: 'Culminating real-world project plus applied leadership portfolio.', tag: 'Capstone', useLogo: false },
+    { num: '↻', title: 'Semester-Long Internship', desc: 'Runs alongside coursework all semester — every student placed with a real program.', tag: 'Ongoing', useLogo: false },
   ]
 
   const ticker = [
@@ -192,7 +195,7 @@ export default function HomePage() {
             {[
               { count: '18', label: 'Weeks of Training', sub: 'Full semester' },
               { count: '1.0', label: 'HW Elective Credit', sub: 'Honors Weighted' },
-              { count: '7', label: 'Course Units', sub: 'Starts with 7 Habits' },
+              { count: '9', label: 'Course Units', sub: 'Plus Capstone & Internship' },
               { count: '11', label: 'Career Pathways', sub: 'Explored in-course' },
             ].map(({ count, label, sub }, i) => (
               <div key={label}
@@ -219,19 +222,19 @@ export default function HomePage() {
             </div>
             <h2 className="text-4xl md:text-5xl font-black">What You'll Cover</h2>
             <p className="text-gray-500 mt-3 max-w-lg mx-auto text-sm">
-              Seven units plus a semester-long internship — starting with the 7 Habits, ending with the Capstone.
+              Nine units plus a capstone and semester-long internship — starting with the 7 Habits, ending with a real-world project.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20 grid-rows-2 auto-rows-fr">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20 auto-rows-fr">
             {units.map(({ num, title, desc, tag, useLogo }, i) => (
               <div key={num}
                 className={`io-reveal p-6 hover:bg-gradient-to-br from-[#111111] to-[#1f1f1f] transition-all duration-300 group cursor-default flex flex-col ${
-                  num === '↻' ? 'bg-[#d81300]/8' : 'bg-gradient-to-br from-[#242424] to-[#383838]'
+                  num === '↻' || num === '—' ? 'bg-[#d81300]/8' : 'bg-gradient-to-br from-[#242424] to-[#383838]'
                 }`}
                 data-delay={String(i * 50)}>
                 <div className="flex items-start justify-between mb-4">
-                  {num !== '↻' && (
+                  {num !== '↻' && num !== '—' && (
   <div className="w-9 h-9 flex items-center justify-center font-black text-sm flex-shrink-0 bg-[#d81300] text-white">
     {num}
   </div>
@@ -304,17 +307,17 @@ export default function HomePage() {
           <div className="io-reveal bg-gray-50 border-l-4 border-[#d81300] border border-gray-200 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8" data-delay="0">
             <LeaderInMeLogo className="w-28 h-28 object-contain flex-shrink-0" />
             <div className="flex-1">
-              <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">Foundation — Unit 01</div>
+              <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">Foundation — Unit 00</div>
               <h3 className="text-2xl md:text-3xl font-black mb-3 text-gray-900">Every student starts with the 7 Habits</h3>
               <p className="text-gray-600 text-sm leading-relaxed max-w-2xl">
-                Before operations, media, or equipment — every AL student builds a leadership
-                foundation through the <strong className="text-gray-900">Leader in Me</strong> framework.
-                The 7 Habits become the operating principles of everything SALT members do all semester.
+                Athletic Leadership opens with the <strong className="text-gray-900">Leader in Me</strong> framework —
+                introduced in Unit 00 and applied across every unit that follows. The 7 Habits become the
+                operating principles of everything SALT members do all semester.
               </p>
             </div>
             <button onClick={() => navigate('/about')}
               className="flex-shrink-0 px-6 py-3 border border-[#d81300] text-[#d81300] font-black text-xs tracking-[0.12em] uppercase hover:bg-[#d81300] hover:text-white transition-all duration-200">
-              See Unit 01 →
+              See Unit 00 →
             </button>
           </div>
         </div>
