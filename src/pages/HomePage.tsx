@@ -240,7 +240,7 @@ export default function HomePage() {
   </div>
 )}
                   {tag && (
-                    <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-[#d81300] border border-[#d81300]/40 px-2 py-0.5 uppercase tracking-wider">
                       {tag}
                     </span>
                   )}
@@ -250,10 +250,10 @@ export default function HomePage() {
     <LeaderInMeLogo className="w-20 h-20 object-contain" />
   </div>
 )}
-                <h3 className="font-black text-white text-xs mb-2 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200 leading-tight">
+                <h3 className="font-black text-white text-sm md:text-base mb-2 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200 leading-tight">
                   {title}
                 </h3>
-                <p className="text-gray-500 text-xs leading-relaxed flex-1">{desc}</p>
+                <p className="text-gray-400 text-sm leading-relaxed flex-1">{desc}</p>
                 <div className="mt-3 h-px w-0 bg-[#d81300] group-hover:w-full transition-all duration-500" />
               </div>
             ))}
