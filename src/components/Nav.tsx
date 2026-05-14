@@ -18,55 +18,46 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
       <DeadlineBanner />
-      <div className="h-1 bg-[#d81300] w-full" />
-      <div className="bg-gradient-to-br from-[#111111] to-[#1f1f1f]/96 backdrop-blur-md border-b border-[#d81300]/30">
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
+      <div className="red-textured-band border-b border-black/20 shadow-[0_4px_18px_rgba(0,0,0,0.35)]">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
           <NavLink to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="absolute -left-3 top-0 bottom-0 w-0.5 bg-[#d81300]" />
-              <HorseshoeLogo className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110" />
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-white text-sm leading-tight tracking-[0.18em] uppercase"
+            <HorseshoeLogo className="w-9 h-9 object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]" />
+            <div className="hidden sm:block leading-tight">
+              <div className="text-white text-sm tracking-[0.16em] uppercase font-headline drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
                 style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
                 Athletic Leadership
               </div>
-              <div className="text-[#d81300] text-[10px] font-black tracking-[0.25em] uppercase">
+              <div className="text-white/75 text-[10px] font-headline font-bold tracking-[0.22em] uppercase">
                 Palmetto High School
               </div>
             </div>
           </NavLink>
 
-          <div className="hidden md:flex items-center">
-            <div className="flex items-center border-l border-[#d81300]/30 pl-6 gap-1">
-              {links.map(({ label, to }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  end={to === '/'}
-                  className={({ isActive }) =>
-                    `relative px-3 py-2 text-xs font-black tracking-[0.1em] uppercase transition-all duration-200 group ${
-                      isActive ? 'text-white' : 'text-gray-500 hover:text-white'
-                    }`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      {isActive && (
-                        <span className="absolute inset-0 bg-[#d81300]/15 border-b-2 border-[#d81300]" />
-                      )}
-                      <span className="relative">{label}</span>
-                      {!isActive && (
-                        <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#d81300] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              ))}
-            </div>
+          <div className="hidden md:flex items-center gap-1">
+            {links.map(({ label, to }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === '/'}
+                className={({ isActive }) =>
+                  `relative px-3 py-2 font-headline text-xs font-bold tracking-[0.12em] uppercase transition-colors duration-200 group ${
+                    isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <span className="relative">{label}</span>
+                    <span className={`absolute bottom-1 left-3 right-3 h-0.5 bg-white transition-transform duration-200 origin-left ${
+                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`} />
+                  </>
+                )}
+              </NavLink>
+            ))}
             <button
               onClick={() => navigate('/apply')}
-              className="ml-4 px-5 py-2 bg-[#d81300] text-white text-xs font-black tracking-[0.12em] uppercase hover:bg-[#ff1a00] transition-all duration-200 hover:shadow-lg hover:shadow-[#d81300]/40 hover:-translate-y-px"
+              className="ml-4 inline-flex items-center justify-center gap-2 font-headline font-bold text-xs tracking-[0.12em] uppercase py-2 px-5 rounded-token bg-white text-brand-red hover:bg-white/95 transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:-translate-y-px"
             >
               Apply Now
             </button>
@@ -83,7 +74,7 @@ export default function Nav() {
       </div>
 
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
-        <div className="bg-gradient-to-br from-[#242424] to-[#383838] border-b border-[#d81300]/20 px-6 py-4 space-y-1">
+        <div className="bg-surface-raised border-b border-white/[0.06] px-6 py-4 space-y-1">
           {links.map(({ label, to }) => (
             <NavLink
               key={to}
@@ -91,8 +82,8 @@ export default function Nav() {
               end={to === '/'}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `block w-full text-left px-3 py-3 text-xs font-black tracking-[0.12em] uppercase border-b border-white/5 transition-colors ${
-                  isActive ? 'text-[#d81300]' : 'text-gray-300 hover:text-white'
+                `block w-full text-left px-3 py-3 font-headline text-xs font-bold tracking-[0.14em] uppercase border-b border-white/[0.04] transition-colors ${
+                  isActive ? 'text-brand-red' : 'text-ink-secondary hover:text-ink-primary'
                 }`
               }
             >
@@ -102,7 +93,7 @@ export default function Nav() {
           <NavLink
             to="/apply"
             onClick={() => setMenuOpen(false)}
-            className="block w-full text-center px-4 py-3 bg-[#d81300] text-white font-black text-xs tracking-[0.12em] uppercase mt-3 hover:bg-[#ff1a00] transition-colors"
+            className="btn btn-primary w-full mt-3"
           >
             Apply Now
           </NavLink>

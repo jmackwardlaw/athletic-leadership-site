@@ -74,57 +74,53 @@ export default function SALTPage() {
   return (
     <div className="pt-[100px]">
       {/* HEADER */}
-      <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
-        <div className="absolute inset-0 bg-[#d81300]/5" />
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none"
-          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 65%)' }} />
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.06]">
+      <section className="relative py-24 md:py-28 px-6 overflow-hidden bg-surface-base">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.05) 35%, transparent 65%)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.05]">
           <HorseshoeLogo className="w-full h-full object-contain" />
         </div>
-        <div className="relative max-w-7xl mx-auto pl-6">
-          <div className="reveal flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Student Organization</span>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="reveal flex items-center gap-3 mb-6">
+            <div className="red-grad-rule w-12" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Student Organization</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black leading-none mb-3"
-  style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-  The <span className="text-[#d81300]">SALT</span>
-</h1>
-<p className="text-2xl md:text-3xl font-black text-white/60 mb-6 tracking-wide">
-  We season the program.
-</p>
-          <p className="reveal delay-1 text-gray-400 text-lg max-w-2xl leading-relaxed">
-  Students in Athletic Leadership have the opportunity to earn a role on the <strong className="text-white">Student Athletic Leadership Team</strong>, where they take on real leadership responsibilities that keep Palmetto Athletics running at every level.
-</p>
+          <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.95] mb-4">
+            The <span className="red-grad-text">SALT</span>
+          </h1>
+          <p className="font-headline text-2xl md:text-3xl font-black text-ink-secondary mb-6 tracking-wide">
+            We season the program.
+          </p>
+          <p className="reveal delay-1 text-ink-secondary text-lg max-w-2xl leading-relaxed">
+            Students in Athletic Leadership have the opportunity to earn a role on the <strong className="text-ink-primary">Student Athletic Leadership Team</strong>, where they take on real leadership responsibilities that keep Palmetto Athletics running at every level.
+          </p>
         </div>
       </section>
 
       {/* MISSION */}
-      <section className="bg-white py-20 px-6" ref={s1}>
+      <section className="bg-surface-raised py-24 md:py-28 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3">
             <div className="io-slide-right" data-delay="0">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-0.5 bg-[#d81300]" />
-                <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Mission</span>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="red-grad-rule w-10" />
+                <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Mission</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-black mb-6 text-gray-900">Built to Serve.<br />Trained to Lead.</h2>
+              <h2 className="font-headline text-3xl md:text-4xl font-black mb-6 text-ink-primary leading-tight">Built to serve.<br /><span className="red-grad-text">Trained to lead.</span></h2>
             </div>
-            <div className="io-reveal" data-delay="80">
-              <p className="text-gray-600 leading-relaxed mb-5">
+            <div className="io-reveal space-y-5 text-ink-secondary leading-relaxed" data-delay="80">
+              <p>
                 SALT members aren't observers — they're contributors. They show up before
                 games start, stay after they end, and spend the weeks between building the
                 systems that make programs successful.
               </p>
-              <p className="text-gray-600 leading-relaxed">
+              <p>
                 Membership through Athletic Leadership is selective. Every SALT member is
                 chosen for character, work ethic, and commitment to the Palmetto athletic culture.
               </p>
             </div>
           </div>
-          <div className="md:col-span-2 space-y-2">
+          <div className="md:col-span-2 space-y-3">
             {[
               'Develop student leadership within athletics',
               'Increase student involvement in programs',
@@ -133,10 +129,10 @@ export default function SALTPage() {
               'Promote positive sportsmanship and culture',
             ].map((item, i) => (
               <div key={item}
-                className="io-reveal flex gap-3 items-start bg-gray-50 border-l-2 border-[#d81300]/50 pl-4 py-3 pr-3 border border-gray-200"
+                className="io-reveal flex gap-3 items-start card-dark p-4"
                 data-delay={String(i * 60)}>
-                <span className="text-[#d81300] font-black text-base leading-tight flex-shrink-0">✓</span>
-                <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                <span className="text-brand-red font-black text-base leading-tight flex-shrink-0">✓</span>
+                <span className="text-ink-secondary text-sm leading-relaxed">{item}</span>
               </div>
             ))}
           </div>
@@ -144,29 +140,29 @@ export default function SALTPage() {
       </section>
 
       {/* ROLES */}
-      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-20 px-6" ref={s2}>
+      <section className="bg-surface-base py-24 md:py-28 px-6" ref={s2}>
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal flex items-center gap-3 mb-3" data-delay="0">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Team Structure</span>
+          <div className="io-reveal flex items-center gap-3 mb-4" data-delay="0">
+            <div className="red-grad-rule w-10" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Team Structure</span>
           </div>
-          <h2 className="io-reveal text-4xl font-black mb-12" data-delay="40">SALT Leadership Roles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#d81300]/15">
+          <h2 className="io-reveal font-headline text-4xl md:text-5xl font-black mb-12 leading-tight" data-delay="40">SALT <span className="red-grad-text">Leadership</span> Roles</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {roles.map(({ key, title, desc, responsibilities }, i) => (
               <div key={key}
-                className="io-reveal bg-gradient-to-br from-[#242424] to-[#383838] p-6 hover:bg-[#181818] transition-all duration-300 group"
+                className="io-reveal card-dark red-card-edge p-7 group"
                 data-delay={String(i * 60)}>
-                <div className="text-[#d81300] mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">
+                <div className="text-brand-red mb-5 transition-transform duration-300 group-hover:scale-110 origin-left">
                   {Icons[key as keyof typeof Icons]}
                 </div>
-                <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2 group-hover:text-[#d81300] transition-colors">
+                <h3 className="font-headline text-ink-primary text-lg font-black mb-2 group-hover:text-brand-red transition-colors leading-tight">
                   {title}
                 </h3>
-                <p className="text-gray-500 text-xs mb-4 leading-relaxed">{desc}</p>
-                <div className="border-t border-white/5 pt-3 space-y-1">
+                <p className="text-ink-muted text-sm mb-4 leading-relaxed">{desc}</p>
+                <div className="border-t border-white/[0.06] pt-4 space-y-1.5">
                   {responsibilities.map(r => (
-                    <div key={r} className="text-xs text-gray-600 flex gap-2">
-                      <span className="text-[#d81300]/50 flex-shrink-0">—</span>{r}
+                    <div key={r} className="text-xs text-ink-secondary flex gap-2">
+                      <span className="text-brand-red/60 flex-shrink-0">—</span>{r}
                     </div>
                   ))}
                 </div>
@@ -177,25 +173,25 @@ export default function SALTPage() {
       </section>
 
       {/* INTERNSHIP PLACEMENTS */}
-      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6" ref={s3}>
+      <section className="bg-surface-raised py-24 md:py-28 px-6" ref={s3}>
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal flex items-center gap-3 mb-3" data-delay="0">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Internship Program</span>
+          <div className="io-reveal flex items-center gap-3 mb-4" data-delay="0">
+            <div className="red-grad-rule w-10" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Internship Program</span>
           </div>
-          <h2 className="io-reveal text-4xl font-black mb-4" data-delay="40">Where SALT Members Work</h2>
-          <p className="io-reveal text-gray-400 mb-10 max-w-2xl text-sm leading-relaxed" data-delay="80">
+          <h2 className="io-reveal font-headline text-4xl md:text-5xl font-black mb-5 leading-tight" data-delay="40">Where SALT <span className="red-grad-text">Members Work</span></h2>
+          <p className="io-reveal text-ink-secondary mb-12 max-w-2xl leading-relaxed" data-delay="80">
             Every SALT member is placed in a real internship role within Palmetto's athletic programs — working directly alongside coaches, athletic trainers, and event staff from Week 3 through finals.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {placements.map(({ icon, label }, i) => (
               <div key={label}
-                className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/5 p-5 text-center hover:border-[#d81300]/40 transition-all duration-300 group card-lift"
+                className="io-reveal card-dark card-lift p-5 text-center group"
                 data-delay={String(i * 60)}>
-                <div className="text-[#d81300] flex justify-center mb-3 transition-transform duration-300 group-hover:scale-110">
+                <div className="text-brand-red flex justify-center mb-3 transition-transform duration-300 group-hover:scale-110">
                   {icon}
                 </div>
-                <div className="text-white text-xs font-bold uppercase tracking-wide whitespace-pre-line leading-relaxed">{label}</div>
+                <div className="font-headline text-ink-primary text-xs font-bold uppercase tracking-[0.12em] whitespace-pre-line leading-relaxed">{label}</div>
               </div>
             ))}
           </div>
@@ -203,19 +199,19 @@ export default function SALTPage() {
       </section>
 
       {/* 7 HABITS */}
-      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-20 px-6" ref={s4}>
+      <section className="bg-surface-base py-24 md:py-28 px-6" ref={s4}>
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <div className="io-slide-right" data-delay="0">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-0.5 bg-[#d81300]" />
-                  <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Our Foundation</span>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="red-grad-rule w-10" />
+                  <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Our Foundation</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-black mb-6">7 Habits.<br />Athletic Application.</h2>
+                <h2 className="font-headline text-3xl md:text-4xl font-black mb-6 leading-tight"><span className="red-grad-text">7 Habits.</span><br />Athletic application.</h2>
               </div>
               <div className="io-reveal" data-delay="80">
-                <p className="text-gray-400 leading-relaxed mb-6">
+                <p className="text-ink-secondary leading-relaxed mb-6">
                   Every SALT member starts with the 7 Habits of Highly Effective People through
                   the Leader in Me framework. These habits aren't classroom theory — they're
                   the operating principles SALT members apply every day in their roles.
@@ -223,15 +219,15 @@ export default function SALTPage() {
                 <LeaderInMeLogo className="w-56 h-56 object-contain opacity-90" />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {habits.map(({ num, title, desc }, i) => (
                 <div key={num}
-                  className="io-reveal flex gap-4 items-start bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
+                  className="io-reveal flex gap-4 items-start card-dark p-4"
                   data-delay={String(i * 50)}>
-                  <div className="w-8 h-8 bg-[#d81300] flex items-center justify-center font-black text-white text-xs flex-shrink-0">{num}</div>
+                  <div className="w-8 h-8 bg-brand-red flex items-center justify-center font-black text-white text-xs flex-shrink-0 rounded-sm">{num}</div>
                   <div>
-                    <div className="text-white font-bold text-sm">{title}</div>
-                    <div className="text-gray-500 text-xs mt-0.5 leading-relaxed">{desc}</div>
+                    <div className="text-ink-primary font-bold text-sm">{title}</div>
+                    <div className="text-ink-muted text-xs mt-0.5 leading-relaxed">{desc}</div>
                   </div>
                 </div>
               ))}
@@ -241,28 +237,27 @@ export default function SALTPage() {
       </section>
 
       {/* INSTRUCTOR */}
-      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6">
+      <section className="bg-surface-raised py-24 md:py-28 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-[#d81300]/20 p-8 md:p-10">
+          <div className="card-dark red-card-edge p-8 md:p-10">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-0.5 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Instructor</span>
+              <div className="red-grad-rule w-10" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Course Instructor</span>
             </div>
             <div className="grid md:grid-cols-3 gap-8 items-start">
               <div className="md:col-span-2">
-                <h3 className="text-3xl font-black mb-1">Mr. Jack Wardlaw</h3>
-                <div className="text-[#d81300] text-sm font-bold tracking-wide mb-4">Health/PE Teacher · Football Coach · Palmetto High School</div>
-                <p className="text-gray-400 leading-relaxed text-sm mb-4">
+                <h3 className="font-headline text-3xl font-black mb-1 leading-tight">Mr. Jack Wardlaw</h3>
+                <div className="text-brand-red text-sm font-bold tracking-wide mb-4">Health/PE Teacher · Football Coach · Palmetto High School</div>
+                <p className="text-ink-secondary leading-relaxed text-sm mb-6">
                   Coach Wardlaw brings experience as a Health/PE educator, football coach, and doctoral student in Educational Leadership to this course. Athletic Leadership is built from real knowledge of what it takes to run high school athletic programs at a high level.
                 </p>
-                <button onClick={() => navigate('/instructor')}
-                  className="px-5 py-2 border border-[#d81300]/50 text-[#d81300] font-black text-xs tracking-[0.1em] uppercase hover:bg-[#d81300] hover:text-white transition-all duration-200">
+                <button onClick={() => navigate('/instructor')} className="btn btn-outline">
                   Full Instructor Profile →
                 </button>
               </div>
               <div className="space-y-3">
                 {['Anderson School District One', 'Palmetto High School', 'Health / PE Educator', 'Football Coach', 'Doctoral Student — Ed. Leadership'].map(t => (
-                  <div key={t} className="text-gray-400 text-xs border-l-2 border-[#d81300]/40 pl-3">{t}</div>
+                  <div key={t} className="text-ink-secondary text-xs border-l-2 border-brand-red/40 pl-3 py-0.5">{t}</div>
                 ))}
               </div>
             </div>
@@ -271,16 +266,15 @@ export default function SALTPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative bg-[#d81300] py-16 px-6 overflow-hidden text-center">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }} />
-        <HorseshoeLogo className="w-20 h-20 object-contain mx-auto mb-6 opacity-20 relative" />
-        <h2 className="relative text-3xl md:text-4xl font-black text-white mb-4">Think You Have What It Takes?</h2>
-        <p className="relative text-white/70 mb-8">SALT membership is earned. Applications open for 2026–2027.</p>
-        <button onClick={() => navigate('/apply')}
-          className="relative px-10 py-4 bg-white text-[#d81300] font-black text-sm tracking-[0.15em] uppercase hover:bg-gray-100 transition-all duration-200">
+      <section className="relative bg-surface-base py-24 md:py-28 px-6 overflow-hidden text-center">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 20% 0%, rgba(216,19,0,0.22) 0%, transparent 60%)' }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 100% 100%, rgba(216,19,0,0.18) 0%, transparent 60%)' }} />
+        <HorseshoeLogo className="relative w-16 h-16 object-contain mx-auto mb-6 opacity-30" />
+        <h2 className="relative font-headline text-3xl md:text-5xl font-black text-ink-primary mb-4 leading-tight">Think you have <span className="red-grad-text">what it takes?</span></h2>
+        <p className="relative text-ink-secondary mb-8 max-w-xl mx-auto leading-relaxed">SALT membership is earned. Applications open for 2026–2027.</p>
+        <button onClick={() => navigate('/apply')} className="relative btn btn-primary">
           Apply for SALT
         </button>
       </section>

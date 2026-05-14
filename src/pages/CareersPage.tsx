@@ -187,24 +187,21 @@ export default function CareersPage() {
   return (
     <div className="pt-[100px]">
       {/* HEADER */}
-      <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none"
-          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 65%)' }} />
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none opacity-[0.04]">
-          <HorseshoeLogo className="w-80 h-80 object-contain" />
+      <section className="relative py-24 md:py-28 px-6 bg-surface-base overflow-hidden">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.05) 35%, transparent 65%)' }} />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-[0.04]">
+          <HorseshoeLogo className="w-[600px] h-[600px] object-contain" />
         </div>
-        <div className="relative max-w-7xl mx-auto pl-6">
-          <div className="reveal flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Sports Industry Careers</span>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="reveal flex items-center gap-3 mb-6">
+            <div className="red-grad-rule w-12" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Sports Industry Careers</span>
           </div>
-          <h1 className="reveal delay-1 text-5xl md:text-7xl font-black leading-none mb-6"
-            style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-            Where This<br /><span className="text-[#d81300]">Takes You</span>
+          <h1 className="reveal delay-1 font-display text-5xl md:text-7xl font-black leading-[0.95] mb-7">
+            Where this<br /><span className="red-grad-text">takes you</span>
           </h1>
-          <p className="reveal delay-2 text-gray-400 text-lg max-w-2xl leading-relaxed">
+          <p className="reveal delay-2 text-ink-secondary text-lg max-w-2xl leading-relaxed">
             Every unit in Athletic Leadership connects to a real career path.
             Click a category to explore the jobs, salaries, and how AL prepares you.
           </p>
@@ -212,8 +209,8 @@ export default function CareersPage() {
       </section>
 
       {/* STATS BAR */}
-      <div className="bg-[#d81300]">
-        <div className="max-w-7xl mx-auto px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="red-textured-band">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-7 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { num: '14', label: 'Career Profiles', sub: 'Across 5 categories' },
             { num: '$135K', label: 'Top Marketing Salary', sub: 'Sports Marketing Director' },
@@ -221,29 +218,29 @@ export default function CareersPage() {
             { num: '1', label: 'Course to Start', sub: 'Athletic Leadership' },
           ].map(({ num, label, sub }) => (
             <div key={label} className="text-center">
-              <div className="text-white font-black text-xl">{num}</div>
-              <div className="text-white/80 text-xs font-bold uppercase tracking-[0.08em]">{label}</div>
-              <div className="text-white/50 text-[10px] mt-0.5">{sub}</div>
+              <div className="font-headline text-white font-black text-xl leading-tight drop-shadow-sm">{num}</div>
+              <div className="font-headline text-white/80 text-[10px] font-bold uppercase tracking-[0.18em] mt-1">{label}</div>
+              <div className="text-white/60 text-[10px] mt-0.5">{sub}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* CATEGORY FILTER */}
-      <div className="bg-gradient-to-br from-[#242424] to-[#383838] border-b border-white/5 sticky top-[57px] z-40">
+      <div className="bg-surface-raised border-b border-white/[0.06] sticky top-[57px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1 overflow-x-auto py-3 scrollbar-none">
+          <div className="flex gap-2 overflow-x-auto py-3 scrollbar-none">
             {categories.map(({ key, label }) => (
               <button
                 key={key}
                 onClick={() => setActiveCategory(key)}
-                className={`flex items-center gap-2 px-4 py-2 text-xs font-black tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
+                className={`flex items-center gap-2 px-4 py-2 font-headline text-xs font-bold tracking-[0.12em] uppercase whitespace-nowrap transition-all duration-200 flex-shrink-0 rounded-token ${
                   activeCategory === key
-                    ? 'bg-[#d81300] text-white'
-                    : 'bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] text-gray-400 hover:text-white border border-white/10 hover:border-white/25'
+                    ? 'bg-brand-red text-white'
+                    : 'bg-surface-card text-ink-secondary hover:text-ink-primary border border-white/[0.06] hover:border-white/20'
                 }`}>
                 {key !== 'all' && (
-                  <span className={activeCategory === key ? 'text-white' : 'text-[#d81300]'}>
+                  <span className={activeCategory === key ? 'text-white' : 'text-brand-red'}>
                     <CatIcon cat={key} />
                   </span>
                 )}
@@ -255,61 +252,56 @@ export default function CareersPage() {
       </div>
 
       {/* CAREER CARDS */}
-      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-12 px-6" ref={s1}>
+      <section className="bg-surface-base py-16 md:py-20 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-5">
             {filtered.map((path) => {
               const isExpanded = expandedCard === path.title
               return (
                 <div
                   key={path.title}
-                  className="bg-gradient-to-br from-[#242424] to-[#383838] border border-white/5 hover:border-[#d81300]/30 transition-all duration-300"
+                  className="card-dark transition-colors"
                 >
-                  {/* Card header — always visible */}
                   <div
-                    className="p-6 cursor-pointer"
+                    className="p-7 cursor-pointer"
                     onClick={() => setExpandedCard(isExpanded ? null : path.title)}
                   >
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="text-[#d81300]"><CatIcon cat={path.cat} /></div>
-                        <h3 className="font-black text-white text-lg leading-tight">{path.title}</h3>
+                        <div className="text-brand-red"><CatIcon cat={path.cat} /></div>
+                        <h3 className="font-headline text-ink-primary text-xl font-black leading-tight">{path.title}</h3>
                       </div>
-                      <span className={`text-[#d81300] font-black text-lg transition-transform duration-200 flex-shrink-0 ${isExpanded ? 'rotate-45' : ''}`}>+</span>
+                      <span className={`text-brand-red font-black text-lg transition-transform duration-200 flex-shrink-0 ${isExpanded ? 'rotate-45' : ''}`}>+</span>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="bg-[#d81300]/15 border border-[#d81300]/30 text-[#d81300] px-3 py-1 text-xs font-bold">{path.salary}</span>
-                      <span className="bg-white/5 border border-white/10 text-gray-400 px-3 py-1 text-xs font-bold">{path.level}</span>
+                      <span className="bg-brand-red/[0.12] border border-brand-red/30 text-brand-red px-3 py-1 text-xs font-bold rounded-sm">{path.salary}</span>
+                      <span className="bg-white/[0.04] border border-white/10 text-ink-secondary px-3 py-1 text-xs font-bold rounded-sm">{path.level}</span>
                     </div>
-                    <p className="text-gray-400 text-sm leading-relaxed">{path.desc}</p>
+                    <p className="text-ink-secondary text-sm leading-relaxed">{path.desc}</p>
                   </div>
 
-                  {/* Expanded detail */}
                   <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[600px]' : 'max-h-0'}`}>
-                    <div className="px-6 pb-6 space-y-5 border-t border-white/5 pt-5">
-                      {/* AL Connection */}
-                      <div className="bg-[#d81300]/8 border-l-2 border-[#d81300] pl-4 py-3">
-                        <div className="text-[#d81300] text-[10px] font-black uppercase tracking-[0.15em] mb-1">AL Connection</div>
-                        <p className="text-gray-300 text-xs leading-relaxed">{path.alConnection}</p>
+                    <div className="px-7 pb-7 space-y-5 border-t border-white/[0.06] pt-5">
+                      <div className="card-red-wash p-4">
+                        <div className="font-headline text-brand-red text-[10px] font-bold uppercase tracking-[0.18em] mb-1.5">AL Connection</div>
+                        <p className="text-ink-primary text-xs leading-relaxed">{path.alConnection}</p>
                       </div>
-                      {/* Pathway */}
                       <div>
-                        <div className="text-white text-xs font-black uppercase tracking-[0.12em] mb-3">Career Pathway</div>
-                        <div className="flex flex-wrap items-center gap-1">
+                        <div className="font-headline text-ink-primary text-xs font-bold uppercase tracking-[0.15em] mb-3">Career Pathway</div>
+                        <div className="flex flex-wrap items-center gap-1.5">
                           {path.pathSteps.map((step, si) => (
-                            <div key={step} className="flex items-center gap-1">
-                              <span className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/10 text-gray-300 text-[10px] px-2 py-1 font-bold">{step}</span>
-                              {si < path.pathSteps.length - 1 && <span className="text-[#d81300] text-xs font-black">›</span>}
+                            <div key={step} className="flex items-center gap-1.5">
+                              <span className="bg-surface-raised border border-white/10 text-ink-secondary text-[10px] px-2 py-1 font-bold rounded-sm">{step}</span>
+                              {si < path.pathSteps.length - 1 && <span className="text-brand-red text-xs font-black">›</span>}
                             </div>
                           ))}
                         </div>
                       </div>
-                      {/* Skills */}
                       <div>
-                        <div className="text-white text-xs font-black uppercase tracking-[0.12em] mb-2">Key Skills</div>
+                        <div className="font-headline text-ink-primary text-xs font-bold uppercase tracking-[0.15em] mb-2">Key Skills</div>
                         <div className="flex flex-wrap gap-2">
                           {path.skills.map(skill => (
-                            <span key={skill} className="text-[10px] text-gray-500 border border-white/8 px-2 py-0.5 font-bold uppercase tracking-wide hover:text-[#d81300] hover:border-[#d81300]/30 transition-colors cursor-default">
+                            <span key={skill} className="font-headline text-[10px] text-ink-muted border border-white/[0.08] px-2 py-0.5 font-bold uppercase tracking-[0.12em] rounded-sm hover:text-brand-red hover:border-brand-red/30 transition-colors cursor-default">
                               {skill}
                             </span>
                           ))}
@@ -325,29 +317,27 @@ export default function CareersPage() {
       </section>
 
       {/* DEGREE PATHWAYS */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-surface-raised py-24 md:py-28 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <div>
-              <div className="text-[#d81300] text-xs font-black tracking-[0.25em] uppercase mb-0.5">After High School</div>
-              <h2 className="text-3xl font-black text-gray-900">Degree Pathways to Consider</h2>
-            </div>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="red-grad-rule w-10" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">After High School</span>
           </div>
-          <p className="text-gray-500 text-sm mb-8 max-w-xl">SC schools with relevant programs — Athletic Leadership gives you the foundation before you arrive.</p>
+          <h2 className="font-headline text-3xl md:text-4xl font-black mb-3 text-ink-primary leading-tight">Degree <span className="red-grad-text">Pathways</span> to Consider</h2>
+          <p className="text-ink-secondary text-sm md:text-base mb-10 max-w-xl leading-relaxed">SC schools with relevant programs — Athletic Leadership gives you the foundation before you arrive.</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { degree: 'Sports Management', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, schools: 'USC, Clemson, Winthrop, Lander', note: 'Broadest pathway — covers business, ops, and leadership' },
-              { degree: 'Exercise Science', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>, schools: 'USC, Clemson, Anderson Univ.', note: 'Foundation for S&C, athletic training, and performance careers' },
-              { degree: 'Communications / Broadcast', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>, schools: 'USC, Coastal Carolina, Bob Jones', note: 'Sports media, journalism, broadcasting, and PR' },
-              { degree: 'Athletic Training (BS + ATC)', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#d81300]"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>, schools: 'Presbyterian, Winthrop, Lander', note: 'Clinical pathway requiring specific accredited programs' },
-            ].map(({ degree, icon, schools, note }, i) => (
-              <div key={degree} className="bg-gray-50 border border-gray-200 p-6 hover:border-[#d81300]/40 transition-all duration-300 card-lift">
-                <div className="mb-4">{icon}</div>
-                <h3 className="font-black text-gray-900 text-sm uppercase tracking-wide mb-2">{degree}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed mb-3">{note}</p>
-                <div className="text-[#d81300] text-[10px] font-bold uppercase tracking-wide">SC Schools:</div>
-                <div className="text-gray-500 text-[10px]">{schools}</div>
+              { degree: 'Sports Management', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-brand-red"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, schools: 'USC, Clemson, Winthrop, Lander', note: 'Broadest pathway — covers business, ops, and leadership' },
+              { degree: 'Exercise Science', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-brand-red"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>, schools: 'USC, Clemson, Anderson Univ.', note: 'Foundation for S&C, athletic training, and performance careers' },
+              { degree: 'Communications / Broadcast', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-brand-red"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>, schools: 'USC, Coastal Carolina, Bob Jones', note: 'Sports media, journalism, broadcasting, and PR' },
+              { degree: 'Athletic Training (BS + ATC)', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-brand-red"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>, schools: 'Presbyterian, Winthrop, Lander', note: 'Clinical pathway requiring specific accredited programs' },
+            ].map(({ degree, icon, schools, note }) => (
+              <div key={degree} className="card-dark card-lift p-6">
+                <div className="mb-5">{icon}</div>
+                <h3 className="font-headline text-ink-primary text-base font-black mb-2 leading-tight">{degree}</h3>
+                <p className="text-ink-muted text-xs leading-relaxed mb-4">{note}</p>
+                <div className="font-headline text-brand-red text-[10px] font-bold uppercase tracking-[0.15em]">SC Schools</div>
+                <div className="text-ink-secondary text-xs mt-1">{schools}</div>
               </div>
             ))}
           </div>
@@ -355,24 +345,22 @@ export default function CareersPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative bg-[#d81300] py-20 px-6 overflow-hidden text-center">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }} />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-10 pointer-events-none">
-          <HorseshoeLogo className="w-96 h-96 object-contain" />
+      <section className="relative bg-surface-base py-24 md:py-28 px-6 overflow-hidden text-center">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 20% 0%, rgba(216,19,0,0.22) 0%, transparent 60%)' }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 100% 100%, rgba(216,19,0,0.18) 0%, transparent 60%)' }} />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-[0.04] pointer-events-none">
+          <HorseshoeLogo className="w-[600px] h-[600px] object-contain" />
         </div>
-        <div className="relative max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight mb-4">The Best Time to Start Is Right Now.</h2>
-          <p className="text-white/70 text-lg mb-10">Athletic Leadership gives you the foundation, the experience, and the connections to compete for a career in sports.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={() => navigate('/apply')}
-              className="px-10 py-4 bg-white text-[#d81300] font-black text-sm tracking-[0.15em] uppercase hover:bg-gray-100 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl">
+        <div className="relative max-w-3xl mx-auto">
+          <h2 className="font-headline text-4xl md:text-5xl font-black text-ink-primary leading-[1.05] mb-5">The best time to start is <span className="red-grad-text">right now.</span></h2>
+          <p className="text-ink-secondary text-lg mb-10 leading-relaxed">Athletic Leadership gives you the foundation, the experience, and the connections to compete for a career in sports.</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button onClick={() => navigate('/apply')} className="btn btn-primary">
               Apply for Selection
             </button>
-            <button onClick={() => navigate('/about')}
-              className="px-10 py-4 border-2 border-white/60 text-white font-black text-sm tracking-[0.15em] uppercase hover:bg-white/10 hover:border-white transition-all duration-200">
+            <button onClick={() => navigate('/about')} className="btn btn-outline">
               Course Overview
             </button>
           </div>

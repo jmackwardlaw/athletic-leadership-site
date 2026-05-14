@@ -35,58 +35,55 @@ export default function InstructorPage() {
   return (
     <div className="pt-[100px]">
       {/* HEADER */}
-      <section className="relative py-24 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none"
-          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 65%)' }} />
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none opacity-[0.04]">
-          <HorseshoeLogo className="w-80 h-80 object-contain" />
+      <section className="relative py-24 md:py-28 px-6 bg-surface-base overflow-hidden">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.05) 35%, transparent 65%)' }} />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-[0.04]">
+          <HorseshoeLogo className="w-[600px] h-[600px] object-contain" />
         </div>
-        <div className="relative max-w-7xl mx-auto pl-6">
-          <div className="reveal flex items-center gap-3 mb-4">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Instructor</span>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="reveal flex items-center gap-3 mb-6">
+            <div className="red-grad-rule w-12" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Course Instructor</span>
           </div>
-          <h1 className="reveal delay-1 text-5xl md:text-7xl font-black leading-none mb-4"
-            style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-            Coach<br /><span className="text-[#d81300]">Wardlaw</span>
+          <h1 className="reveal delay-1 font-display text-5xl md:text-7xl font-black leading-[0.95] mb-5">
+            Coach<br /><span className="red-grad-text">Wardlaw</span>
           </h1>
-          <p className="reveal delay-2 text-gray-400 text-lg max-w-xl leading-relaxed">
+          <p className="reveal delay-2 text-ink-secondary text-lg max-w-xl leading-relaxed">
             Health/PE Teacher · Football Coach · Palmetto High School
           </p>
         </div>
       </section>
 
       {/* PHOTO + BIO */}
-      <section className="bg-white py-20 px-6" ref={s1}>
+      <section className="bg-surface-raised py-24 md:py-28 px-6" ref={s1}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 items-start">
 
           {/* Photo */}
           <div className="io-reveal" data-delay="0">
-            <div className="border-2 border-[#d81300]/30 aspect-square overflow-hidden">
+            <div className="card-dark red-card-edge aspect-square overflow-hidden">
               <img
                 src={coachPhoto}
                 alt="Coach Wardlaw"
                 className="w-full h-full object-cover object-top"
               />
             </div>
-            <div className="mt-3 text-center">
-              <div className="text-gray-900 font-black text-sm">Coach Jack Wardlaw</div>
-              <div className="text-[#d81300] text-xs font-bold tracking-wide uppercase mt-0.5">Palmetto High School</div>
+            <div className="mt-4 text-center">
+              <div className="font-headline text-ink-primary font-black text-sm">Coach Jack Wardlaw</div>
+              <div className="font-headline text-brand-red text-xs font-bold tracking-[0.18em] uppercase mt-0.5">Palmetto High School</div>
             </div>
           </div>
 
           {/* Bio */}
           <div className="md:col-span-2">
             <div className="io-slide-right mb-6" data-delay="60">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-0.5 bg-[#d81300]" />
-                <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">About</span>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="red-grad-rule w-10" />
+                <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">About</span>
               </div>
-              <h2 className="text-3xl font-black mb-4 text-gray-900">Building the Next Generation<br />of Athletic Leaders</h2>
+              <h2 className="font-headline text-3xl md:text-4xl font-black mb-6 text-ink-primary leading-tight">Building the next generation<br />of <span className="red-grad-text">athletic leaders</span></h2>
             </div>
-            <div className="io-reveal space-y-4 text-gray-600 leading-relaxed text-sm" data-delay="120">
+            <div className="io-reveal space-y-5 text-ink-secondary leading-relaxed" data-delay="120">
               <p>
                 Coach Wardlaw is a Health and Physical Education teacher and football coach at Palmetto High School and a 2014 PHS graduate. Teaching in the community he grew up in is something he is passionate about, and his focus as an educator is helping students develop the confidence, accountability, and discipline to make a positive impact on those around them.
               </p>
@@ -105,20 +102,20 @@ export default function InstructorPage() {
       </section>
 
       {/* CREDENTIALS + EDUCATION */}
-      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6">
+      <section className="bg-surface-base py-24 md:py-28 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
 
           {/* Credentials */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-0.5 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Credentials</span>
+              <div className="red-grad-rule w-10" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Credentials</span>
             </div>
             <div className="space-y-3">
               {credentials.map(({ label, value }) => (
-                <div key={label} className="flex gap-4 bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border-l-2 border-[#d81300]/40 px-4 py-3">
-                  <span className="text-gray-600 text-xs w-20 flex-shrink-0 uppercase tracking-wide font-bold pt-0.5">{label}</span>
-                  <span className="text-white text-sm font-bold">{value}</span>
+                <div key={label} className="flex gap-4 card-dark px-4 py-3">
+                  <span className="font-headline text-ink-muted text-[10px] w-16 flex-shrink-0 uppercase tracking-[0.15em] font-bold pt-0.5">{label}</span>
+                  <span className="text-ink-primary text-sm font-bold">{value}</span>
                 </div>
               ))}
             </div>
@@ -127,19 +124,19 @@ export default function InstructorPage() {
           {/* Education */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-0.5 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Education</span>
+              <div className="red-grad-rule w-10" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Education</span>
             </div>
             <div className="space-y-3">
               {education.map(({ degree, school, status }) => (
-                <div key={degree} className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border-l-2 border-[#d81300]/40 px-4 py-3">
+                <div key={degree} className="card-dark px-4 py-3">
                   <div className="flex items-start justify-between gap-2">
-                    <div className="text-white text-sm font-bold leading-snug">{degree}</div>
+                    <div className="text-ink-primary text-sm font-bold leading-snug">{degree}</div>
                     {status && (
-                      <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider whitespace-nowrap flex-shrink-0 mt-0.5">{status}</span>
+                      <span className="font-headline text-[9px] font-bold text-brand-red border border-brand-red/40 px-1.5 py-0.5 uppercase tracking-[0.15em] whitespace-nowrap flex-shrink-0 mt-0.5 rounded-sm">{status}</span>
                     )}
                   </div>
-                  <div className="text-gray-500 text-xs mt-1">{school}</div>
+                  <div className="text-ink-muted text-xs mt-1">{school}</div>
                 </div>
               ))}
             </div>
@@ -148,16 +145,16 @@ export default function InstructorPage() {
           {/* Expertise */}
           <div ref={s2}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-0.5 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Areas of Expertise</span>
+              <div className="red-grad-rule w-10" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Areas of Expertise</span>
             </div>
             <div className="space-y-3">
               {expertise.map(({ area, desc }, i) => (
                 <div key={area}
-                  className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] border border-white/5 p-4 hover:border-[#d81300]/20 transition-colors"
+                  className="io-reveal card-dark p-4"
                   data-delay={String(i * 50)}>
-                  <div className="text-white font-bold text-sm mb-1">{area}</div>
-                  <div className="text-gray-500 text-xs leading-relaxed">{desc}</div>
+                  <div className="text-ink-primary font-bold text-sm mb-1">{area}</div>
+                  <div className="text-ink-muted text-xs leading-relaxed">{desc}</div>
                 </div>
               ))}
             </div>
@@ -167,23 +164,21 @@ export default function InstructorPage() {
       </section>
 
       {/* COURSE CTA */}
-      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-16 px-6">
+      <section className="bg-surface-raised py-24 md:py-28 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-[#242424] to-[#383838] border border-[#d81300]/20 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+          <div className="card-dark red-card-edge p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
-              <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">2026–2027</div>
-              <h3 className="text-2xl font-black mb-3">Interested in Athletic Leadership?</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <div className="font-headline text-brand-red text-[11px] font-bold tracking-[0.22em] uppercase mb-3">2026–2027</div>
+              <h3 className="font-headline text-2xl md:text-3xl font-black mb-3 leading-tight">Interested in Athletic Leadership?</h3>
+              <p className="text-ink-secondary leading-relaxed">
                 Applications for the 2026–2027 school year are open. Coach Wardlaw reviews every application personally — selection is based on character, work ethic, and commitment to Palmetto Athletics.
               </p>
             </div>
-            <div className="flex flex-col gap-3 flex-shrink-0">
-              <button onClick={() => navigate('/apply')}
-                className="px-8 py-3 bg-[#d81300] text-white font-black text-sm tracking-[0.1em] uppercase hover:bg-[#ff1a00] transition-all duration-200 whitespace-nowrap">
+            <div className="flex flex-col gap-3 flex-shrink-0 w-full md:w-auto">
+              <button onClick={() => navigate('/apply')} className="btn btn-primary whitespace-nowrap">
                 Apply Now
               </button>
-              <button onClick={() => navigate('/about')}
-                className="px-8 py-3 border border-white/20 text-white font-bold text-sm tracking-[0.1em] uppercase hover:border-[#d81300]/60 hover:text-[#d81300] transition-all duration-200 whitespace-nowrap">
+              <button onClick={() => navigate('/about')} className="btn btn-outline whitespace-nowrap">
                 Course Overview
               </button>
             </div>

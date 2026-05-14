@@ -550,20 +550,18 @@ export default function ApplicationPage() {
     return (
       <div className="pt-[100px]">
         {/* Header */}
-        <section className="relative py-20 px-6 bg-gradient-to-br from-[#242424] to-[#383838] overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{ backgroundImage: `repeating-linear-gradient(-45deg, #d81300, #d81300 1px, transparent 1px, transparent 24px)` }}
-          />
+        <section className="relative py-24 md:py-28 px-6 bg-surface-base overflow-hidden">
+          <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+            style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.05) 35%, transparent 65%)' }} />
           <div className="relative max-w-7xl mx-auto">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5 bg-[#d81300]"></div>
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">2026–2027 Enrollment</span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="red-grad-rule w-12"></div>
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">2026–2027 Enrollment</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black mb-4" style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-              Athletic Leadership<br /><span className="text-[#d81300]">Application</span>
+            <h1 className="font-display text-5xl md:text-6xl font-black leading-[0.95] mb-5">
+              Athletic Leadership<br /><span className="red-grad-text">Application</span>
             </h1>
-            <p className="text-gray-400 max-w-xl leading-relaxed">
+            <p className="text-ink-secondary text-lg max-w-xl leading-relaxed">
               Admission to the Athletic Leadership program is selective.
               Complete the application — Coach Wardlaw will review every submission and notify selected students.
             </p>
@@ -571,14 +569,14 @@ export default function ApplicationPage() {
         </section>
 
         {/* Info bar */}
-        <div className="bg-[#d81300] py-4 px-6">
-          <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-3 justify-center">
+        <div className="red-textured-band">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-5 flex flex-wrap gap-x-8 gap-y-3 justify-center">
             {[
               { icon: <ShieldCheckIcon />, text: 'Reviewed by Coach Wardlaw — not all applicants accepted' },
               { icon: <ClockIcon />, text: 'Plan 20–30 minutes for thoughtful responses' },
               { icon: <CalendarIcon />, text: '2026–2027 Academic Year' },
             ].map(({ icon, text }) => (
-              <div key={text} className="flex items-center gap-2.5 text-white text-sm">
+              <div key={text} className="flex items-center gap-2.5 text-white text-sm font-medium">
                 <span className="text-white/90 flex-shrink-0">{icon}</span>
                 <span>{text}</span>
               </div>
@@ -587,20 +585,20 @@ export default function ApplicationPage() {
         </div>
 
         {/* Sign-in gate */}
-        <section className="py-20 px-6 bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a]">
+        <section className="py-24 md:py-28 px-6 bg-surface-base">
           <div className="max-w-xl mx-auto">
-            <div className="border border-white/10 bg-white/[0.03] backdrop-blur-sm p-10 text-center">
-              <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-4">Step 1 — Verify Identity</div>
-              <h2 className="text-3xl font-black mb-4">Sign in to begin</h2>
-              <p className="text-gray-400 text-sm leading-relaxed mb-8">
-                Use your <span className="text-white font-bold">Anderson District One</span> student Google account to start your application. This verifies your identity so Coach Wardlaw can contact you.
+            <div className="card-dark red-card-edge p-10 text-center">
+              <div className="font-headline text-brand-red text-[11px] font-bold tracking-[0.22em] uppercase mb-4">Step 1 — Verify Identity</div>
+              <h2 className="font-headline text-3xl md:text-4xl font-black mb-4 text-ink-primary leading-tight">Sign in to begin</h2>
+              <p className="text-ink-secondary text-sm leading-relaxed mb-8">
+                Use your <span className="text-ink-primary font-bold">Anderson District One</span> student Google account to start your application. This verifies your identity so Coach Wardlaw can contact you.
               </p>
               <div className="flex justify-center mb-4 min-h-[44px]">
                 {IS_DEMO_AUTH ? (
                   <button
                     type="button"
                     onClick={handleDemoSignIn}
-                    className="px-8 py-3 bg-[#d81300] text-white font-black text-sm tracking-[0.1em] uppercase hover:bg-[#ff1a00] transition-colors"
+                    className="btn btn-primary"
                   >
                     Continue (Demo Mode)
                   </button>
@@ -608,8 +606,8 @@ export default function ApplicationPage() {
                   <div ref={signInBtnRef}></div>
                 )}
               </div>
-              <p className="text-gray-500 text-xs">
-                Only <span className="text-white">@{HOSTED_DOMAIN}</span> accounts can submit this application.
+              <p className="text-ink-muted text-xs">
+                Only <span className="text-ink-secondary">@{HOSTED_DOMAIN}</span> accounts can submit this application.
               </p>
               {authError && (
                 <div className="mt-6 p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-xs text-left">

@@ -8,7 +8,6 @@ export default function HomePage() {
   const navigate = useNavigate()
   const s1 = useScrollReveal()
   const s2 = useScrollReveal()
-  const s3 = useScrollReveal()
   const s4 = useScrollReveal()
   const s5 = useScrollReveal()
 
@@ -91,98 +90,95 @@ export default function HomePage() {
     <div className="pt-[100px]">
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e]">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#d81300]" />
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(216,19,0,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(216,19,0,0.12) 1px, transparent 1px)`,
-          backgroundSize: '80px 80px',
-        }} />
-        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#d81300]" />
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] pointer-events-none"
-          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.18) 0%, transparent 70%)' }} />
-        <div className="absolute right-0 top-0 h-full w-2/3 pointer-events-none"
-          style={{ background: 'linear-gradient(120deg, transparent 55%, rgba(216,19,0,0.10) 100%)' }} />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 pointer-events-none select-none opacity-[0.05]">
-          <HorseshoeLogo className="w-[700px] h-[700px]" />
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-surface-base">
+        {/* Soft red ambient glow — top-left */}
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 0% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.05) 35%, transparent 65%)' }} />
+        {/* Secondary red glow — bottom-right counter-balance */}
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 100% 100%, rgba(216,19,0,0.16) 0%, transparent 60%)' }} />
+        {/* Horseshoe watermark — quieter, lower-right */}
+        <div className="absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4 pointer-events-none select-none opacity-[0.04]">
+          <HorseshoeLogo className="w-[760px] h-[760px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 py-28 w-full">
-          <div className="max-w-3xl pl-6">
-            <div className="reveal delay-0 flex items-center gap-3 mb-6">
-              <div className="h-0.5 w-10 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.35em] uppercase">
-                Palmetto High School · Anderson District One
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-28 w-full">
+          <div className="max-w-3xl">
+            <div className="reveal delay-0 flex items-center gap-3 mb-8">
+              <div className="red-grad-rule w-12" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">
+                Palmetto High School
               </span>
             </div>
-            <h1 className="leading-[0.88] tracking-tight mb-8"
-              style={{ fontFamily: "'Racesport', 'Barlow Condensed', sans-serif" }}>
-              <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-white">athletic</span>
+            <h1 className="font-display leading-[0.9] tracking-tight mb-10">
+              <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-ink-primary">athletic</span>
               <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
-                <span className="text-[#d81300]">LEADER</span>
-                <span className="text-white">ship</span>
+                <span className="red-grad-text">LEADER</span>
+                <span className="text-ink-primary">ship</span>
               </span>
             </h1>
-            <p className="reveal delay-3 text-gray-400 text-lg md:text-xl max-w-xl mb-3 leading-relaxed font-light">
+            <p className="reveal delay-3 font-body text-ink-secondary text-lg md:text-xl max-w-xl mb-5 leading-relaxed">
               An honors-weighted career course for students who want to lead, operate,
               and shape Palmetto athletics from the inside out.
             </p>
-            <p className="reveal delay-4 text-gray-500 text-sm mb-10 tracking-wide font-bold uppercase">
-              1.0 Honors Weighted — Elective Credit &nbsp;·&nbsp; Grades 9–12 &nbsp;·&nbsp; Fall / Spring Semesters
-            </p>
-            <div className="reveal delay-5 flex flex-col sm:flex-row gap-4">
-              <button onClick={() => navigate('/apply')}
-                className="px-8 py-4 bg-[#d81300] text-white font-black text-sm tracking-[0.15em] uppercase hover:bg-[#ff1a00] transition-all duration-200 hover:shadow-xl hover:shadow-[#d81300]/40 hover:-translate-y-0.5">
+            <div className="reveal delay-4 font-headline text-ink-muted text-xs mb-12 tracking-[0.16em] uppercase font-bold flex flex-wrap gap-x-4 gap-y-1">
+              <span>1.0 Honors Weighted Credit</span>
+              <span className="text-ink-faint">·</span>
+              <span>Grades 9–12</span>
+              <span className="text-ink-faint">·</span>
+              <span>Fall / Spring</span>
+            </div>
+            <div className="reveal delay-5 flex flex-col sm:flex-row gap-3">
+              <button onClick={() => navigate('/apply')} className="btn btn-primary">
                 Apply for Selection
               </button>
-              <button onClick={() => navigate('/about')}
-                className="px-8 py-4 border border-white/20 text-white font-bold text-sm tracking-[0.15em] uppercase hover:border-[#d81300]/60 hover:text-[#d81300] transition-all duration-200">
+              <button onClick={() => navigate('/about')} className="btn btn-outline">
                 Course Overview →
               </button>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-25">
-          <span className="text-[10px] tracking-[0.25em] uppercase text-white">Scroll</span>
-          <div className="w-px h-10 bg-gradient-to-b from-white to-transparent" />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+          <span className="font-headline text-[10px] tracking-[0.25em] uppercase text-ink-muted">Scroll</span>
+          <div className="w-px h-10 bg-gradient-to-b from-ink-muted to-transparent" />
         </div>
       </section>
 
       {/* ─── MARQUEE ──────────────────────────────────────────────────────── */}
-      <div className="bg-[#d81300] py-3 overflow-hidden border-y border-[#ff1a00]/30">
-        <div className="marquee-track">
+      <div className="red-textured-band py-4 overflow-hidden">
+        <div className="marquee-track relative z-10">
           {[...ticker, ...ticker].map((item, i) => (
-            <span key={i} className="inline-flex items-center gap-4 px-4 text-white/90 font-black text-xs tracking-[0.2em] uppercase">
-              {item}<span className="text-white/50">◆</span>
+            <span key={i} className="inline-flex items-center gap-4 px-5 font-headline text-white text-xs tracking-[0.22em] uppercase font-black">
+              {item}<span className="text-white/60">◆</span>
             </span>
           ))}
         </div>
       </div>
 
       {/* ─── WHAT IS AL ───────────────────────────────────────────────────── */}
-      <section className="bg-white py-24 px-6 relative overflow-hidden" ref={s1}>
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#d81300] via-[#d81300]/40 to-transparent" />
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      <section className="bg-surface-base py-24 md:py-28 px-6 relative overflow-hidden" ref={s1}>
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start">
           <div>
             <div className="io-slide-right mb-6" data-delay="0">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-0.5 bg-[#d81300]" />
-                <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">About the Course</span>
+                <div className="red-grad-rule w-10" />
+                <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">About the Course</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 text-gray-900">
-                More Than A Class.<br /><span className="text-[#d81300]">A Career Path.</span>
+              <h2 className="font-headline text-4xl md:text-5xl font-black leading-tight mb-6 text-ink-primary">
+                More than a class.<br /><span className="red-grad-text">A career path.</span>
               </h2>
             </div>
-            <div className="io-reveal" data-delay="80">
-              <p className="text-gray-600 leading-relaxed mb-5">
+            <div className="io-reveal space-y-5 text-ink-secondary leading-relaxed" data-delay="80">
+              <p>
                 Athletic Leadership is Palmetto's career-focused elective built around one question:
-                <em className="text-gray-900 font-medium"> What does it actually take to run a championship program?</em>
+                <em className="text-ink-primary font-medium"> what does it actually take to run a championship program?</em>
               </p>
-              <p className="text-gray-600 leading-relaxed mb-5">
+              <p>
                 Students don't just learn about athletics — they work inside them. Through a semester-long
                 internship, real event operations, media production, and project-based leadership,
-                AL students are the backbone of Palmetto Athletics.
+                AL students get hands-on experience inside Palmetto Athletics.
               </p>
-              <p className="text-gray-600 leading-relaxed">
+              <p>
                 The course begins with the 7 Habits of Highly Effective People through the Leader
                 in Me framework — building the leadership foundation everything else is built on.
               </p>
@@ -196,11 +192,11 @@ export default function HomePage() {
               { count: '11', label: 'Career Pathways', sub: 'Explored in-course' },
             ].map(({ count, label, sub }, i) => (
               <div key={label}
-                className="io-reveal bg-gray-50 border-l-4 border-[#d81300] border-t border-r border-b border-gray-200 p-6 card-lift"
+                className="io-reveal card-dark red-card-edge p-7"
                 data-delay={String(i * 80)}>
-                <div className="text-4xl font-black text-[#d81300] mb-1 tabular-nums" data-count={count}>{count}</div>
-                <div className="text-gray-900 font-bold text-sm uppercase tracking-wide">{label}</div>
-                <div className="text-gray-500 text-xs mt-1">{sub}</div>
+                <div className="font-headline text-5xl font-black red-grad-text mb-2 tabular-nums leading-none" data-count={count}>{count}</div>
+                <div className="text-ink-primary font-bold text-sm">{label}</div>
+                <div className="text-ink-muted text-xs mt-1">{sub}</div>
               </div>
             ))}
           </div>
@@ -208,112 +204,75 @@ export default function HomePage() {
       </section>
 
       {/* ─── UNITS GRID 2×4 ───────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] py-24 px-6 relative" ref={s2}>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
+      <section className="bg-surface-raised py-24 md:py-28 px-6 relative" ref={s2}>
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal text-center mb-12" data-delay="0">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-8 h-0.5 bg-[#d81300]" />
-              <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Course Outline</span>
-              <div className="w-8 h-0.5 bg-[#d81300]" />
+          <div className="io-reveal text-center mb-14 max-w-2xl mx-auto" data-delay="0">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="red-grad-rule-center w-12" />
+              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Course Outline</span>
+              <div className="red-grad-rule-center w-12" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-black">What You'll Cover</h2>
-            <p className="text-gray-500 mt-3 max-w-lg mx-auto text-sm">
+            <h2 className="font-headline text-4xl md:text-5xl font-black mb-4">What You'll Cover</h2>
+            <p className="text-ink-muted text-sm md:text-base leading-relaxed">
               Seven units plus a semester-long internship — starting with the 7 Habits, ending with the Capstone.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d81300]/20 grid-rows-2 auto-rows-fr">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {units.map(({ num, title, desc, tag, useLogo }, i) => (
               <div key={num}
-                className={`io-reveal p-6 hover:bg-gradient-to-br from-[#111111] to-[#1f1f1f] transition-all duration-300 group cursor-default flex flex-col ${
-                  num === '↻' ? 'bg-[#d81300]/8' : 'bg-gradient-to-br from-[#242424] to-[#383838]'
+                className={`io-reveal card-dark p-6 group cursor-default flex flex-col ${
+                  num === '↻' ? 'border-brand-red/30' : ''
                 }`}
                 data-delay={String(i * 50)}>
-                <div className="flex items-start justify-between mb-4">
-                  {num !== '↻' && (
-  <div className="w-9 h-9 flex items-center justify-center font-black text-sm flex-shrink-0 bg-[#d81300] text-white">
-    {num}
-  </div>
-)}
+                <div className="flex items-start justify-between mb-5">
+                  {num !== '↻' ? (
+                    <div className="font-headline text-2xl font-black text-brand-red leading-none">{num}</div>
+                  ) : (
+                    <div className="font-headline text-2xl font-black text-brand-red leading-none">↻</div>
+                  )}
                   {tag && (
-                    <span className="text-[9px] font-black text-[#d81300] border border-[#d81300]/40 px-1.5 py-0.5 uppercase tracking-wider">
+                    <span className="font-headline text-[9px] font-bold text-ink-secondary border border-white/10 px-2 py-0.5 uppercase tracking-[0.15em] rounded-sm">
                       {tag}
                     </span>
                   )}
                 </div>
                 {useLogo && (
-  <div className="mb-3">
-    <LeaderInMeLogo className="w-20 h-20 object-contain" />
-  </div>
-)}
-                <h3 className="font-black text-white text-xs mb-2 uppercase tracking-wide group-hover:text-[#d81300] transition-colors duration-200 leading-tight">
+                  <div className="mb-3">
+                    <LeaderInMeLogo className="w-16 h-16 object-contain" />
+                  </div>
+                )}
+                <h3 className="font-headline text-ink-primary text-sm font-black mb-2 leading-tight group-hover:text-brand-red transition-colors">
                   {title}
                 </h3>
-                <p className="text-gray-500 text-xs leading-relaxed flex-1">{desc}</p>
-                <div className="mt-3 h-px w-0 bg-[#d81300] group-hover:w-full transition-all duration-500" />
+                <p className="text-ink-muted text-xs leading-relaxed flex-1">{desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="io-reveal text-center mt-10" data-delay="200">
-            <button onClick={() => navigate('/about')}
-              className="px-8 py-3 border border-white/15 text-white font-bold text-sm tracking-[0.12em] uppercase hover:border-[#d81300] hover:text-[#d81300] hover:bg-[#d81300]/5 transition-all duration-200">
+          <div className="io-reveal text-center mt-14" data-delay="200">
+            <button onClick={() => navigate('/about')} className="btn btn-outline">
               Full Course Details →
             </button>
           </div>
         </div>
       </section>
 
-      {/* ─── SALT CALLOUT ─────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-20 px-6 relative overflow-hidden" ref={s3}>
-        <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#d81300] via-[#d81300]/40 to-transparent" />
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <div className="io-reveal flex-shrink-0" data-delay="0">
-            <HorseshoeLogo className="w-44 h-44 object-contain transition-transform duration-500 hover:scale-105" />
-          </div>
-          <div>
-            <div className="io-slide-right mb-4" data-delay="80">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-0.5 bg-[#d81300]" />
-                <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Student Organization</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                AL students form the <span className="text-[#d81300]">SALT</span> Team
-              </h2>
-            </div>
-            <div className="io-reveal" data-delay="160">
-              <p className="text-gray-400 leading-relaxed max-w-2xl mb-6">
-                The Student Athletic Leadership Team is the organization that brings this
-                course to life. SALT members hold real roles — Operations, Media, Equipment,
-                Spirit, Development, Community — and contribute to Palmetto Athletics every week.
-              </p>
-              <button onClick={() => navigate('/salt')}
-                className="px-6 py-3 bg-[#d81300] text-white font-black text-sm tracking-[0.1em] uppercase hover:bg-[#ff1a00] transition-all duration-200 hover:shadow-lg hover:shadow-[#d81300]/30 hover:-translate-y-0.5">
-                Meet the SALT Team →
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── LEADER IN ME STRIP ───────────────────────────────────────────── */}
-      <section className="bg-white py-16 px-6 relative" ref={s4}>
-        <div className="absolute top-0 left-0 right-0 h-px bg-[#d81300]/30" />
-        <div className="max-w-7xl mx-auto">
-          <div className="io-reveal bg-gray-50 border-l-4 border-[#d81300] border border-gray-200 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8" data-delay="0">
+      <section className="bg-surface-raised py-20 md:py-24 px-6 relative" ref={s4}>
+        <div className="max-w-6xl mx-auto">
+          <div className="io-reveal card-dark red-card-edge p-8 md:p-10 flex flex-col md:flex-row items-center gap-8" data-delay="0">
             <LeaderInMeLogo className="w-28 h-28 object-contain flex-shrink-0" />
             <div className="flex-1">
-              <div className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase mb-3">Foundation — Unit 01</div>
-              <h3 className="text-2xl md:text-3xl font-black mb-3 text-gray-900">Every student starts with the 7 Habits</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-2xl">
+              <div className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary mb-3">Foundation — Unit 01</div>
+              <h3 className="font-headline text-2xl md:text-3xl font-black mb-3 text-ink-primary leading-tight">Every student starts with the 7 Habits</h3>
+              <p className="text-ink-secondary text-sm leading-relaxed max-w-2xl">
                 Before operations, media, or equipment — every AL student builds a leadership
-                foundation through the <strong className="text-gray-900">Leader in Me</strong> framework.
-                The 7 Habits become the operating principles of everything SALT members do all semester.
+                foundation through the <strong className="text-ink-primary">Leader in Me</strong> framework.
+                The 7 Habits become the operating principles AL students apply across their internships, projects, and leadership work all semester.
               </p>
             </div>
-            <button onClick={() => navigate('/about')}
-              className="flex-shrink-0 px-6 py-3 border border-[#d81300] text-[#d81300] font-black text-xs tracking-[0.12em] uppercase hover:bg-[#d81300] hover:text-white transition-all duration-200">
+            <button onClick={() => navigate('/about')} className="btn btn-outline flex-shrink-0">
               See Unit 01 →
             </button>
           </div>
@@ -321,29 +280,27 @@ export default function HomePage() {
       </section>
 
       {/* ─── CAREERS CALLOUT ──────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-[#242424] to-[#383838] py-16 px-6 relative" ref={s5}>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d81300] to-transparent" />
+      <section className="bg-surface-base py-24 md:py-28 px-6 relative" ref={s5}>
         <div className="max-w-7xl mx-auto">
-          <div className="io-reveal flex items-center gap-3 mb-8" data-delay="0">
-            <div className="w-8 h-0.5 bg-[#d81300]" />
-            <span className="text-[#d81300] text-xs font-black tracking-[0.3em] uppercase">Where This Takes You</span>
+          <div className="io-reveal flex items-center gap-3 mb-10" data-delay="0">
+            <div className="red-grad-rule w-10" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Where This Takes You</span>
           </div>
-          <div className="grid md:grid-cols-3 gap-px bg-[#d81300]/15">
+          <div className="grid md:grid-cols-3 gap-4">
             {careerCards.map(({ title, desc, icon }, i) => (
               <div key={title}
-                className="io-reveal bg-gradient-to-br from-[#1a1a1a] to-[#2e2e2e] p-8 hover:bg-[#424242] transition-colors duration-300 group card-lift"
+                className="io-reveal card-dark card-lift p-8 group"
                 data-delay={String(i * 80)}>
-                <div className="mb-4 transition-transform duration-300 group-hover:scale-110 origin-left">
+                <div className="mb-5">
                   {icon}
                 </div>
-                <h3 className="font-black text-white text-sm uppercase tracking-wide mb-2 group-hover:text-[#d81300] transition-colors">{title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
+                <h3 className="font-headline text-ink-primary text-lg font-black mb-2 group-hover:text-brand-red transition-colors leading-tight">{title}</h3>
+                <p className="text-ink-muted text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
-          <div className="io-reveal text-center mt-8" data-delay="200">
-            <button onClick={() => navigate('/careers')}
-              className="px-8 py-3 border border-white/15 text-white font-bold text-sm tracking-[0.12em] uppercase hover:border-[#d81300] hover:text-[#d81300] transition-all duration-200">
+          <div className="io-reveal text-center mt-12" data-delay="200">
+            <button onClick={() => navigate('/careers')} className="btn btn-outline">
               Explore All Career Pathways →
             </button>
           </div>
@@ -351,28 +308,31 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="relative bg-[#d81300] py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }} />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-10 pointer-events-none">
-          <HorseshoeLogo className="w-96 h-96 object-contain" />
+      <section className="relative bg-surface-raised py-28 md:py-32 px-6 overflow-hidden">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 30% 0%, rgba(216,19,0,0.22) 0%, rgba(216,19,0,0.04) 40%, transparent 65%)' }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle at 100% 100%, rgba(216,19,0,0.18) 0%, transparent 60%)' }} />
+        <div className="absolute right-0 bottom-0 translate-x-1/3 translate-y-1/4 opacity-[0.04] pointer-events-none">
+          <HorseshoeLogo className="w-[600px] h-[600px] object-contain" />
         </div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <h2 className="reveal text-4xl md:text-5xl font-black text-white leading-tight mb-4">
-            Ready to Be Part of Palmetto Athletics?
+        <div className="relative max-w-3xl mx-auto text-center">
+          <div className="reveal delay-0 flex items-center justify-center gap-3 mb-6">
+            <div className="red-grad-rule-center w-12" />
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Apply Now</span>
+            <div className="red-grad-rule-center w-12" />
+          </div>
+          <h2 className="reveal delay-1 font-headline text-4xl md:text-6xl font-black text-ink-primary leading-[1.05] mb-6">
+            Ready to be part of<br /><span className="red-grad-text">Palmetto Athletics?</span>
           </h2>
-          <p className="reveal delay-1 text-white/75 text-lg mb-10">
+          <p className="reveal delay-2 text-ink-secondary text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
             Athletic Leadership is selective. Submit your application — Coach Wardlaw reviews every one personally.
           </p>
-          <div className="reveal delay-2 flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={() => navigate('/apply')}
-              className="px-10 py-4 bg-white text-[#d81300] font-black text-sm tracking-[0.15em] uppercase hover:bg-gray-100 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
+          <div className="reveal delay-3 flex flex-col sm:flex-row gap-3 justify-center">
+            <button onClick={() => navigate('/apply')} className="btn btn-primary">
               Submit Application
             </button>
-            <button onClick={() => navigate('/salt')}
-              className="px-10 py-4 border-2 border-white/70 text-white font-black text-sm tracking-[0.15em] uppercase hover:bg-white/15 hover:border-white transition-all duration-200">
+            <button onClick={() => navigate('/salt')} className="btn btn-outline">
               Meet the Team
             </button>
           </div>
