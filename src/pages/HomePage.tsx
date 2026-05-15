@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { HorseshoeLogo, LeaderInMeLogo } from '../components/Logos'
+import ClemsonALWordmark from '../components/ClemsonALWordmark'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
 
@@ -103,38 +104,56 @@ export default function HomePage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-28 w-full">
-          <div className="max-w-3xl">
-            <div className="reveal delay-0 flex items-center gap-3 mb-8">
-              <div className="red-grad-rule w-12" />
-              <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">
-                Palmetto High School
-              </span>
+          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-end">
+            {/* Left — title + subtitle + buttons */}
+            <div className="md:col-span-8 max-w-3xl">
+              <div className="reveal delay-0 flex items-center gap-3 mb-8">
+                <div className="red-grad-rule w-12" />
+                <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">
+                  Palmetto High School
+                </span>
+              </div>
+              <h1 className="font-display leading-[0.9] tracking-tight mb-10">
+                <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-ink-primary">athletic</span>
+                <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
+                  <span className="red-grad-text">LEADER</span>
+                  <span className="text-ink-primary">ship</span>
+                </span>
+              </h1>
+              <p className="reveal delay-3 font-body text-ink-secondary text-lg md:text-xl max-w-xl mb-5 leading-relaxed">
+                An honors-weighted career course for students who want to lead, operate,
+                and shape Palmetto athletics from the inside out.
+              </p>
+              <div className="reveal delay-4 font-headline text-ink-muted text-xs mb-12 tracking-[0.16em] uppercase font-bold flex flex-wrap gap-x-4 gap-y-1">
+                <span>1.0 Honors Weighted Credit</span>
+                <span className="text-ink-faint">·</span>
+                <span>Grades 9–12</span>
+                <span className="text-ink-faint">·</span>
+                <span>Fall / Spring</span>
+              </div>
+              <div className="reveal delay-5 flex flex-col sm:flex-row gap-3">
+                <button onClick={() => navigate('/apply')} className="btn btn-primary">
+                  Apply for Selection
+                </button>
+                <button onClick={() => navigate('/about')} className="btn btn-outline">
+                  Course Overview →
+                </button>
+              </div>
             </div>
-            <h1 className="font-display leading-[0.9] tracking-tight mb-10">
-              <span className="reveal delay-1 block text-[clamp(3.5rem,10vw,7.5rem)] text-ink-primary">athletic</span>
-              <span className="reveal delay-2 block text-[clamp(3.5rem,10vw,7.5rem)]">
-                <span className="red-grad-text">LEADER</span>
-                <span className="text-ink-primary">ship</span>
-              </span>
-            </h1>
-            <p className="reveal delay-3 font-body text-ink-secondary text-lg md:text-xl max-w-xl mb-5 leading-relaxed">
-              An honors-weighted career course for students who want to lead, operate,
-              and shape Palmetto athletics from the inside out.
-            </p>
-            <div className="reveal delay-4 font-headline text-ink-muted text-xs mb-12 tracking-[0.16em] uppercase font-bold flex flex-wrap gap-x-4 gap-y-1">
-              <span>1.0 Honors Weighted Credit</span>
-              <span className="text-ink-faint">·</span>
-              <span>Grades 9–12</span>
-              <span className="text-ink-faint">·</span>
-              <span>Fall / Spring</span>
-            </div>
-            <div className="reveal delay-5 flex flex-col sm:flex-row gap-3">
-              <button onClick={() => navigate('/apply')} className="btn btn-primary">
-                Apply for Selection
-              </button>
-              <button onClick={() => navigate('/about')} className="btn btn-outline">
-                Course Overview →
-              </button>
+
+            {/* Right — partnership badge, baseline-aligned with the buttons */}
+            <div className="reveal delay-6 md:col-span-4 max-w-lg
+              pt-7 border-t border-white/[0.08]
+              md:max-w-none md:pt-0 md:pl-8 md:border-t-0 md:border-l md:border-l-white/[0.08]">
+              <div className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary mb-5">
+                In Partnership With
+              </div>
+              <ClemsonALWordmark
+                variant="light"
+                size="footer"
+                href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+                className="!w-[280px] md:!w-full md:max-w-[340px]"
+              />
             </div>
           </div>
         </div>

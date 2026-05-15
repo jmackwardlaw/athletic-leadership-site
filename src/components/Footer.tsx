@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { HorseshoeLogo } from './Logos'
+import ClemsonALWordmark from './ClemsonALWordmark'
 
 const links: { label: string; to: string }[] = [
   { label: 'Home', to: '/' },
@@ -72,6 +73,20 @@ export default function Footer() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Partnership */}
+        <div className="border-t border-white/[0.06] pt-10 pb-10 flex flex-col items-center text-center">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="red-grad-rule-center w-10"></div>
+            <span className="font-headline text-[10px] font-bold tracking-[0.22em] uppercase text-ink-secondary">In Partnership With</span>
+            <div className="red-grad-rule-center w-10"></div>
+          </div>
+          <ClemsonALWordmark
+            variant="light"
+            size="footer"
+            href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+          />
         </div>
 
         {/* Bottom bar */}

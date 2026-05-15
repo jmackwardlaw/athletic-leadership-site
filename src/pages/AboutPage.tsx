@@ -1,6 +1,7 @@
 import { HorseshoeLogo, LeaderInMeLogo } from '../components/Logos'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
+import ClemsonALWordmark from '../components/ClemsonALWordmark'
 
 export default function AboutPage() {
   const navigate = useNavigate()
@@ -105,10 +106,11 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* ── RATIONALE ────────────────────────────────────────────────────── */}
+      {/* ── RATIONALE + ACADEMIC PARTNERSHIP ─────────────────────────────── */}
       <section className="bg-surface-base py-24 md:py-28 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start">
-          <div>
+        <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 md:gap-16 items-start">
+          {/* Left: course rationale */}
+          <div className="md:col-span-7">
             <div className="flex items-center gap-3 mb-6">
               <div className="red-grad-rule w-10"></div>
               <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Course Rationale</span>
@@ -134,26 +136,70 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <div>
-            <div className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary mb-5">Skills You'll Build</div>
-            <div className="space-y-3">
-              {[
-                ['Communication', 'Presentations, written plans, event messaging'],
-                ['Collaboration', 'Group projects, peer feedback, shared decision-making'],
-                ['Critical Thinking', 'Real-world challenges, strategic proposals, problem solving'],
-                ['Creativity', 'Marketing campaigns, engagement strategies, media production'],
-                ['Leadership', 'Philosophy development, project management, accountability'],
-                ['Career Readiness', 'Professional proposals, industry exploration, workforce skills'],
-              ].map(([skill, desc]) => (
-                <div key={skill} className="flex gap-4 items-start card-dark p-4">
-                  <div className="w-1.5 h-1.5 bg-brand-red rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <div className="text-ink-primary font-bold text-sm">{skill}</div>
-                    <div className="text-ink-muted text-xs mt-0.5">{desc}</div>
-                  </div>
-                </div>
-              ))}
+
+          {/* Right: featured Academic Partnership */}
+          <div className="md:col-span-5">
+            <div className="card-dark red-card-edge p-8 md:p-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="red-grad-rule w-10"></div>
+                <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Academic Partnership</span>
+              </div>
+              <div className="flex justify-center py-4 mb-7">
+                <ClemsonALWordmark
+                  variant="light"
+                  size="feature"
+                  href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+                  className="!w-full"
+                />
+              </div>
+              <p className="text-ink-secondary leading-relaxed mb-7">
+                Palmetto Athletic Leadership is proud to partner with Clemson
+                University's Athletic Leadership program. As one of the few
+                undergraduate athletic leadership degrees in the country, Clemson's
+                program serves as both a model and a pathway — connecting Palmetto
+                students to the people, ideas, and opportunities shaping the future
+                of the field.
+              </p>
+              <a
+                href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline w-full"
+              >
+                Learn More About Clemson Athletic Leadership →
+              </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SKILLS YOU'LL BUILD ──────────────────────────────────────────── */}
+      <section className="bg-surface-raised py-24 md:py-28 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="red-grad-rule w-10"></div>
+            <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Outcomes</span>
+          </div>
+          <h2 className="font-headline text-3xl md:text-4xl font-black mb-10 text-ink-primary leading-tight">
+            Skills You'll <span className="red-grad-text">Build</span>
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              ['Communication', 'Presentations, written plans, event messaging'],
+              ['Collaboration', 'Group projects, peer feedback, shared decision-making'],
+              ['Critical Thinking', 'Real-world challenges, strategic proposals, problem solving'],
+              ['Creativity', 'Marketing campaigns, engagement strategies, media production'],
+              ['Leadership', 'Philosophy development, project management, accountability'],
+              ['Career Readiness', 'Professional proposals, industry exploration, workforce skills'],
+            ].map(([skill, desc]) => (
+              <div key={skill} className="flex gap-4 items-start card-dark p-5">
+                <div className="w-1.5 h-1.5 bg-brand-red rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <div className="text-ink-primary font-bold text-sm">{skill}</div>
+                  <div className="text-ink-muted text-xs mt-0.5 leading-relaxed">{desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
