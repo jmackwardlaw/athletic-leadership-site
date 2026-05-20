@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { HorseshoeLogo, LeaderInMeLogo } from '../components/Logos'
-import ClemsonALWordmark from '../components/ClemsonALWordmark'
+import ClemsonCollegeOfEdMark from '../components/ClemsonCollegeOfEdMark'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
 
@@ -148,10 +148,10 @@ export default function HomePage() {
               <div className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary mb-5">
                 In Partnership With
               </div>
-              <ClemsonALWordmark
+              <ClemsonCollegeOfEdMark
                 variant="light"
                 size="footer"
-                href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+                href="https://www.clemson.edu/education/"
                 className="!w-[280px] md:!w-full md:max-w-[340px]"
               />
             </div>
