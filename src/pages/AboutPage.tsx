@@ -1,7 +1,7 @@
 import { HorseshoeLogo, LeaderInMeLogo } from '../components/Logos'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
-import ClemsonALWordmark from '../components/ClemsonALWordmark'
+import ClemsonCollegeOfEdMark from '../components/ClemsonCollegeOfEdMark'
 
 export default function AboutPage() {
   const navigate = useNavigate()
@@ -145,20 +145,19 @@ export default function AboutPage() {
                 <span className="font-headline text-[11px] font-bold tracking-[0.22em] uppercase text-ink-secondary">Academic Partnership</span>
               </div>
               <div className="flex justify-center py-4 mb-7">
-                <ClemsonALWordmark
+                <ClemsonCollegeOfEdMark
                   variant="light"
                   size="feature"
-                  href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
+                  href="https://www.clemson.edu/education/"
                   className="!w-full"
                 />
               </div>
               <p className="text-ink-secondary leading-relaxed mb-7">
-                Palmetto Athletic Leadership is proud to partner with Clemson
-                University's Athletic Leadership program. As one of the few
-                undergraduate athletic leadership degrees in the country, Clemson's
-                program serves as both a model and a pathway — connecting Palmetto
-                students to the people, ideas, and opportunities shaping the future
-                of the field.
+                Palmetto High School's Athletic Leadership Program is proud to partner
+                with Clemson University's Athletic Leadership program. As one of the
+                leading athletic leadership programs in the country, Clemson's program
+                serves as both a model and a pathway — connecting Palmetto students to
+                the people, ideas, and opportunities shaping the future of the field.
               </p>
               <a
                 href="https://www.clemson.edu/education/academics/undergraduate/athletic-leadership-minor.html"
