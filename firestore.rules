@@ -1,0 +1,121 @@
+rules_version = '2';
+
+// ─────────────────────────────────────────────────────────────
+// Palmetto AL Hub — Firestore security rules (spec §10).
+//
+// Roles come from the `role` custom claim, set ONLY by the ensureProfile
+// Cloud Function (admin SDK) — there is no client path to set a claim.
+// ensureProfile only assigns a role to allowed-domain users, so requiring
+// a valid role claim is equivalent to the domain gate. We also allow the
+// configured email domain directly as a belt-and-suspenders check.
+// ─────────────────────────────────────────────────────────────
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function role() {
+      return request.auth.token.role;
+    }
+    function isTeacher() {
+      return isSignedIn() && role() == 'teacher';
+    }
+    function hasValidRole() {
+      return isSignedIn() && (role() == 'student' || role() == 'teacher');
+    }
+    // Allowed Workspace domain(s). Mirror of ALLOWED_AUTH_DOMAINS.
+    function allowedDomain() {
+      return isSignedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email.lower().matches('^[^@]+@apps[.]anderson1[.]org$');
+    }
+    // Any authenticated, allowed-domain user (with or without a claim yet).
+    function allowed() {
+      return hasValidRole() || allowedDomain();
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ── users/{uid} ─────────────────────────────────────────
+    // A user may read/write only their own doc and may NOT change their own
+    // role. Teachers may read all users. Claims are set only by ensureProfile.
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isTeacher();
+      // Create own doc: role (if present) must match the caller's claim.
+      allow create: if isOwner(uid)
+        && (!('role' in request.resource.data)
+            || request.resource.data.role == request.auth.token.role);
+      // Update own doc: role cannot change.
+      allow update: if isOwner(uid)
+        && request.resource.data.role == resource.data.role;
+      allow delete: if false;
+    }
+
+    // ── settings/** , courses/** , todos/** ─────────────────
+    // Read by any authenticated allowed-domain user; write by teachers only.
+    match /settings/{doc} {
+      allow read: if allowed();
+      allow write: if isTeacher();
+    }
+    match /courses/{courseId}/{document=**} {
+      allow read: if allowed();
+      allow write: if isTeacher();
+    }
+    match /todos/{todoId} {
+      allow read: if allowed();
+      allow write: if isTeacher();
+    }
+
+    // ── internshipLogs/{logId} ──────────────────────────────
+    // Students create + read their own; may update only while pending and
+    // may never set a privileged status. Teachers read all and may set
+    // teacher_approved / rejected. supervisor_approved is set ONLY by a
+    // Cloud Function (admin SDK), so there is no client write path to it.
+    match /internshipLogs/{logId} {
+      allow read: if isTeacher()
+        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && request.resource.data.studentUid == request.auth.uid
+        && request.resource.data.status == 'pending';
+
+      // Student edit: only their own, only while pending, status stays pending.
+      allow update: if (isSignedIn()
+          && resource.data.studentUid == request.auth.uid
+          && resource.data.status == 'pending'
+          && request.resource.data.studentUid == resource.data.studentUid
+          && request.resource.data.status == 'pending')
+        // Teacher review: may move to teacher_approved / rejected (not
+        // supervisor_approved — that is Cloud-Function-only).
+        || (isTeacher()
+          && request.resource.data.status in ['teacher_approved', 'rejected']);
+
+      allow delete: if false;
+    }
+
+    // ── submissions / rubrics (Phase 4) ─────────────────────
+    // Included now so the boundary is documented; collections are unused
+    // until Phase 4 is enabled.
+    match /submissions/{submissionId} {
+      allow read: if isTeacher()
+        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
+      allow create, update: if isSignedIn()
+        && request.resource.data.studentUid == request.auth.uid
+        && request.resource.data.status in ['draft', 'submitted'];
+      // Teachers grade: may read all and write grade fields.
+      allow update: if isTeacher();
+      allow delete: if false;
+    }
+    match /rubrics/{rubricId} {
+      allow read: if allowed();
+      allow write: if isTeacher();
+    }
+
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

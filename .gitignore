@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local env files (Vite). .env.example IS committed; real values are not.
+.env
+.env.local
+.env.*.local
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+functions/node_modules/
+functions/lib/
+# Service-account keys / admin credentials — NEVER commit
+*serviceAccount*.json
+service-account*.json
+.runtimeconfig.json
+
+# OS / editor
+.DS_Store
+*.local
+
+# Claude Code local session/settings
+.claude/

@@ -55,9 +55,15 @@ export default function Nav() {
                 )}
               </NavLink>
             ))}
+            <NavLink
+              to="/hub/login"
+              className="ml-2 px-3 py-2 font-headline text-xs font-bold tracking-[0.12em] uppercase text-white/70 hover:text-white transition-colors"
+            >
+              Student Access
+            </NavLink>
             <button
               onClick={() => navigate('/apply')}
-              className="ml-4 inline-flex items-center justify-center gap-2 font-headline font-bold text-xs tracking-[0.12em] uppercase py-2 px-5 rounded-token bg-white text-brand-red hover:bg-white/95 transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:-translate-y-px"
+              className="ml-2 inline-flex items-center justify-center gap-2 font-headline font-bold text-xs tracking-[0.12em] uppercase py-2 px-5 rounded-token bg-white text-brand-red hover:bg-white/95 transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:-translate-y-px"
             >
               Apply Now
             </button>
@@ -90,6 +96,13 @@ export default function Nav() {
               {label}
             </NavLink>
           ))}
+          <NavLink
+            to="/hub/login"
+            onClick={() => setMenuOpen(false)}
+            className="block w-full text-left px-3 py-3 font-headline text-xs font-bold tracking-[0.14em] uppercase border-b border-white/[0.04] text-ink-secondary hover:text-ink-primary transition-colors"
+          >
+            Student Access
+          </NavLink>
           <NavLink
             to="/apply"
             onClick={() => setMenuOpen(false)}
