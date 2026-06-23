@@ -146,9 +146,14 @@ two to-dos. Idempotent (fixed doc ids). Does not touch users or internship logs.
 | Phase | Scope | Status |
 |---|---|---|
 | **1 — Spine** | Firebase, auth + roles, guards, student landing, internship logging (teacher direct-approve stub), teacher todos + roster, rules, seed, deploy | ✅ this build |
-| 2 — Content | Full CMS for courses/modules/items, markdown rendering, "Submit in Classroom" | pending sign-off |
-| 3 — Internship | Supervisor magic-link sign-off (email) + accurate totals | pending |
+| 2 — Content | Full CMS for courses/modules/items, markdown rendering, "Submit in Classroom", + lesson progress tracking | pending sign-off |
+| 2.5 — Quizzes | Native auto-graded quizzes (LMS-inspired) | planned |
+| 3 — Internship | Supervisor magic-link sign-off (email) + accurate totals + completion certificates (PDF) | pending |
 | 4 — Native submissions | submissions + rubrics + Storage | optional |
+| 5 — Engagement | Badges / gamification | optional |
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for the extended plan + Firestore schemas
+for the LMS-inspired features (progress, quizzes, certificates, badges).
 
 `/hub/teacher/content` (Phase 2) and `/hub/teacher/submissions` (Phase 4) are
 shown as upcoming in the teacher dashboard and not yet wired.
