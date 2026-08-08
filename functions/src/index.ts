@@ -50,7 +50,19 @@ type Role = 'student' | 'teacher'
  * The client must force-refresh its ID token afterward to see the claim.
  */
 export const ensureProfile = onCall(
-  { region: 'us-central1' },
+  {
+    region: 'us-central1',
+    // The browser calls this cross-origin (www.phsal.org -> cloudfunctions.net).
+    // Without an explicit allowlist the preflight is refused and the client only
+    // ever sees an opaque "FirebaseError: internal", which is what hid the fact
+    // that this function had never succeeded from the browser at all.
+    cors: [
+      'https://www.phsal.org',
+      'https://phsal.org',
+      /athletic-leadership-site.*\.vercel\.app$/, // preview deploys
+      'http://localhost:5173', // vite dev
+    ],
+  },
   async (request): Promise<{ role: Role }> => {
     const auth = request.auth
     if (!auth) {

@@ -151,6 +151,17 @@ function HubHeader() {
   )
 }
 
+/** Surfaces a failed role provisioning instead of quietly showing student UI. */
+function ProvisioningWarning() {
+  const { authError } = useAuth()
+  if (!authError) return null
+  return (
+    <div className="mb-6 p-3 bg-yellow-500/10 border border-yellow-500/30 text-yellow-200 text-xs rounded-token">
+      {authError}
+    </div>
+  )
+}
+
 export default function HubLayout() {
   return (
     <RequireAuth>
@@ -158,6 +169,7 @@ export default function HubLayout() {
         <div className="min-h-screen bg-gradient-to-br from-[#0d0d0d] to-[#1a1a1a] text-white">
           <HubHeader />
           <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+            <ProvisioningWarning />
             <Outlet />
           </main>
         </div>

@@ -87,10 +87,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           await ensureProfileFn()
           setRole(await readRole(u, true)) // force refresh to pick up claim
         } catch (err) {
-          // If functions aren't deployed yet, fall back to whatever claim
-          // exists (likely none → treated as student by guards).
+          // ensureProfile is the ONLY thing that assigns the role claim, so a
+          // failure here silently demotes staff to the student view. That is
+          // indistinguishable from "you are a student" unless we say so — this
+          // went unnoticed for weeks once, because the error was console-only.
           // eslint-disable-next-line no-console
           console.error('[AL Hub] ensureProfile failed:', err)
+          setAuthError(
+            'Could not confirm your account role, so you may be seeing the student view. ' +
+              'If you are staff, tell Coach Wardlaw the hub could not reach ensureProfile.'
+          )
           setRole(await readRole(u, true))
         }
       } else {
