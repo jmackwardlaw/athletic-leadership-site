@@ -6,13 +6,23 @@ import { useAuth } from '../../context/AuthContext'
 import { useHubData } from '../../context/HubDataContext'
 import {
   approvedHours,
+  getPublishedItems,
   getPublishedModules,
   getStudentLogs,
+  getStudentProgress,
   getTodosForStudent,
 } from '../../lib/hub/db'
+import { completedIds, courseProgress, moduleProgress } from '../../lib/hub/progress'
+import type { Tally } from '../../lib/hub/progress'
 import type { InternshipLog, Module, Todo, WithId } from '../../lib/hub/types'
 import { formatDate, hoursLabel } from '../../lib/hub/format'
-import { Card, EmptyState, SectionTitle, StatusBadge } from '../../components/hub/ui'
+import {
+  Card,
+  EmptyState,
+  ProgressBar,
+  SectionTitle,
+  StatusBadge,
+} from '../../components/hub/ui'
 import HubLoading from '../../components/hub/HubLoading'
 
 export default function StudentDashboard() {
@@ -21,6 +31,7 @@ export default function StudentDashboard() {
   const [todos, setTodos] = useState<WithId<Todo>[]>([])
   const [logs, setLogs] = useState<WithId<InternshipLog>[]>([])
   const [modules, setModules] = useState<WithId<Module>[]>([])
+  const [tallies, setTallies] = useState<Record<string, Tally>>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -29,15 +40,28 @@ export default function StudentDashboard() {
     ;(async () => {
       setLoading(true)
       try {
-        const [t, l, m] = await Promise.all([
+        const [t, l, m, progress] = await Promise.all([
           getTodosForStudent(user.uid),
           getStudentLogs(user.uid),
           course?.id ? getPublishedModules(course.id) : Promise.resolve([]),
+          getStudentProgress(user.uid),
         ])
         if (cancelled) return
         setTodos(t)
         setLogs(l)
         setModules(m)
+
+        // ponytail: one items read per module. At one-class scale that's a
+        // handful of reads; if the course ever grows past ~20 modules, denormalise
+        // an itemCount onto the module doc instead.
+        const done = completedIds(progress)
+        const perModule = await Promise.all(
+          m.map(async (mod) => {
+            const items = course?.id ? await getPublishedItems(course.id, mod.id) : []
+            return [mod.id, moduleProgress(items.map((i) => i.id), done)] as const
+          })
+        )
+        if (!cancelled) setTallies(Object.fromEntries(perModule))
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -52,6 +76,7 @@ export default function StudentDashboard() {
   const firstName = (user?.displayName || '').split(' ')[0] || 'there'
   const required = settings?.internshipHoursRequired ?? 0
   const approved = approvedHours(logs)
+  const overall = courseProgress(Object.values(tallies))
 
   return (
     <div className="space-y-12">
@@ -91,26 +116,41 @@ export default function StudentDashboard() {
         {modules.length === 0 ? (
           <EmptyState>No modules published yet. Check back soon.</EmptyState>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {modules.map((m) => (
-              <Link key={m.id} to={`/hub/modules/${m.id}`} className="block group">
-                <Card className="h-full card-lift">
-                  <div className="flex items-start justify-between gap-3">
-                    <BookOpen className="w-5 h-5 text-brand-red shrink-0" />
-                    <ArrowUpRight className="w-4 h-4 text-ink-faint group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="mt-3 font-headline font-black uppercase tracking-[0.04em] text-base">
-                    {m.title}
-                  </h3>
-                  {m.description && (
-                    <p className="mt-1 text-sm text-ink-muted line-clamp-2">
-                      {m.description}
-                    </p>
-                  )}
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <>
+            {overall.total > 0 && (
+              <Card className="mb-4">
+                <ProgressBar {...overall} label="lessons complete" />
+              </Card>
+            )}
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {modules.map((m) => {
+                const tally = tallies[m.id]
+                return (
+                  <Link key={m.id} to={`/hub/modules/${m.id}`} className="block group">
+                    <Card className="h-full card-lift flex flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <BookOpen className="w-5 h-5 text-brand-red shrink-0" />
+                        <ArrowUpRight className="w-4 h-4 text-ink-faint group-hover:text-white transition-colors" />
+                      </div>
+                      <h3 className="mt-3 font-headline font-black uppercase tracking-[0.04em] text-base">
+                        {m.title}
+                      </h3>
+                      {m.description && (
+                        <p className="mt-1 text-sm text-ink-muted line-clamp-2">
+                          {m.description}
+                        </p>
+                      )}
+                      {tally && tally.total > 0 && (
+                        <div className="mt-4 pt-1">
+                          <ProgressBar {...tally} />
+                        </div>
+                      )}
+                    </Card>
+                  </Link>
+                )
+              })}
+            </div>
+          </>
         )}
       </section>
     </div>
@@ -185,11 +225,8 @@ function HoursWidget({
         </Link>
       </div>
 
-      <div className="mt-4 h-2 w-full rounded-full bg-surface-sunken overflow-hidden">
-        <div
-          className="h-full bg-brand-red transition-all"
-          style={{ width: `${pct}%` }}
-        />
+      <div className="mt-4">
+        <ProgressBar complete={approved} total={required} pct={pct} showCount={false} />
       </div>
 
       {recent.length > 0 && (

@@ -27,3 +27,4 @@ service-account*.json
 
 # Claude Code local session/settings
 .claude/
+.vercel

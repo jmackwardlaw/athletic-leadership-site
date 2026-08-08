@@ -57,6 +57,18 @@ export interface Item {
   dueDate?: Timestamp
 }
 
+// lessonProgress/{uid}_{itemId} — per-student, per-item completion.
+// The id is deterministic (see progressId) so a student has exactly one row
+// per item and re-marking is an idempotent overwrite, not a duplicate.
+export interface LessonProgress {
+  studentUid: string
+  courseId: string
+  moduleId: string
+  itemId: string
+  status: 'viewed' | 'complete'
+  completedAt?: Timestamp | null
+}
+
 // todos/{todoId} — surfaced on the student landing "This Week"
 export interface Todo {
   title: string

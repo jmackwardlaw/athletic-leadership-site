@@ -68,6 +68,44 @@ export function StatusBadge({ status }: { status: InternshipStatus }) {
   )
 }
 
+/** Completion bar. Pass a Tally from lib/hub/progress, or any n/total. */
+export function ProgressBar({
+  complete,
+  total,
+  pct,
+  label = 'complete',
+  showCount = true,
+}: {
+  complete: number
+  total: number
+  pct: number
+  label?: string
+  showCount?: boolean
+}) {
+  return (
+    <div>
+      {showCount && (
+        <div className="mb-1.5 flex items-baseline justify-between gap-3">
+          <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-secondary">
+            {complete} of {total} {label}
+          </span>
+          <span className="text-xs font-bold text-ink-muted">{pct}%</span>
+        </div>
+      )}
+      <div
+        className="h-2 w-full rounded-full bg-surface-sunken overflow-hidden"
+        role="progressbar"
+        aria-valuenow={pct}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={`${complete} of ${total} ${label}`}
+      >
+        <div className="h-full bg-brand-red transition-all" style={{ width: `${pct}%` }} />
+      </div>
+    </div>
+  )
+}
+
 export function Field({
   label,
   children,

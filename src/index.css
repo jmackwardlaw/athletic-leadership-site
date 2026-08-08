@@ -395,3 +395,70 @@ body::before {
   border: 1px solid rgba(216,19,0,0.25);
   border-radius: var(--radius-md);
 }
+
+/* ── Hub markdown (teacher-authored lesson bodies) ──── */
+/* Scoped so it can't leak into the marketing pages. Tailwind's typography
+   plugin would do this too, but it's a whole dependency for one surface. */
+.hub-prose {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.hub-prose > :first-child { margin-top: 0; }
+.hub-prose > :last-child { margin-bottom: 0; }
+.hub-prose h1,
+.hub-prose h2,
+.hub-prose h3,
+.hub-prose h4 {
+  color: var(--text-primary);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 1.75rem 0 0.6rem;
+  line-height: 1.15;
+}
+.hub-prose h1 { font-size: 1.5rem; }
+.hub-prose h2 { font-size: 1.25rem; }
+.hub-prose h3 { font-size: 1.0625rem; }
+.hub-prose h4 { font-size: 0.9375rem; }
+.hub-prose p { margin: 0 0 1rem; }
+.hub-prose strong { color: var(--text-primary); font-weight: 700; }
+.hub-prose a {
+  color: var(--brand-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hub-prose a:hover { color: var(--brand-red-hover); }
+.hub-prose ul,
+.hub-prose ol { margin: 0 0 1rem; padding-left: 1.35rem; }
+.hub-prose li { margin: 0.3rem 0; }
+.hub-prose ul { list-style: disc; }
+.hub-prose ol { list-style: decimal; }
+.hub-prose blockquote {
+  margin: 1.25rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--brand-red);
+  color: var(--text-muted);
+  font-style: italic;
+}
+.hub-prose code {
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.875em;
+}
+.hub-prose pre {
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0 0 1rem;
+}
+.hub-prose pre code { background: none; border: 0; padding: 0; }
+.hub-prose hr { border: 0; border-top: 1px solid var(--border-subtle); margin: 1.75rem 0; }
+.hub-prose img { max-width: 100%; height: auto; border-radius: var(--radius-md); }
+.hub-prose table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.9375rem; }
+.hub-prose th,
+.hub-prose td { border: 1px solid var(--border-subtle); padding: 0.5rem 0.7rem; text-align: left; }
+.hub-prose th { color: var(--text-primary); font-weight: 700; background: var(--surface-sunken); }

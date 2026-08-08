@@ -1,6 +1,5 @@
-// /hub/teacher — teacher overview (spec §7). Phase 1 surfaces Roster,
-// Internship approvals, and To-Dos. Content CMS (Phase 2) and Submissions
-// (Phase 4) are shown as upcoming, not yet linked.
+// /hub/teacher — teacher overview (spec §7). Roster, Internship approvals,
+// To-Dos, and Content. Submissions (Phase 4) is shown as upcoming, not linked.
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Users, ClipboardCheck, ListTodo, FolderCog, FileCheck2 } from 'lucide-react'
@@ -77,10 +76,10 @@ export default function TeacherDashboard() {
           desc="Post weekly to-dos to the student dashboard."
         />
         <ActionCard
+          to="/hub/teacher/content"
           icon={FolderCog}
-          title="Content CMS"
-          desc="Author courses, modules, and items."
-          comingSoon="Phase 2"
+          title="Content"
+          desc="Author modules and items in markdown. Publish when ready."
         />
         <ActionCard
           icon={FileCheck2}

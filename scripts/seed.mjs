@@ -79,9 +79,28 @@ async function seed() {
         {
           id: 'i1-welcome',
           type: 'lesson',
+          // Item bodies are markdown (GFM). This one exercises the common
+          // elements so the rendering is visible straight after seeding.
+          body: [
+            '## Welcome to Athletic Leadership',
+            '',
+            'This course runs through the Hub — modules, to-dos, and your',
+            'internship hours all live here.',
+            '',
+            '### What you owe each week',
+            '',
+            '- Read the assigned module items and **mark them complete**',
+            '- Log any internship hours you worked',
+            '- Turn in written work through the Classroom link on the item',
+            '',
+            '| Requirement | Amount |',
+            '| --- | --- |',
+            '| Internship hours | 30 |',
+            '| Reflections | 4 |',
+            '',
+            '> Be an A. Effort is the part nobody can grade you down on.',
+          ].join('\n'),
           title: 'Welcome & Course Overview',
-          body:
-            'Read the syllabus and expectations. This course is run through the Hub — all modules, to-dos, and your internship hours live here.',
           order: 0,
         },
         {

@@ -11,6 +11,7 @@ import ModulePage from './ModulePage'
 import ItemPage from './ItemPage'
 import InternshipPage from './InternshipPage'
 import TeacherDashboard from './TeacherDashboard'
+import TeacherContent from './TeacherContent'
 import TeacherRoster from './TeacherRoster'
 import TeacherInternship from './TeacherInternship'
 import TeacherTodos from './TeacherTodos'
@@ -35,6 +36,14 @@ export default function HubRoutes() {
             element={
               <RequireRole role="teacher">
                 <TeacherDashboard />
+              </RequireRole>
+            }
+          />
+          <Route
+            path="teacher/content"
+            element={
+              <RequireRole role="teacher">
+                <TeacherContent />
               </RequireRole>
             }
           />

@@ -1,21 +1,28 @@
 // /hub/modules/:moduleId/items/:itemId — item detail.
-// Phase 1 renders the body as plain text; rich markdown rendering is a
-// Phase 2 deliverable. Resource + "Submit in Classroom" actions work now.
+// Body renders as markdown; students mark the item complete themselves
+// (see Markdown.tsx for why raw HTML stays disabled).
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ExternalLink } from 'lucide-react'
+import { CheckCircle2, Circle, ExternalLink } from 'lucide-react'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
+import { useAuth } from '../../context/AuthContext'
 import { useHubData } from '../../context/HubDataContext'
+import { getStudentProgress, setItemComplete } from '../../lib/hub/db'
+import { completedIds } from '../../lib/hub/progress'
 import type { Item } from '../../lib/hub/types'
 import { formatDate } from '../../lib/hub/format'
 import { Card, EmptyState, PageHeading } from '../../components/hub/ui'
+import Markdown from '../../components/hub/Markdown'
 import HubLoading from '../../components/hub/HubLoading'
 
 export default function ItemPage() {
   const { moduleId, itemId } = useParams()
+  const { user } = useAuth()
   const { course, loading: settingsLoading } = useHubData()
   const [item, setItem] = useState<Item | null>(null)
+  const [complete, setComplete] = useState(false)
+  const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,17 +30,35 @@ export default function ItemPage() {
     let cancelled = false
     ;(async () => {
       setLoading(true)
-      const snap = await getDoc(
-        doc(db, 'courses', course.id, 'modules', moduleId, 'items', itemId)
-      )
+      const [snap, progress] = await Promise.all([
+        getDoc(doc(db, 'courses', course.id, 'modules', moduleId, 'items', itemId)),
+        user ? getStudentProgress(user.uid) : Promise.resolve([]),
+      ])
       if (cancelled) return
       setItem(snap.exists() ? (snap.data() as Item) : null)
+      setComplete(completedIds(progress).has(itemId))
       setLoading(false)
     })()
     return () => {
       cancelled = true
     }
-  }, [course?.id, moduleId, itemId, settingsLoading])
+  }, [course?.id, moduleId, itemId, user, settingsLoading])
+
+  const toggleComplete = async () => {
+    if (!user || !course?.id || !moduleId || !itemId) return
+    const next = !complete
+    setSaving(true)
+    setComplete(next) // optimistic; reverted below if the write fails
+    try {
+      await setItemComplete(user.uid, { courseId: course.id, moduleId, itemId }, next)
+    } catch (err) {
+      setComplete(!next)
+      // eslint-disable-next-line no-console
+      console.error('[AL Hub] could not save progress:', err)
+    } finally {
+      setSaving(false)
+    }
+  }
 
   if (loading || settingsLoading) return <HubLoading />
 
@@ -58,13 +83,28 @@ export default function ItemPage() {
             </p>
           )}
           {item.body && (
-            <Card className="prose-none">
-              <p className="whitespace-pre-wrap text-ink-secondary leading-relaxed">
-                {item.body}
-              </p>
+            <Card>
+              <Markdown>{item.body}</Markdown>
             </Card>
           )}
           <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              onClick={toggleComplete}
+              disabled={saving}
+              className={`btn !text-xs disabled:opacity-60 ${
+                complete ? 'btn-outline' : 'btn-primary'
+              }`}
+            >
+              {complete ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" /> Completed
+                </>
+              ) : (
+                <>
+                  <Circle className="w-4 h-4" /> Mark Complete
+                </>
+              )}
+            </button>
             {item.resourceUrl && (
               <a
                 href={item.resourceUrl}

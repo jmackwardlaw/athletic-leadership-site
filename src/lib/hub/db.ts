@@ -21,10 +21,12 @@ import {
   type QueryDocumentSnapshot,
 } from 'firebase/firestore'
 import { db } from '../firebase'
+import { progressId } from './progress'
 import type {
   Course,
   InternshipLog,
   Item,
+  LessonProgress,
   Module,
   SettingsConfig,
   Todo,
@@ -90,6 +92,131 @@ export async function getPublishedItems(
   )
   const snap = await getDocs(q)
   return snap.docs.map((d) => withId<Item>(d)).sort((a, b) => a.order - b.order)
+}
+
+// ── Content authoring (teacher CMS) ───────────────────────────────────────
+// Same collections as the student reads, minus the `published` filter, so
+// drafts are visible to the author. Rules already restrict writes to teachers.
+
+export async function getAllModules(courseId: string): Promise<WithId<Module>[]> {
+  const snap = await getDocs(collection(db, 'courses', courseId, 'modules'))
+  return snap.docs.map((d) => withId<Module>(d)).sort((a, b) => a.order - b.order)
+}
+
+export async function getAllItems(
+  courseId: string,
+  moduleId: string
+): Promise<WithId<Item>[]> {
+  const snap = await getDocs(
+    collection(db, 'courses', courseId, 'modules', moduleId, 'items')
+  )
+  return snap.docs.map((d) => withId<Item>(d)).sort((a, b) => a.order - b.order)
+}
+
+export async function createModule(courseId: string, data: Module): Promise<string> {
+  const ref = await addDoc(collection(db, 'courses', courseId, 'modules'), {
+    ...data,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  })
+  return ref.id
+}
+
+export async function updateModule(
+  courseId: string,
+  moduleId: string,
+  data: Partial<Module>
+): Promise<void> {
+  await updateDoc(doc(db, 'courses', courseId, 'modules', moduleId), {
+    ...data,
+    updatedAt: serverTimestamp(),
+  })
+}
+
+/**
+ * Firestore does not cascade, so the module's items are deleted first —
+ * otherwise they survive as unreachable orphans that still bill and still
+ * match collection-group reads.
+ */
+export async function deleteModule(courseId: string, moduleId: string): Promise<void> {
+  const items = await getDocs(
+    collection(db, 'courses', courseId, 'modules', moduleId, 'items')
+  )
+  await Promise.all(items.docs.map((d) => deleteDoc(d.ref)))
+  await deleteDoc(doc(db, 'courses', courseId, 'modules', moduleId))
+}
+
+export async function createItem(
+  courseId: string,
+  moduleId: string,
+  data: Item
+): Promise<string> {
+  const ref = await addDoc(
+    collection(db, 'courses', courseId, 'modules', moduleId, 'items'),
+    { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }
+  )
+  return ref.id
+}
+
+export async function updateItem(
+  courseId: string,
+  moduleId: string,
+  itemId: string,
+  data: Partial<Item>
+): Promise<void> {
+  await updateDoc(doc(db, 'courses', courseId, 'modules', moduleId, 'items', itemId), {
+    ...data,
+    updatedAt: serverTimestamp(),
+  })
+}
+
+export async function deleteItem(
+  courseId: string,
+  moduleId: string,
+  itemId: string
+): Promise<void> {
+  await deleteDoc(doc(db, 'courses', courseId, 'modules', moduleId, 'items', itemId))
+}
+
+// ── Lesson progress ───────────────────────────────────────────────────────
+
+/** Every progress row for one student (single-field query, no index needed). */
+export async function getStudentProgress(
+  uid: string
+): Promise<WithId<LessonProgress>[]> {
+  const q = query(collection(db, 'lessonProgress'), where('studentUid', '==', uid))
+  const snap = await getDocs(q)
+  return snap.docs.map((d) => withId<LessonProgress>(d))
+}
+
+/** Teacher view: all progress rows, for roster completion columns. */
+export async function getAllProgress(): Promise<WithId<LessonProgress>[]> {
+  const snap = await getDocs(collection(db, 'lessonProgress'))
+  return snap.docs.map((d) => withId<LessonProgress>(d))
+}
+
+/**
+ * Mark an item complete (or back to 'viewed'). Deterministic id keeps this
+ * idempotent — rules require the id to match `${uid}_${itemId}`.
+ */
+export async function setItemComplete(
+  uid: string,
+  ref: { courseId: string; moduleId: string; itemId: string },
+  complete: boolean
+): Promise<void> {
+  await setDoc(
+    doc(db, 'lessonProgress', progressId(uid, ref.itemId)),
+    {
+      studentUid: uid,
+      courseId: ref.courseId,
+      moduleId: ref.moduleId,
+      itemId: ref.itemId,
+      status: complete ? 'complete' : 'viewed',
+      completedAt: complete ? serverTimestamp() : null,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  )
 }
 
 // ── Todos ─────────────────────────────────────────────────────────────────

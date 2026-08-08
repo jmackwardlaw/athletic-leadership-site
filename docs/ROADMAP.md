@@ -15,20 +15,26 @@ well. Traditional file/quiz turn-in that GC handles stays in GC via links.
 | Phase | Scope | Status |
 |---|---|---|
 | 1 — Spine | Auth, roles, student landing, internship logging (direct-approve stub), teacher todos/roster, rules, seed | ✅ done |
-| 2 — Content | CMS for courses/modules/items, markdown rendering, Submit-in-Classroom **+ progress tracking** | next |
-| 2.5 — Quizzes | Native auto-graded quizzes | new (LMS-inspired) |
+| 2 — Content | CMS for modules/items, markdown rendering, Submit-in-Classroom **+ progress tracking** | ✅ done |
+| 2.5 — Quizzes | Native auto-graded quizzes | next (LMS-inspired) |
 | 3 — Internship | Supervisor magic-link sign-off (email) + accurate totals + **completion certificates (PDF)** | planned |
 | 4 — Native submissions | submissions + rubrics + Storage | optional |
 | 5 — Engagement | Badges / gamification | optional polish |
 
 ---
 
-## Phase 2 add-on — Lesson progress tracking
+## Phase 2 add-on — Lesson progress tracking ✅
 
 Borrowed from Frappe's `lms course progress` + `lms video watch duration`.
 Gives per-lesson checkmarks and a course % complete on the dashboard — high
 perceived legitimacy, low effort. Builds on the module/item pages already in
 Phase 2.
+
+**Shipped as:** `src/lib/hub/progress.ts` (pure math, checked by
+`node scripts/check-progress.mjs`), progress helpers in `db.ts`, a shared
+`ProgressBar` in `components/hub/ui.tsx`, and a "Mark Complete" toggle on
+`ItemPage`. Auto-marking on open was **not** built — a checkmark the student
+never chose doesn't mean anything. Add it if teachers ask.
 
 ```
 lessonProgress/{uid}_{itemId}        // deterministic id = `${uid}_${itemId}`

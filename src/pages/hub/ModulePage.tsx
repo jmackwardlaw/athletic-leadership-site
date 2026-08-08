@@ -1,14 +1,23 @@
-// /hub/modules/:moduleId — module detail (list of published items).
-// Full markdown rendering + rich item pages land in Phase 2; this is the
-// lean Phase-1 version so module navigation works end to end.
+// /hub/modules/:moduleId — module detail (list of published items) with
+// per-item completion ticks and a module progress bar.
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ExternalLink, FileText, Link2, PlayCircle, Paperclip, BookText } from 'lucide-react'
+import {
+  CheckCircle2,
+  ExternalLink,
+  FileText,
+  Link2,
+  PlayCircle,
+  Paperclip,
+  BookText,
+} from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
 import { useHubData } from '../../context/HubDataContext'
-import { getModule, getPublishedItems } from '../../lib/hub/db'
+import { getModule, getPublishedItems, getStudentProgress } from '../../lib/hub/db'
+import { completedIds, moduleProgress } from '../../lib/hub/progress'
 import type { Item, ItemType, Module, WithId } from '../../lib/hub/types'
 import { formatDate } from '../../lib/hub/format'
-import { Card, EmptyState, PageHeading } from '../../components/hub/ui'
+import { Card, EmptyState, PageHeading, ProgressBar } from '../../components/hub/ui'
 import HubLoading from '../../components/hub/HubLoading'
 
 const ITEM_ICON: Record<ItemType, typeof FileText> = {
@@ -22,9 +31,11 @@ const ITEM_ICON: Record<ItemType, typeof FileText> = {
 
 export default function ModulePage() {
   const { moduleId } = useParams()
+  const { user } = useAuth()
   const { course, loading: settingsLoading } = useHubData()
   const [module, setModule] = useState<WithId<Module> | null>(null)
   const [items, setItems] = useState<WithId<Item>[]>([])
+  const [done, setDone] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
@@ -41,13 +52,19 @@ export default function ModulePage() {
         return
       }
       setModule(m)
-      setItems(await getPublishedItems(course.id, moduleId))
-      if (!cancelled) setLoading(false)
+      const [its, progress] = await Promise.all([
+        getPublishedItems(course.id, moduleId),
+        user ? getStudentProgress(user.uid) : Promise.resolve([]),
+      ])
+      if (cancelled) return
+      setItems(its)
+      setDone(completedIds(progress))
+      setLoading(false)
     })()
     return () => {
       cancelled = true
     }
-  }, [course?.id, moduleId, settingsLoading])
+  }, [course?.id, moduleId, user, settingsLoading])
 
   if (loading || settingsLoading) return <HubLoading />
 
@@ -71,7 +88,13 @@ export default function ModulePage() {
         <PageHeading eyebrow="Module" title={module.title} />
       </div>
       {module.description && (
-        <p className="-mt-4 mb-8 text-ink-muted max-w-2xl">{module.description}</p>
+        <p className="-mt-4 mb-6 text-ink-muted max-w-2xl">{module.description}</p>
+      )}
+
+      {items.length > 0 && (
+        <div className="mb-8 max-w-md">
+          <ProgressBar {...moduleProgress(items.map((i) => i.id), done)} />
+        </div>
       )}
 
       {items.length === 0 ? (
@@ -80,15 +103,25 @@ export default function ModulePage() {
         <div className="space-y-3">
           {items.map((item) => {
             const Icon = ITEM_ICON[item.type] ?? FileText
+            const isDone = done.has(item.id)
             return (
               <Card key={item.id} className="flex items-start gap-4">
-                <Icon className="w-5 h-5 text-brand-red shrink-0 mt-0.5" />
+                {isDone ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
+                ) : (
+                  <Icon className="w-5 h-5 text-brand-red shrink-0 mt-0.5" />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-bold text-ink-primary">{item.title}</h3>
                     <span className="text-[10px] uppercase tracking-[0.12em] text-ink-faint">
                       {item.type}
                     </span>
+                    {isDone && (
+                      <span className="text-[10px] uppercase tracking-[0.12em] text-green-400">
+                        Complete
+                      </span>
+                    )}
                   </div>
                   {item.dueDate && (
                     <p className="mt-1 text-xs font-bold uppercase tracking-[0.08em] text-ink-secondary">

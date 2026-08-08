@@ -135,6 +135,8 @@ two to-dos. Idempotent (fixed doc ids). Does not touch users or internship logs.
 - All access requires an authenticated, allowed-domain user.
 - `users/{uid}`: read/write own only; cannot change own role; teachers read all.
 - `settings`, `courses/**`, `todos`: read by any allowed user; write by teachers.
+- `lessonProgress`: students read + write only their own row, and the doc id
+  must equal `{uid}_{itemId}`; teachers read all. No deletes.
 - `internshipLogs`: students create + read + edit (while `pending`) their own;
   teachers read all and set `teacher_approved`/`rejected`. `supervisor_approved`
   is reachable **only** via a Cloud Function (Phase 3) — no client write path.
@@ -145,8 +147,8 @@ two to-dos. Idempotent (fixed doc ids). Does not touch users or internship logs.
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 — Spine** | Firebase, auth + roles, guards, student landing, internship logging (teacher direct-approve stub), teacher todos + roster, rules, seed, deploy | ✅ this build |
-| 2 — Content | Full CMS for courses/modules/items, markdown rendering, "Submit in Classroom", + lesson progress tracking | pending sign-off |
+| **1 — Spine** | Firebase, auth + roles, guards, student landing, internship logging (teacher direct-approve stub), teacher todos + roster, rules, seed, deploy | ✅ done |
+| **2 — Content** | CMS for modules/items, markdown rendering, "Submit in Classroom", + lesson progress tracking | ✅ this build |
 | 2.5 — Quizzes | Native auto-graded quizzes (LMS-inspired) | planned |
 | 3 — Internship | Supervisor magic-link sign-off (email) + accurate totals + completion certificates (PDF) | pending |
 | 4 — Native submissions | submissions + rubrics + Storage | optional |
@@ -155,8 +157,23 @@ two to-dos. Idempotent (fixed doc ids). Does not touch users or internship logs.
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the extended plan + Firestore schemas
 for the LMS-inspired features (progress, quizzes, certificates, badges).
 
-`/hub/teacher/content` (Phase 2) and `/hub/teacher/submissions` (Phase 4) are
-shown as upcoming in the teacher dashboard and not yet wired.
+`/hub/teacher/submissions` (Phase 4) is shown as upcoming in the teacher
+dashboard and not yet wired.
+
+### Authoring content (Phase 2)
+
+`/hub/teacher/content` edits the active course from `settings/config`.
+Modules and items are created unpublished; students only ever see
+`published: true`. Item bodies are markdown (GFM: headings, lists, links,
+tables, code) with a Preview toggle in the editor.
+
+Markdown is rendered by `react-markdown` with **raw HTML disabled** — do not
+add `rehype-raw`, it would turn item bodies into an XSS vector.
+
+Students mark items complete themselves on the item page; this writes
+`lessonProgress/{uid}_{itemId}`, and rules pin the doc id to the caller's uid
+so nobody can write another student's row. The progress math lives in
+`src/lib/hub/progress.ts` and is checked by `node scripts/check-progress.mjs`.
 
 ---
 

@@ -68,6 +68,22 @@ service cloud.firestore {
       allow write: if isTeacher();
     }
 
+    // ── lessonProgress/{uid}_{itemId} ───────────────────────
+    // A student may only ever write their own progress, and the doc id is
+    // pinned to `${uid}_${itemId}` so one student cannot occupy another's
+    // row (or create unbounded junk docs). Teachers read all for completion.
+    match /lessonProgress/{progressId} {
+      allow read: if isTeacher()
+        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
+
+      allow create, update: if isSignedIn()
+        && request.resource.data.studentUid == request.auth.uid
+        && progressId == request.auth.uid + '_' + request.resource.data.itemId
+        && request.resource.data.status in ['viewed', 'complete'];
+
+      allow delete: if false;
+    }
+
     // ── internshipLogs/{logId} ──────────────────────────────
     // Students create + read their own; may update only while pending and
     // may never set a privileged status. Teachers read all and may set
