@@ -16,7 +16,16 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https'
 import { logger } from 'firebase-functions'
 
 initializeApp()
-const db = getFirestore()
+
+// getFirestore() must NOT run at module scope. On deploy, the CLI imports this
+// file to discover its exports with a 10s budget; resolving credentials there
+// stalls on a machine with no application-default credentials and fails the
+// whole deploy with "Cannot determine backend specification. Timeout after
+// 10000." Resolve it lazily, inside the handler, where credentials exist.
+let firestore: ReturnType<typeof getFirestore> | undefined
+function db() {
+  return (firestore ??= getFirestore())
+}
 
 function parseList(raw: string | undefined): string[] {
   return (raw || '')
@@ -76,7 +85,7 @@ export const ensureProfile = onCall(
 
     // Upsert the profile doc (mirror of the claim, plus display fields).
     // Only stamp createdAt on first creation.
-    const ref = db.collection('users').doc(uid)
+    const ref = db().collection('users').doc(uid)
     const snap = await ref.get()
     await ref.set(
       {
