@@ -49,6 +49,8 @@ async function seed() {
     {
       activeCourseId: COURSE_ID,
       internshipHoursRequired: 60,
+      nfhsModulesRequired: 8,
+      lrlCredentialsRequired: 8,
       termLabel: '2026-27',
       ...stamps,
     },

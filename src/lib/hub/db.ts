@@ -59,6 +59,14 @@ export async function getStudents(): Promise<WithId<UserProfile>[]> {
     .sort((a, b) => a.displayName.localeCompare(b.displayName))
 }
 
+/** Teacher-only: the credential counts behind the dashboard rings. */
+export async function updateStudentCredentials(
+  uid: string,
+  data: Pick<UserProfile, 'nfhsModulesComplete' | 'lrlCredentialsEarned'>
+): Promise<void> {
+  await updateDoc(doc(db, 'users', uid), { ...data, updatedAt: serverTimestamp() })
+}
+
 // ── Courses / modules / items ─────────────────────────────────────────────
 export async function getCourse(courseId: string): Promise<WithId<Course> | null> {
   const snap = await getDoc(doc(db, 'courses', courseId))

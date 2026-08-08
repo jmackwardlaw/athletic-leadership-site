@@ -2,10 +2,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Download } from 'lucide-react'
 import { useHubData } from '../../context/HubDataContext'
-import { getAllLogs, getStudents } from '../../lib/hub/db'
+import { getAllLogs, getStudents, updateStudentCredentials } from '../../lib/hub/db'
 import type { InternshipLog, UserProfile, WithId } from '../../lib/hub/types'
 import { hoursLabel } from '../../lib/hub/format'
-import { EmptyState, PageHeading } from '../../components/hub/ui'
+import { EmptyState, PageHeading, inputClass } from '../../components/hub/ui'
 import HubLoading from '../../components/hub/HubLoading'
 
 interface Row {
@@ -14,6 +14,8 @@ interface Row {
   email: string
   approved: number
   pending: number
+  nfhs: number
+  lrl: number
 }
 
 export default function TeacherRoster() {
@@ -21,6 +23,7 @@ export default function TeacherRoster() {
   const [students, setStudents] = useState<WithId<UserProfile>[]>([])
   const [logs, setLogs] = useState<WithId<InternshipLog>[]>([])
   const [loading, setLoading] = useState(true)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -58,14 +61,46 @@ export default function TeacherRoster() {
         email: s.email,
         approved: agg.approved,
         pending: agg.pending,
+        nfhs: s.nfhsModulesComplete ?? 0,
+        lrl: s.lrlCredentialsEarned ?? 0,
       }
     })
   }, [students, logs])
 
+  // Writes the count immediately and patches local state, so the cell does not
+  // snap back to the old value while the roster refetch is in flight.
+  const saveCount = async (
+    uid: string,
+    field: 'nfhsModulesComplete' | 'lrlCredentialsEarned',
+    raw: string
+  ) => {
+    const value = Math.max(0, Math.floor(Number(raw) || 0))
+    setStudents((prev) =>
+      prev.map((s) => (s.id === uid ? { ...s, [field]: value } : s))
+    )
+    try {
+      await updateStudentCredentials(uid, { [field]: value })
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('[AL Hub] could not save credential count:', err)
+      setSaveError('Could not save that count. Check your connection and try again.')
+    }
+  }
+
   const exportCsv = () => {
-    const header = ['Name', 'Email', 'Approved Hours', 'Pending Hours', 'Required']
+    const header = [
+      'Name',
+      'Email',
+      'Approved Hours',
+      'Pending Hours',
+      'Required',
+      'NFHS Modules',
+      'LiM Credentials',
+    ]
     const lines = rows.map((r) =>
-      [r.name, r.email, r.approved, r.pending, required].map(csvCell).join(',')
+      [r.name, r.email, r.approved, r.pending, required, r.nfhs, r.lrl]
+        .map(csvCell)
+        .join(',')
     )
     const csv = [header.join(','), ...lines].join('\r\n')
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
@@ -91,6 +126,12 @@ export default function TeacherRoster() {
         </button>
       </PageHeading>
 
+      {saveError && (
+        <div className="mb-5 p-3 bg-red-500/10 border border-red-500/30 text-red-300 text-xs rounded-token">
+          {saveError}
+        </div>
+      )}
+
       {rows.length === 0 ? (
         <EmptyState>No students have signed in yet.</EmptyState>
       ) : (
@@ -102,6 +143,8 @@ export default function TeacherRoster() {
                 <th className="px-4 py-3 font-bold">Email</th>
                 <th className="px-4 py-3 font-bold text-right">Approved</th>
                 <th className="px-4 py-3 font-bold text-right">Pending</th>
+                <th className="px-4 py-3 font-bold text-center">NFHS</th>
+                <th className="px-4 py-3 font-bold text-center">LiM</th>
                 <th className="px-4 py-3 font-bold">Progress</th>
               </tr>
             </thead>
@@ -120,6 +163,22 @@ export default function TeacherRoster() {
                     <td className="px-4 py-3 text-right text-ink-secondary">
                       {hoursLabel(r.pending)}
                     </td>
+                    <td className="px-4 py-3 text-center">
+                      <CountInput
+                        value={r.nfhs}
+                        max={settings?.nfhsModulesRequired}
+                        onSave={(v) => saveCount(r.uid, 'nfhsModulesComplete', v)}
+                        label={`NFHS modules for ${r.name}`}
+                      />
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <CountInput
+                        value={r.lrl}
+                        max={settings?.lrlCredentialsRequired}
+                        onSave={(v) => saveCount(r.uid, 'lrlCredentialsEarned', v)}
+                        label={`Leader in Me credentials for ${r.name}`}
+                      />
+                    </td>
                     <td className="px-4 py-3 w-40">
                       <div className="h-2 w-full rounded-full bg-surface-sunken overflow-hidden">
                         <div className="h-full bg-brand-red" style={{ width: `${pct}%` }} />
@@ -132,6 +191,47 @@ export default function TeacherRoster() {
           </table>
         </div>
       )}
+    </div>
+  )
+}
+
+/** Saves on blur rather than per keystroke, so typing "12" is one write. */
+function CountInput({
+  value,
+  max,
+  onSave,
+  label,
+}: {
+  value: number
+  max?: number
+  onSave: (raw: string) => void
+  label: string
+}) {
+  const [draft, setDraft] = useState(String(value))
+
+  useEffect(() => {
+    setDraft(String(value))
+  }, [value])
+
+  return (
+    <div className="flex items-center justify-center gap-1">
+      <input
+        type="number"
+        min={0}
+        max={max}
+        inputMode="numeric"
+        aria-label={label}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={() => {
+          if (draft !== String(value)) onSave(draft)
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
+        }}
+        className={`${inputClass} !w-16 !px-2 !py-1.5 text-center`}
+      />
+      {max ? <span className="text-xs text-ink-faint">/{max}</span> : null}
     </div>
   )
 }

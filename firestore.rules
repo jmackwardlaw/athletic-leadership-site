@@ -47,8 +47,10 @@ service cloud.firestore {
       allow create: if isOwner(uid)
         && (!('role' in request.resource.data)
             || request.resource.data.role == request.auth.token.role);
-      // Update own doc: role cannot change.
-      allow update: if isOwner(uid)
+      // Update: a user may edit their own doc; a teacher may edit any student's
+      // (needed for the credential counts on the roster). Neither can change a
+      // role — that remains ensureProfile's job via custom claims.
+      allow update: if (isOwner(uid) || isTeacher())
         && request.resource.data.role == resource.data.role;
       allow delete: if false;
     }

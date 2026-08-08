@@ -18,6 +18,9 @@ export interface UserProfile {
   internshipSite?: string
   internshipSupervisorName?: string
   internshipSupervisorEmail?: string
+  // Credential counts, maintained by the teacher on the roster. Absent = 0.
+  nfhsModulesComplete?: number
+  lrlCredentialsEarned?: number
 }
 
 // settings/config (singleton)
@@ -25,6 +28,9 @@ export interface SettingsConfig {
   activeCourseId: string
   internshipHoursRequired: number // e.g. 60
   termLabel: string // e.g. "2026-27"
+  // Denominators for the credential rings. Absent = ring hidden.
+  nfhsModulesRequired?: number
+  lrlCredentialsRequired?: number
 }
 
 // courses/{courseId}

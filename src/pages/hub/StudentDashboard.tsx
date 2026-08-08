@@ -11,15 +11,23 @@ import {
   getStudentLogs,
   getStudentProgress,
   getTodosForStudent,
+  getUser,
 } from '../../lib/hub/db'
 import { completedIds, courseProgress, moduleProgress } from '../../lib/hub/progress'
 import type { Tally } from '../../lib/hub/progress'
-import type { InternshipLog, Module, Todo, WithId } from '../../lib/hub/types'
+import type {
+  InternshipLog,
+  Module,
+  Todo,
+  UserProfile,
+  WithId,
+} from '../../lib/hub/types'
 import { formatDate, hoursLabel } from '../../lib/hub/format'
 import {
   Card,
   EmptyState,
   ProgressBar,
+  ProgressRing,
   SectionTitle,
   StatusBadge,
 } from '../../components/hub/ui'
@@ -32,6 +40,7 @@ export default function StudentDashboard() {
   const [logs, setLogs] = useState<WithId<InternshipLog>[]>([])
   const [modules, setModules] = useState<WithId<Module>[]>([])
   const [tallies, setTallies] = useState<Record<string, Tally>>({})
+  const [profile, setProfile] = useState<WithId<UserProfile> | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -40,16 +49,18 @@ export default function StudentDashboard() {
     ;(async () => {
       setLoading(true)
       try {
-        const [t, l, m, progress] = await Promise.all([
+        const [t, l, m, progress, p] = await Promise.all([
           getTodosForStudent(user.uid),
           getStudentLogs(user.uid),
           course?.id ? getPublishedModules(course.id) : Promise.resolve([]),
           getStudentProgress(user.uid),
+          getUser(user.uid),
         ])
         if (cancelled) return
         setTodos(t)
         setLogs(l)
         setModules(m)
+        setProfile(p)
 
         // ponytail: one items read per module. At one-class scale that's a
         // handful of reads; if the course ever grows past ~20 modules, denormalise
@@ -75,6 +86,8 @@ export default function StudentDashboard() {
 
   const firstName = (user?.displayName || '').split(' ')[0] || 'there'
   const required = settings?.internshipHoursRequired ?? 0
+  const nfhsRequired = settings?.nfhsModulesRequired ?? 0
+  const lrlRequired = settings?.lrlCredentialsRequired ?? 0
   const approved = approvedHours(logs)
   const overall = courseProgress(Object.values(tallies))
 
@@ -89,6 +102,37 @@ export default function StudentDashboard() {
           {firstName}
         </h1>
       </div>
+
+      {/* Progress rings */}
+      <section>
+        <SectionTitle>Your Progress</SectionTitle>
+        <Card>
+          <div className="flex flex-wrap justify-center gap-x-10 gap-y-8 py-2">
+            <ProgressRing
+              value={approved}
+              total={required}
+              label="Internship Hours"
+              caption="Approved hours"
+            />
+            {nfhsRequired > 0 && (
+              <ProgressRing
+                value={profile?.nfhsModulesComplete ?? 0}
+                total={nfhsRequired}
+                label="NFHS"
+                caption="Modules complete"
+              />
+            )}
+            {lrlRequired > 0 && (
+              <ProgressRing
+                value={profile?.lrlCredentialsEarned ?? 0}
+                total={lrlRequired}
+                label="Leader in Me"
+                caption="Micro-credentials"
+              />
+            )}
+          </div>
+        </Card>
+      </section>
 
       {/* This Week */}
       <section>
@@ -107,7 +151,7 @@ export default function StudentDashboard() {
       {/* Internship Hours widget */}
       <section>
         <SectionTitle>Internship Hours</SectionTitle>
-        <HoursWidget approved={approved} required={required} recent={logs.slice(0, 3)} />
+        <RecentHours recent={logs.slice(0, 3)} />
       </section>
 
       {/* Modules */}
@@ -195,42 +239,24 @@ function TodoCard({ todo }: { todo: WithId<Todo> }) {
   )
 }
 
-function HoursWidget({
-  approved,
-  required,
-  recent,
-}: {
-  approved: number
-  required: number
-  recent: WithId<InternshipLog>[]
-}) {
-  const pct = required > 0 ? Math.min(100, Math.round((approved / required) * 100)) : 0
+// Totals live in the ring above, so this is just the log + the way to add to it.
+function RecentHours({ recent }: { recent: WithId<InternshipLog>[] }) {
   return (
     <Card>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Clock className="w-6 h-6 text-brand-red" />
-          <div>
-            <div className="text-2xl font-black">
-              {hoursLabel(approved)}{' '}
-              <span className="text-ink-muted text-lg">/ {hoursLabel(required)}</span>
-            </div>
-            <div className="text-xs uppercase tracking-[0.1em] text-ink-secondary">
-              Approved hours
-            </div>
-          </div>
+          <Clock className="w-5 h-5 text-brand-red" />
+          <span className="text-sm text-ink-secondary">
+            {recent.length > 0 ? 'Your most recent entries' : 'No hours logged yet.'}
+          </span>
         </div>
         <Link to="/hub/internship" className="btn btn-primary !py-2.5 !px-5 !text-xs">
           Log Hours
         </Link>
       </div>
 
-      <div className="mt-4">
-        <ProgressBar complete={approved} total={required} pct={pct} showCount={false} />
-      </div>
-
       {recent.length > 0 && (
-        <ul className="mt-5 space-y-2">
+        <ul className="mt-4 space-y-2">
           {recent.map((log) => (
             <li
               key={log.id}

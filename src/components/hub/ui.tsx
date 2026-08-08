@@ -2,7 +2,7 @@
 // tokens / global .card-dark, .btn classes from index.css.
 import type { ReactNode } from 'react'
 import { cn } from '../../lib/utils'
-import { STATUS_META } from '../../lib/hub/format'
+import { STATUS_META, hoursLabel } from '../../lib/hub/format'
 import type { InternshipStatus } from '../../lib/hub/types'
 
 export function PageHeading({
@@ -65,6 +65,86 @@ export function StatusBadge({ status }: { status: InternshipStatus }) {
     >
       {meta.label}
     </span>
+  )
+}
+
+/**
+ * Circular progress ring. Complete rings turn green so "done" is readable at a
+ * glance without counting. Pure SVG — no chart dependency for three donuts.
+ */
+export function ProgressRing({
+  value,
+  total,
+  label,
+  caption,
+  size = 148,
+  stroke = 12,
+}: {
+  value: number
+  total: number
+  label: string
+  caption?: string
+  size?: number
+  stroke?: number
+}) {
+  const pct = total > 0 ? Math.min(100, Math.round((value / total) * 100)) : 0
+  const done = total > 0 && value >= total
+  const radius = (size - stroke) / 2
+  const circumference = 2 * Math.PI * radius
+  const filled = (pct / 100) * circumference
+  const center = size / 2
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative" style={{ width: size, height: size }}>
+        <svg
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          role="img"
+          aria-label={`${label}: ${hoursLabel(value)} of ${hoursLabel(total)}, ${pct}% complete`}
+        >
+          <circle
+            cx={center}
+            cy={center}
+            r={radius}
+            fill="none"
+            stroke="rgba(255,255,255,0.07)"
+            strokeWidth={stroke}
+          />
+          {/* Skipped entirely at 0% — a round linecap still paints a dot on a
+              zero-length dash, which reads as "you have some progress". */}
+          {filled > 0 && (
+            <circle
+              cx={center}
+              cy={center}
+              r={radius}
+              fill="none"
+              stroke={done ? '#4ade80' : 'var(--brand-red)'}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeDasharray={`${filled} ${circumference - filled}`}
+              transform={`rotate(-90 ${center} ${center})`}
+              style={{ transition: 'stroke-dasharray 0.7s cubic-bezier(0.22,1,0.36,1)' }}
+            />
+          )}
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-3xl font-black leading-none text-ink-primary">
+            {hoursLabel(value)}
+          </div>
+          <div className="mt-1 text-xs font-bold text-ink-muted">
+            of {hoursLabel(total)}
+          </div>
+        </div>
+      </div>
+      <div className="mt-3 text-center">
+        <div className="font-headline text-sm font-black uppercase tracking-[0.08em] text-ink-primary">
+          {label}
+        </div>
+        {caption && <div className="mt-0.5 text-xs text-ink-muted">{caption}</div>}
+      </div>
+    </div>
   )
 }
 
