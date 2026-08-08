@@ -1,9 +1,11 @@
 // ─────────────────────────────────────────────────────────────
 // Import Unit 1 (L1.1–L1.5) into the active course as student-facing items.
 //
-// Usage: same credentials as `npm run seed`.
+// Usage: needs a service-account key, exactly like `npm run seed`.
 //   export GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/serviceAccount.json
 //   node scripts/import-unit1.mjs
+//
+// A Firebase CLI OAuth token will NOT do — see makeCredential below.
 //
 // Idempotent: fixed document ids, merge writes. Re-running updates the same
 // docs. Everything is written published:false — review in the CMS at
@@ -29,20 +31,63 @@ import { readFileSync } from 'node:fs'
 const PROJECT_ID = 'phs-al-hub'
 const MODULE_ID = 'u1-foundations'
 
+// NOTE: a bare OAuth token (e.g. `firebase auth:print-access-token`) does NOT
+// work here. firebase-admin's Firestore client checks the credential *type* and
+// rejects anything that is not a certificate or real ADC:
+//   firestore/invalid-credential: Must initialize the SDK with a certificate
+//   credential or application default credentials
+// So this needs a service-account key, same as scripts/seed.mjs.
 function makeCredential() {
   const explicit = process.env.SERVICE_ACCOUNT
-  if (explicit) return cert(JSON.parse(readFileSync(explicit, 'utf8')))
-
-  // Borrow the Firebase CLI's own login instead of a downloaded key. The token
-  // is short-lived and never touches disk, which beats keeping a permanent
-  // service-account key around for a script that runs a few times a year:
-  //   FIREBASE_ACCESS_TOKEN=$(firebase auth:print-access-token) node scripts/import-unit1.mjs
-  const token = process.env.FIREBASE_ACCESS_TOKEN
-  if (token) {
-    return { getAccessToken: async () => ({ access_token: token, expires_in: 3600 }) }
+  if (explicit) {
+    console.log('auth: service-account file from $SERVICE_ACCOUNT')
+    return cert(JSON.parse(readFileSync(explicit, 'utf8')))
   }
 
-  return applicationDefault()
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    console.log('auth: $GOOGLE_APPLICATION_CREDENTIALS')
+    return applicationDefault()
+  }
+
+  // Without this guard, applicationDefault() finds nothing and stalls probing
+  // for a GCE metadata server that is not there — a silent hang with no error.
+  console.error(
+    'No credentials found.\n\n' +
+      'Firebase console -> Project settings -> Service accounts ->\n' +
+      '"Generate new private key". Save it OUTSIDE the repo, then:\n\n' +
+      '  export GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/serviceAccount.json\n' +
+      '  node scripts/import-unit1.mjs\n'
+  )
+  process.exit(1)
+}
+
+/**
+ * Firestore retries auth failures with backoff, so a rejected credential looks
+ * exactly like a slow network: no output, no error, forever. Fail loudly.
+ */
+async function withTimeout(promise, what, ms = 20000) {
+  let timer
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timer = setTimeout(
+          () =>
+            reject(
+              new Error(
+                `${what} timed out after ${ms / 1000}s.\n` +
+                  'This is almost always the credential being refused rather than a\n' +
+                  'slow connection. Check that this prints a few hundred characters:\n' +
+                  '  firebase auth:print-access-token --project phs-al-hub | wc -c'
+              )
+            ),
+          ms
+        )
+      }),
+    ])
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 initializeApp({ credential: makeCredential(), projectId: PROJECT_ID })
@@ -293,7 +338,11 @@ const ITEMS = [
 ]
 
 async function importUnit1() {
-  const settings = await db.doc('settings/config').get()
+  console.log(`Connecting to ${PROJECT_ID}…`)
+  const settings = await withTimeout(
+    db.doc('settings/config').get(),
+    'Reading settings/config'
+  )
   const courseId = settings.exists ? settings.data().activeCourseId : null
   if (!courseId) {
     throw new Error(
@@ -321,7 +370,12 @@ async function importUnit1() {
   )
 }
 
-importUnit1().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+// Firestore holds gRPC connections open, so node will not exit on its own once
+// the writes are done. Exit explicitly rather than leaving a finished script
+// looking like a hung one.
+importUnit1()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(`\n${err.message || err}`)
+    process.exit(1)
+  })
