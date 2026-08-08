@@ -2,7 +2,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Download } from 'lucide-react'
 import { useHubData } from '../../context/HubDataContext'
-import { getAllLogs, getStudents, updateStudentCredentials } from '../../lib/hub/db'
+import {
+  getAllLogs,
+  getEnrolledEmails,
+  getStudents,
+  setEnrolledEmails,
+  updateStudentCredentials,
+} from '../../lib/hub/db'
+import { parseEmailList } from '../../lib/hub/roster'
 import type { InternshipLog, UserProfile, WithId } from '../../lib/hub/types'
 import { hoursLabel } from '../../lib/hub/format'
 import { EmptyState, PageHeading, inputClass } from '../../components/hub/ui'
@@ -24,15 +31,21 @@ export default function TeacherRoster() {
   const [logs, setLogs] = useState<WithId<InternshipLog>[]>([])
   const [loading, setLoading] = useState(true)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [enrolled, setEnrolled] = useState<string[]>([])
 
   useEffect(() => {
     let cancelled = false
     ;(async () => {
       setLoading(true)
-      const [s, l] = await Promise.all([getStudents(), getAllLogs()])
+      const [s, l, e] = await Promise.all([
+        getStudents(),
+        getAllLogs(),
+        getEnrolledEmails(),
+      ])
       if (!cancelled) {
         setStudents(s)
         setLogs(l)
+        setEnrolled(e)
         setLoading(false)
       }
     })()
@@ -132,6 +145,15 @@ export default function TeacherRoster() {
         </div>
       )}
 
+      <EnrollmentPanel
+        enrolled={enrolled}
+        signedIn={rows.map((r) => r.email)}
+        onSave={async (emails) => {
+          setEnrolled(emails)
+          await setEnrolledEmails(emails)
+        }}
+      />
+
       {rows.length === 0 ? (
         <EmptyState>No students have signed in yet.</EmptyState>
       ) : (
@@ -189,6 +211,143 @@ export default function TeacherRoster() {
               })}
             </tbody>
           </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/**
+ * The enrollment gate. An empty list means the gate is OFF and any account on
+ * the school domain can sign in — that state is stated plainly rather than
+ * left to be discovered.
+ */
+export function EnrollmentPanel({
+  enrolled,
+  signedIn,
+  onSave,
+}: {
+  enrolled: string[]
+  signedIn: string[]
+  onSave: (emails: string[]) => Promise<void>
+}) {
+  const [open, setOpen] = useState(false)
+  const [draft, setDraft] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setDraft(enrolled.join('\n'))
+  }, [enrolled])
+
+  const parsed = parseEmailList(draft)
+  const on = enrolled.length > 0
+
+  // Someone who signed in before the gate went up, and is not on the list.
+  const strays = signedIn.filter(
+    (e) => on && !enrolled.some((x) => x.trim().toLowerCase() === e.toLowerCase())
+  )
+
+  const save = async () => {
+    setSaving(true)
+    setError(null)
+    try {
+      await onSave(parsed)
+      setOpen(false)
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('[AL Hub] could not save enrollment list:', err)
+      setError('Could not save the roster. Try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div
+      className={`mb-6 rounded-token border p-4 ${
+        on
+          ? 'border-white/10 bg-surface-sunken/50'
+          : 'border-yellow-500/30 bg-yellow-500/10'
+      }`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="text-sm">
+          {on ? (
+            <>
+              <span className="font-bold text-ink-primary">
+                Enrollment restricted
+              </span>
+              <span className="text-ink-muted">
+                {' '}
+                — {enrolled.length} student{enrolled.length === 1 ? '' : 's'} may
+                sign in.
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="font-bold text-yellow-200">
+                Enrollment is not restricted
+              </span>
+              <span className="text-yellow-200/80">
+                {' '}
+                — anyone with a school Google account can sign in and see course
+                content. Add your students to lock it down.
+              </span>
+            </>
+          )}
+        </div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="btn btn-outline !py-1.5 !px-3.5 !text-xs shrink-0"
+        >
+          {open ? 'Cancel' : on ? 'Edit list' : 'Add students'}
+        </button>
+      </div>
+
+      {strays.length > 0 && (
+        <p className="mt-3 text-xs text-yellow-200">
+          {strays.length} account{strays.length === 1 ? '' : 's'} already signed in
+          before being enrolled and {strays.length === 1 ? 'is' : 'are'} not on the
+          list: {strays.join(', ')}. They lose access next time they sign in.
+        </p>
+      )}
+
+      {open && (
+        <div className="mt-4 space-y-3">
+          <textarea
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            placeholder={'student1@apps.anderson1.org\nstudent2@apps.anderson1.org'}
+            className={`${inputClass} min-h-[180px] resize-y font-mono !text-[13px]`}
+          />
+          <p className="text-xs text-ink-muted">
+            One per line or comma-separated — paste straight from a spreadsheet.
+            Duplicates and stray text are cleaned up on save. You do not need to
+            add yourself; staff bypass this list.
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={save}
+              disabled={saving}
+              className="btn btn-primary !text-xs disabled:opacity-60"
+            >
+              {saving
+                ? 'Saving…'
+                : `Save ${parsed.length} student${parsed.length === 1 ? '' : 's'}`}
+            </button>
+            {parsed.length === 0 && draft.trim().length > 0 && (
+              <span className="text-xs text-yellow-200">
+                No valid emails found — every line needs an @.
+              </span>
+            )}
+            {parsed.length === 0 && draft.trim().length === 0 && enrolled.length > 0 && (
+              <span className="text-xs text-yellow-200">
+                Saving an empty list turns the restriction off.
+              </span>
+            )}
+          </div>
+          {error && <p className="text-xs text-red-300">{error}</p>}
         </div>
       )}
     </div>

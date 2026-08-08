@@ -44,6 +44,25 @@ export async function getSettings(): Promise<SettingsConfig | null> {
   return snap.exists() ? (snap.data() as SettingsConfig) : null
 }
 
+// ── Enrollment roster ───────────────────────────────────────────────────
+// settings/roster holds the enrolled student emails. ensureProfile reads it
+// server-side; this is the teacher's editor for it. Rules already restrict
+// settings writes to teachers.
+
+export async function getEnrolledEmails(): Promise<string[]> {
+  const snap = await getDoc(doc(db, 'settings', 'roster'))
+  const emails = snap.exists() ? snap.data().studentEmails : undefined
+  return Array.isArray(emails) ? emails : []
+}
+
+export async function setEnrolledEmails(emails: string[]): Promise<void> {
+  await setDoc(
+    doc(db, 'settings', 'roster'),
+    { studentEmails: emails, updatedAt: serverTimestamp() },
+    { merge: true }
+  )
+}
+
 // ── Users ───────────────────────────────────────────────────────────────
 export async function getUser(uid: string): Promise<WithId<UserProfile> | null> {
   const snap = await getDoc(doc(db, 'users', uid))

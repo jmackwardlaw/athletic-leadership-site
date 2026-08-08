@@ -86,8 +86,37 @@ export const ensureProfile = onCall(
       )
     }
 
-    const role: Role = TEACHER_EMAILS.includes(email) ? 'teacher' : 'student'
     const uid = auth.uid
+    const isTeacher = TEACHER_EMAILS.includes(email)
+
+    // Enrollment gate. The list lives in Firestore (settings/roster) rather
+    // than in .env so it can be edited from the teacher Roster page without a
+    // function deploy. Teachers bypass it — staff are not on a student roster.
+    //
+    // Fail-open when the list is empty: an empty roster means "not configured
+    // yet", and failing closed there would lock out the whole class the moment
+    // this deploys. The teacher UI states loudly when the gate is off.
+    if (!isTeacher) {
+      const rosterSnap = await db().doc('settings/roster').get()
+      const enrolled = (rosterSnap.data()?.studentEmails as string[] | undefined) ?? []
+      // Normalised here too, because the list is hand-editable in the console.
+      const onRoster = enrolled.some((e) => e.trim().toLowerCase() === email)
+
+      if (enrolled.length > 0 && !onRoster) {
+        // Revoke any claim from a previous sign-in, so someone provisioned
+        // before the gate existed loses access rather than keeping it forever.
+        if (auth.token.role) {
+          await getAuth().setCustomUserClaims(uid, {})
+        }
+        logger.warn('ensureProfile rejected unenrolled account', { email })
+        throw new HttpsError(
+          'permission-denied',
+          'Your account is not on the roster for this course. If you think that is wrong, ask Coach Wardlaw to add you.'
+        )
+      }
+    }
+
+    const role: Role = isTeacher ? 'teacher' : 'student'
 
     // Set the custom claim only when it would change, to avoid needless writes.
     const existing = (auth.token.role as Role | undefined) ?? undefined

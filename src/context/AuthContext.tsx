@@ -87,12 +87,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           await ensureProfileFn()
           setRole(await readRole(u, true)) // force refresh to pick up claim
         } catch (err) {
-          // ensureProfile is the ONLY thing that assigns the role claim, so a
-          // failure here silently demotes staff to the student view. That is
-          // indistinguishable from "you are a student" unless we say so — this
-          // went unnoticed for weeks once, because the error was console-only.
           // eslint-disable-next-line no-console
           console.error('[AL Hub] ensureProfile failed:', err)
+
+          // A rejection is a decision, not a fault: the account is off-domain
+          // or not on the course roster. Sign them out and say so, rather than
+          // stranding them on an empty dashboard they cannot read.
+          const code = (err as { code?: string })?.code
+          if (code === 'functions/permission-denied') {
+            const message =
+              (err as { message?: string })?.message ||
+              'Your account does not have access to this course.'
+            provisionedFor.current = null
+            await fbSignOut(auth)
+            setAuthError(message)
+            return
+          }
+
+          // Anything else is a real failure. ensureProfile is the ONLY thing
+          // that assigns the role claim, so failing quietly here demotes staff
+          // to the student view — indistinguishable from "you are a student"
+          // unless we say so. That hid a broken callable for weeks.
           setAuthError(
             'Could not confirm your account role, so you may be seeing the student view. ' +
               'If you are staff, tell Coach Wardlaw the hub could not reach ensureProfile.'

@@ -24,15 +24,15 @@ service cloud.firestore {
     function hasValidRole() {
       return isSignedIn() && (role() == 'student' || role() == 'teacher');
     }
-    // Allowed Workspace domain(s). Mirror of ALLOWED_AUTH_DOMAINS.
-    function allowedDomain() {
-      return isSignedIn()
-        && request.auth.token.email != null
-        && request.auth.token.email.lower().matches('^[^@]+@apps[.]anderson1[.]org$');
-    }
-    // Any authenticated, allowed-domain user (with or without a claim yet).
+    // Access requires a role claim, and ONLY ensureProfile issues one — after
+    // checking the email domain AND the enrollment list in settings/roster.
+    //
+    // There is deliberately no "allowed domain" fallback here. That fallback
+    // used to let any @apps.anderson1.org account read course content without
+    // ever being enrolled, which is exactly what the roster gate exists to
+    // stop. Requiring the claim is what makes an unenrolled sign-in useless.
     function allowed() {
-      return hasValidRole() || allowedDomain();
+      return hasValidRole();
     }
     function isOwner(uid) {
       return isSignedIn() && request.auth.uid == uid;
