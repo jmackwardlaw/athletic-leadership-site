@@ -48,7 +48,7 @@ async function seed() {
   await db.doc('settings/config').set(
     {
       activeCourseId: COURSE_ID,
-      internshipHoursRequired: 30,
+      internshipHoursRequired: 60,
       termLabel: '2026-27',
       ...stamps,
     },

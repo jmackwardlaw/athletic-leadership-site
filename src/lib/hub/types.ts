@@ -23,7 +23,7 @@ export interface UserProfile {
 // settings/config (singleton)
 export interface SettingsConfig {
   activeCourseId: string
-  internshipHoursRequired: number // e.g. 30
+  internshipHoursRequired: number // e.g. 60
   termLabel: string // e.g. "2026-27"
 }
 

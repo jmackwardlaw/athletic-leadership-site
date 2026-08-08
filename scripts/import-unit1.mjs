@@ -32,6 +32,16 @@ const MODULE_ID = 'u1-foundations'
 function makeCredential() {
   const explicit = process.env.SERVICE_ACCOUNT
   if (explicit) return cert(JSON.parse(readFileSync(explicit, 'utf8')))
+
+  // Borrow the Firebase CLI's own login instead of a downloaded key. The token
+  // is short-lived and never touches disk, which beats keeping a permanent
+  // service-account key around for a script that runs a few times a year:
+  //   FIREBASE_ACCESS_TOKEN=$(firebase auth:print-access-token) node scripts/import-unit1.mjs
+  const token = process.env.FIREBASE_ACCESS_TOKEN
+  if (token) {
+    return { getAccessToken: async () => ({ access_token: token, expires_in: 3600 }) }
+  }
+
   return applicationDefault()
 }
 
