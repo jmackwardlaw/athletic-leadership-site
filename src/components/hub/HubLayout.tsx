@@ -14,10 +14,15 @@ const studentNav = [
 ]
 const teacherNav = [
   { label: 'Overview', to: '/hub/teacher', end: true },
+  { label: 'Content', to: '/hub/teacher/content', end: false },
   { label: 'Roster', to: '/hub/teacher/roster', end: false },
   { label: 'Approvals', to: '/hub/teacher/internship', end: false },
   { label: 'To-Dos', to: '/hub/teacher/todos', end: false },
 ]
+// Teachers are students' teachers, not students — but they still need to see
+// what the class sees. Without this the only way to reach the student view is
+// to edit the URL by hand.
+const teacherExtraNav = { label: 'Student View', to: '/hub', end: true }
 
 function HubHeader() {
   const { user, role, signOut } = useAuth()
@@ -25,7 +30,7 @@ function HubHeader() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
 
-  const links = role === 'teacher' ? teacherNav : studentNav
+  const links = role === 'teacher' ? [...teacherNav, teacherExtraNav] : studentNav
   const courseTitle = course?.title || 'Athletic Leadership'
 
   const handleSignOut = async () => {
