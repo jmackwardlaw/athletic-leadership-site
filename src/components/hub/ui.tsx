@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { cn } from '../../lib/utils'
 import { STATUS_META, hoursLabel } from '../../lib/hub/format'
+import { DEFAULT_EMBED_RATIO, toEmbedUrl } from '../../lib/hub/embed'
 import type { InternshipStatus } from '../../lib/hub/types'
 
 export function PageHeading({
@@ -65,6 +66,45 @@ export function StatusBadge({ status }: { status: InternshipStatus }) {
     >
       {meta.label}
     </span>
+  )
+}
+
+/**
+ * Inline embed for teacher-authored slide decks, docs and video.
+ *
+ * The src is normalised by lib/hub/embed, which refuses anything that is not
+ * https — so javascript:/data: URLs can never reach the frame. Content is
+ * still third-party, so it gets a sandbox: scripts and popups yes (decks need
+ * them), form submission and top-level navigation no, which stops an embed
+ * from redirecting the hub out from under a student.
+ */
+export function Embed({
+  url,
+  title,
+  ratio = DEFAULT_EMBED_RATIO,
+}: {
+  url: string | null | undefined
+  title: string
+  ratio?: string
+}) {
+  const src = toEmbedUrl(url)
+  if (!src) return null
+  return (
+    <div className="mb-5 overflow-hidden rounded-token border border-white/10 bg-surface-sunken">
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        allowFullScreen
+        // NOT no-referrer: YouTube (and other players) validate the embedding
+        // origin and fail with "Error 153" without it. This sends the origin
+        // only, never the full hub URL.
+        referrerPolicy="strict-origin-when-cross-origin"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
+        className="block w-full border-0"
+        style={{ aspectRatio: ratio }}
+      />
+    </div>
   )
 }
 

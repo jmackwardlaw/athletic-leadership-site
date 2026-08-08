@@ -26,12 +26,14 @@ import type { Item, ItemType, Module, WithId } from '../../lib/hub/types'
 import { formatDate, formatDateInput } from '../../lib/hub/format'
 import {
   Card,
+  Embed,
   EmptyState,
   Field,
   PageHeading,
   SectionTitle,
   inputClass,
 } from '../../components/hub/ui'
+import { embedHostLabel, toEmbedUrl } from '../../lib/hub/embed'
 import Markdown from '../../components/hub/Markdown'
 import HubLoading from '../../components/hub/HubLoading'
 
@@ -56,6 +58,7 @@ interface ItemForm {
   title: string
   body: string
   resourceUrl: string
+  embedUrl: string
   gcSubmitUrl: string
   dueDate: string
   order: string
@@ -74,6 +77,7 @@ const emptyItemForm: ItemForm = {
   title: '',
   body: '',
   resourceUrl: '',
+  embedUrl: '',
   gcSubmitUrl: '',
   dueDate: '',
   order: '',
@@ -214,6 +218,7 @@ export default function TeacherContent() {
       title: item.title,
       body: item.body || '',
       resourceUrl: item.resourceUrl || '',
+      embedUrl: item.embedUrl || '',
       gcSubmitUrl: item.gcSubmitUrl || '',
       dueDate: formatDateInput(item.dueDate),
       order: String(item.order ?? 0),
@@ -238,6 +243,9 @@ export default function TeacherContent() {
         ...(itemForm.resourceUrl.trim()
           ? { resourceUrl: itemForm.resourceUrl.trim() }
           : {}),
+        // Stored as pasted; toEmbedUrl normalises at render time, so fixing a
+        // host's URL shape later repairs existing items without a data migration.
+        ...(itemForm.embedUrl.trim() ? { embedUrl: itemForm.embedUrl.trim() } : {}),
         ...(itemForm.gcSubmitUrl.trim()
           ? { gcSubmitUrl: itemForm.gcSubmitUrl.trim() }
           : {}),
@@ -592,6 +600,19 @@ function ItemEditor({
         </Field>
       </div>
 
+      <div>
+        <Field label="Embed (Canva, Slides, YouTube, Drive)">
+          <input
+            type="url"
+            value={form.embedUrl}
+            onChange={(e) => setForm((f) => ({ ...f, embedUrl: e.target.value }))}
+            className={inputClass}
+            placeholder="Paste the Share link — it gets converted automatically"
+          />
+        </Field>
+        <EmbedFeedback raw={form.embedUrl} title={form.title} />
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Due date">
           <input
@@ -622,6 +643,49 @@ function ItemEditor({
         createLabel="Create Item"
       />
     </form>
+  )
+}
+
+/**
+ * Shows what the pasted link resolved to, and previews it. A blank iframe on
+ * the student page is the failure mode here, so it is worth seeing it work
+ * before publishing rather than after.
+ */
+function EmbedFeedback({ raw, title }: { raw: string; title: string }) {
+  const [show, setShow] = useState(false)
+  const trimmed = raw.trim()
+  if (!trimmed) return null
+
+  const src = toEmbedUrl(trimmed)
+  if (!src) {
+    return (
+      <p className="mt-1.5 text-xs text-yellow-200">
+        That doesn't look like an embeddable link. It needs to start with
+        https://
+      </p>
+    )
+  }
+
+  const label = embedHostLabel(src)
+  const converted = src !== trimmed
+
+  return (
+    <div className="mt-1.5">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
+        <span>
+          {label ? `Recognised as ${label}.` : 'Will be embedded.'}
+          {converted ? ' Converted to its embed link.' : ''}
+        </span>
+        <button
+          type="button"
+          onClick={() => setShow((v) => !v)}
+          className="text-ink-secondary hover:text-white underline"
+        >
+          {show ? 'Hide preview' : 'Test it'}
+        </button>
+      </div>
+      {show && <div className="mt-2"><Embed url={trimmed} title={title || 'Embed preview'} /></div>}
+    </div>
   )
 }
 

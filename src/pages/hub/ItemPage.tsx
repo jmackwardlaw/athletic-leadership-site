@@ -12,7 +12,7 @@ import { getStudentProgress, setItemComplete } from '../../lib/hub/db'
 import { completedIds } from '../../lib/hub/progress'
 import type { Item } from '../../lib/hub/types'
 import { formatDate } from '../../lib/hub/format'
-import { Card, EmptyState, PageHeading } from '../../components/hub/ui'
+import { Card, Embed, EmptyState, PageHeading } from '../../components/hub/ui'
 import Markdown from '../../components/hub/Markdown'
 import HubLoading from '../../components/hub/HubLoading'
 
@@ -83,10 +83,12 @@ export default function ItemPage() {
             </p>
           )}
           {item.body && (
-            <Card>
+            <Card className="mb-5">
               <Markdown>{item.body}</Markdown>
             </Card>
           )}
+
+          <Embed url={item.embedUrl} title={item.title} />
           <div className="mt-5 flex flex-wrap gap-2">
             <button
               onClick={toggleComplete}

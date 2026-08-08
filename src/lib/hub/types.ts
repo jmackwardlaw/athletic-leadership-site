@@ -58,7 +58,8 @@ export interface Item {
   body: string // markdown (rendered client-side)
   order: number
   published: boolean
-  resourceUrl?: string // for link/video/file types
+  resourceUrl?: string // for link/video/file types — opens in a new tab
+  embedUrl?: string // rendered inline in an iframe (Canva, Slides, YouTube…)
   gcSubmitUrl?: string // deep-link to the GC assignment ("Submit in Classroom →")
   dueDate?: Timestamp
 }
