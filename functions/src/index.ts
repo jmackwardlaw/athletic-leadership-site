@@ -74,44 +74,47 @@ export const ensureProfile = onCall(
       throw new HttpsError('failed-precondition', 'No email on the account.')
     }
 
-    const domain = domainOf(email)
-    if (
-      ALLOWED_AUTH_DOMAINS.length > 0 &&
-      (!domain || !ALLOWED_AUTH_DOMAINS.includes(domain))
-    ) {
-      logger.warn('ensureProfile rejected non-allowed domain', { email })
-      throw new HttpsError(
-        'permission-denied',
-        'Your account domain is not permitted for this hub.'
-      )
-    }
-
     const uid = auth.uid
     const isTeacher = TEACHER_EMAILS.includes(email)
 
-    // Enrollment gate. The list lives in Firestore (settings/roster) rather
-    // than in .env so it can be edited from the teacher Roster page without a
-    // function deploy. Teachers bypass it — staff are not on a student roster.
+    // Access model, in priority order:
     //
-    // Fail-open when the list is empty: an empty roster means "not configured
-    // yet", and failing closed there would lock out the whole class the moment
-    // this deploys. The teacher UI states loudly when the gate is off.
+    //   1. Staff (TEACHER_EMAILS) always get in.
+    //   2. Otherwise, if an enrollment roster exists, it is the ONLY thing that
+    //      matters — being on it grants access even off-domain, and not being
+    //      on it denies access even on-domain. An explicit list the teacher
+    //      curates should beat a blanket domain rule, which is what makes a
+    //      transfer student, an aide, or a test account possible.
+    //   3. If no roster is configured yet, fall back to the domain allowlist.
+    //      Failing closed here would lock out the class the moment this
+    //      deploys; the teacher UI says loudly when the gate is off.
     if (!isTeacher) {
       const rosterSnap = await db().doc('settings/roster').get()
       const enrolled = (rosterSnap.data()?.studentEmails as string[] | undefined) ?? []
       // Normalised here too, because the list is hand-editable in the console.
       const onRoster = enrolled.some((e) => e.trim().toLowerCase() === email)
 
-      if (enrolled.length > 0 && !onRoster) {
-        // Revoke any claim from a previous sign-in, so someone provisioned
+      const denied =
+        enrolled.length > 0
+          ? !onRoster
+          : ALLOWED_AUTH_DOMAINS.length > 0 &&
+            !ALLOWED_AUTH_DOMAINS.includes(domainOf(email) ?? '')
+
+      if (denied) {
+        // Revoke any claim from a previous sign-in, so an account provisioned
         // before the gate existed loses access rather than keeping it forever.
         if (auth.token.role) {
           await getAuth().setCustomUserClaims(uid, {})
         }
-        logger.warn('ensureProfile rejected unenrolled account', { email })
+        logger.warn('ensureProfile denied', {
+          email,
+          reason: enrolled.length > 0 ? 'not-enrolled' : 'domain',
+        })
         throw new HttpsError(
           'permission-denied',
-          'Your account is not on the roster for this course. If you think that is wrong, ask Coach Wardlaw to add you.'
+          enrolled.length > 0
+            ? 'Your account is not on the roster for this course. If you think that is wrong, ask Coach Wardlaw to add you.'
+            : 'Your account domain is not permitted for this hub.'
         )
       }
     }

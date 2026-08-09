@@ -28,7 +28,6 @@ import {
 } from 'firebase/auth'
 import { httpsCallable } from 'firebase/functions'
 import { auth, functions, googleProvider } from '../lib/firebase'
-import { isAllowedDomain } from '../lib/hub/config'
 import type { Role } from '../lib/hub/types'
 
 interface AuthState {
@@ -69,15 +68,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      // Client-side domain gate (UX). The server rejects too.
-      if (!isAllowedDomain(u.email)) {
-        setAuthError(
-          `You must sign in with your school account. ${u.email ?? ''} is not an allowed domain.`
-        )
-        await fbSignOut(auth)
-        return
-      }
-
+      // No client-side domain gate. ensureProfile is the authority now, because
+      // an enrolled address may legitimately be off-domain (transfer student,
+      // aide, a test account) — blocking here would deny them before the server
+      // ever sees the roster. Rejections come back as permission-denied below.
       setUser(u)
 
       // Provision once: set role claim + upsert profile, then refresh token.

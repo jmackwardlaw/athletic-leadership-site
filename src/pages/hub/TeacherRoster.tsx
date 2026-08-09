@@ -326,6 +326,11 @@ export function EnrollmentPanel({
             Duplicates and stray text are cleaned up on save. You do not need to
             add yourself; staff bypass this list.
           </p>
+          <p className="text-xs text-ink-muted">
+            An address on this list gets in even if it is not a school account,
+            so you can enrol a transfer student — or add a personal address to
+            see the hub exactly as a student does. Remove it when you are done.
+          </p>
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={save}
