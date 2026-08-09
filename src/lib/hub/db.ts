@@ -17,6 +17,7 @@ import {
   setDoc,
   updateDoc,
   where,
+  writeBatch,
   type DocumentData,
   type QueryDocumentSnapshot,
 } from 'firebase/firestore'
@@ -376,6 +377,43 @@ export async function teacherRejectLog(
     },
     updatedAt: serverTimestamp(),
   })
+}
+
+/**
+ * Teacher logs one class work day for many students at once, already approved
+ * — they supervised it, so queueing 21 rows for self-approval is busywork.
+ *
+ * One batch, so it either all lands or none of it does; a half-written work day
+ * would be worse than a failed one. Firestore caps a batch at 500 writes, which
+ * is far beyond one class.
+ */
+export async function bulkCreateApprovedLogs(
+  studentUids: string[],
+  entry: Omit<InternshipLog, 'studentUid' | 'status' | 'supervisorSignoff' | 'teacherReview'>,
+  teacherUid: string,
+  note = 'Class work day'
+): Promise<number> {
+  if (studentUids.length === 0) return 0
+  if (studentUids.length > 500) {
+    throw new Error('Too many students for a single batch (max 500).')
+  }
+  const batch = writeBatch(db)
+  for (const uid of studentUids) {
+    batch.set(doc(collection(db, 'internshipLogs')), {
+      ...entry,
+      studentUid: uid,
+      status: 'teacher_approved',
+      teacherReview: {
+        reviewedBy: teacherUid,
+        reviewedAt: serverTimestamp(),
+        note,
+      },
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    })
+  }
+  await batch.commit()
+  return studentUids.length
 }
 
 /** Sum of teacher-approved hours from a set of logs. */

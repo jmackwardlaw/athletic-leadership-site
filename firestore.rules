@@ -95,9 +95,15 @@ service cloud.firestore {
       allow read: if isTeacher()
         || (isSignedIn() && resource.data.studentUid == request.auth.uid);
 
-      allow create: if isSignedIn()
-        && request.resource.data.studentUid == request.auth.uid
-        && request.resource.data.status == 'pending';
+      // A student logs their own hours, always as pending.
+      allow create: if (isSignedIn()
+          && request.resource.data.studentUid == request.auth.uid
+          && request.resource.data.status == 'pending')
+        // A teacher logs a class work day on behalf of students. They ran the
+        // session, so it lands already approved rather than queueing 21 rows
+        // for them to approve one at a time.
+        || (isTeacher()
+          && request.resource.data.status in ['pending', 'teacher_approved']);
 
       // Student edit: only their own, only while pending, status stays pending.
       allow update: if (isSignedIn()

@@ -1,6 +1,5 @@
 // /hub/teacher/todos — CRUD on to-dos surfaced on the student dashboard.
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
-import { Timestamp } from 'firebase/firestore'
 import { Pencil, Trash2, Plus, Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import {
@@ -11,7 +10,7 @@ import {
   updateTodo,
 } from '../../lib/hub/db'
 import type { Todo, UserProfile, WithId } from '../../lib/hub/types'
-import { formatDate, formatDateInput } from '../../lib/hub/format'
+import { dateInputToTimestamp, formatDate, formatDateInput } from '../../lib/hub/format'
 import {
   Card,
   EmptyState,
@@ -126,10 +125,7 @@ export default function TeacherTodos() {
         gcSubmitUrl: form.gcSubmitUrl.trim() || undefined,
         moduleItemRef: form.moduleItemRef.trim() || undefined,
       }
-      if (form.dueDate) {
-        const [y, m, d] = form.dueDate.split('-').map(Number)
-        payload.dueDate = Timestamp.fromDate(new Date(y, m - 1, d, 12, 0, 0))
-      }
+      if (form.dueDate) payload.dueDate = dateInputToTimestamp(form.dueDate)
 
       if (editingId) {
         await updateTodo(editingId, payload)

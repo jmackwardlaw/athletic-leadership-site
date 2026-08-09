@@ -1,7 +1,6 @@
 // /hub/teacher/content — author the active course: modules and their items.
 // Drafts (published: false) are visible here and nowhere else.
 import { useEffect, useState, type FormEvent } from 'react'
-import { Timestamp } from 'firebase/firestore'
 import {
   ChevronDown,
   ChevronRight,
@@ -23,7 +22,7 @@ import {
   updateModule,
 } from '../../lib/hub/db'
 import type { Item, ItemType, Module, WithId } from '../../lib/hub/types'
-import { formatDate, formatDateInput } from '../../lib/hub/format'
+import { dateInputToTimestamp, formatDate, formatDateInput } from '../../lib/hub/format'
 import {
   Card,
   Embed,
@@ -82,12 +81,6 @@ const emptyItemForm: ItemForm = {
   dueDate: '',
   order: '',
   published: false,
-}
-
-/** yyyy-mm-dd from a <input type="date"> → noon local, matching TeacherTodos. */
-function dateInputToTimestamp(value: string): Timestamp {
-  const [y, m, d] = value.split('-').map(Number)
-  return Timestamp.fromDate(new Date(y, m - 1, d, 12, 0, 0))
 }
 
 export default function TeacherContent() {

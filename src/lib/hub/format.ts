@@ -1,4 +1,4 @@
-import type { Timestamp } from 'firebase/firestore'
+import { Timestamp } from 'firebase/firestore'
 import type { InternshipStatus } from './types'
 
 export function formatDate(ts: Timestamp | null | undefined): string {
@@ -9,6 +9,21 @@ export function formatDate(ts: Timestamp | null | undefined): string {
     year: 'numeric',
     timeZone: 'America/New_York',
   })
+}
+
+/** Today as yyyy-mm-dd in local time, for defaulting <input type="date">. */
+export function todayInput(): string {
+  const d = new Date()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${m}-${day}`
+}
+
+/** yyyy-mm-dd -> local noon Timestamp, so a timezone shift can't roll the date
+ *  back a day. Noon is the safe hour on both sides of any offset. */
+export function dateInputToTimestamp(value: string): Timestamp {
+  const [y, m, d] = value.split('-').map(Number)
+  return Timestamp.fromDate(new Date(y, m - 1, d, 12, 0, 0))
 }
 
 export function formatDateInput(ts: Timestamp | null | undefined): string {

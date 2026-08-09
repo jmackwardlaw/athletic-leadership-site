@@ -7,9 +7,11 @@ import {
   approvedHours,
   createInternshipLog,
   getStudentLogs,
+  getUser,
+  touchOwnProfile,
 } from '../../lib/hub/db'
 import type { InternshipLog, WithId } from '../../lib/hub/types'
-import { formatDate, hoursLabel } from '../../lib/hub/format'
+import { formatDate, hoursLabel, todayInput } from '../../lib/hub/format'
 import {
   Card,
   EmptyState,
@@ -31,7 +33,7 @@ interface FormState {
 }
 
 const emptyForm: FormState = {
-  date: '',
+  date: todayInput(),
   hours: '',
   site: '',
   supervisorName: '',
@@ -48,6 +50,13 @@ export default function InternshipPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  // The saved placement, so repeat entries are just date + hours.
+  const [savedPlacement, setSavedPlacement] = useState<{
+    site: string
+    supervisorName: string
+    supervisorEmail: string
+  } | null>(null)
+  const [editingPlacement, setEditingPlacement] = useState(false)
 
   const load = async () => {
     if (!user) return
@@ -59,11 +68,34 @@ export default function InternshipPage() {
     let cancelled = false
     ;(async () => {
       setLoading(true)
-      const l = await getStudentLogs(user.uid)
-      if (!cancelled) {
-        setLogs(l)
-        setLoading(false)
-      }
+      const [l, profile] = await Promise.all([getStudentLogs(user.uid), getUser(user.uid)])
+      if (cancelled) return
+
+      // Prefill from the profile so a student types their site and supervisor
+      // once a semester instead of once a shift. Falls back to their most
+      // recent log, which covers anyone who logged hours before this existed.
+      const fromProfile = profile?.internshipSite
+        ? {
+            site: profile.internshipSite,
+            supervisorName: profile.internshipSupervisorName || '',
+            supervisorEmail: profile.internshipSupervisorEmail || '',
+          }
+        : null
+      const last = l[0]
+      const placement =
+        fromProfile ||
+        (last
+          ? {
+              site: last.site,
+              supervisorName: last.supervisorName,
+              supervisorEmail: last.supervisorEmail,
+            }
+          : null)
+
+      setLogs(l)
+      setSavedPlacement(placement)
+      if (placement) setForm((f) => ({ ...f, ...placement }))
+      setLoading(false)
     })()
     return () => {
       cancelled = true
@@ -100,7 +132,30 @@ export default function InternshipPage() {
         supervisorEmail: form.supervisorEmail.trim().toLowerCase(),
         description: form.description.trim(),
       })
-      setForm(emptyForm)
+      // Remember the placement so the next entry is just date + hours.
+      const placement = {
+        internshipSite: form.site.trim(),
+        internshipSupervisorName: form.supervisorName.trim(),
+        internshipSupervisorEmail: form.supervisorEmail.trim().toLowerCase(),
+      }
+      await touchOwnProfile(user.uid, placement).catch((err) => {
+        // Losing the convenience prefill must never lose the logged hours,
+        // which are already written by this point.
+        // eslint-disable-next-line no-console
+        console.error('[AL Hub] could not save placement to profile:', err)
+      })
+      setSavedPlacement({
+        site: placement.internshipSite,
+        supervisorName: placement.internshipSupervisorName,
+        supervisorEmail: placement.internshipSupervisorEmail,
+      })
+      setEditingPlacement(false)
+      setForm({
+        ...emptyForm,
+        site: placement.internshipSite,
+        supervisorName: placement.internshipSupervisorName,
+        supervisorEmail: placement.internshipSupervisorEmail,
+      })
       setSuccess(true)
       await load()
     } catch (err) {
@@ -150,32 +205,64 @@ export default function InternshipPage() {
                   placeholder="e.g. 2.5"
                 />
               </Field>
-              <Field label="Site / location" required>
-                <input
-                  type="text"
-                  value={form.site}
-                  onChange={(e) => handleChange('site', e.target.value)}
-                  className={inputClass}
-                  placeholder="Where you worked"
-                />
-              </Field>
-              <Field label="Supervisor name" required>
-                <input
-                  type="text"
-                  value={form.supervisorName}
-                  onChange={(e) => handleChange('supervisorName', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Supervisor email" required>
-                <input
-                  type="email"
-                  value={form.supervisorEmail}
-                  onChange={(e) => handleChange('supervisorEmail', e.target.value)}
-                  className={inputClass}
-                  placeholder="name@organization.org"
-                />
-              </Field>
+              {/* Once a placement is saved it collapses to a single line, so
+                  a repeat entry is date + hours + what you did. */}
+              {savedPlacement && !editingPlacement ? (
+                <div className="rounded-token border border-white/10 bg-surface-sunken px-3 py-2.5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold uppercase tracking-[0.1em] text-ink-secondary">
+                        Placement
+                      </div>
+                      <div className="mt-1 text-sm text-ink-primary truncate">
+                        {savedPlacement.site}
+                      </div>
+                      <div className="text-xs text-ink-muted truncate">
+                        {savedPlacement.supervisorName}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setEditingPlacement(true)}
+                      className="text-xs text-ink-muted hover:text-white underline shrink-0"
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Field label="Site / location" required>
+                    <input
+                      type="text"
+                      value={form.site}
+                      onChange={(e) => handleChange('site', e.target.value)}
+                      className={inputClass}
+                      placeholder="Where you worked"
+                    />
+                  </Field>
+                  <Field label="Supervisor name" required>
+                    <input
+                      type="text"
+                      value={form.supervisorName}
+                      onChange={(e) => handleChange('supervisorName', e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Supervisor email" required>
+                    <input
+                      type="email"
+                      value={form.supervisorEmail}
+                      onChange={(e) => handleChange('supervisorEmail', e.target.value)}
+                      className={inputClass}
+                      placeholder="name@organization.org"
+                    />
+                  </Field>
+                  <p className="-mt-1 text-xs text-ink-muted">
+                    Saved for next time — you only fill this in once.
+                  </p>
+                </>
+              )}
               <Field label="What did you do?">
                 <textarea
                   value={form.description}
